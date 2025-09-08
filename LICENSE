@@ -1,0 +1,90 @@
+SPDX-License-Identifier: CNC-SA-1.0.1
+
+Custom Non-Commercial Share-Alike License (CNC‑SA) — Version 1.0.1
+Copyright (c) 2025 Dampish0
+
+Preamble
+This license grants certain rights to use, reproduce, modify, and distribute the licensed work ("Software") while (a) prohibiting Commercial Use, and (b) requiring that Derivative Works distributed to third parties be licensed under the same CNC‑SA terms (share‑alike). This is a custom, non‑open‑source license intended to permit sharing for non‑commercial purposes while preserving the Copyright Holder's right to license commercial or entity uses separately.
+
+Definitions
+- "Software" means the original work of authorship licensed under this document, including source code, object code, documentation, and other materials.
+- "You" and "Your" mean any individual or legal entity exercising rights under this license.
+- "Entity" means any company, corporation, partnership, association, organization, union, club, nonprofit, foundation, government body, or other collective legal person.
+- "Copyright Holder" means the person or entity listed as copyright owner.
+- "Contributor" means a person or entity that has supplied code or other work to the Software.
+- "Derivative Work" or "Derivative" means a work based upon the Software or a portion thereof, including modifications, translations, adaptations, compilations, or any work that incorporates the Software in whole or in part.
+- "Distribute" means to make the Software or a Derivative available to third parties by sale, transfer, rental, lease, subscription, offering as a service, hosting, or any other form of conveyance.
+- "Commercial" or "Commercial Use" means any use that is intended for or results in commercial advantage, direct or indirect monetary compensation, sale, licensing, rental, incorporation into a product or service that is sold or monetized, or use by an entity primarily engaged in commercial activities. Non-profit, educational, personal, or research uses that do not produce direct or indirect commercial benefit are not "Commercial" under this definition; however, mere non-profit status alone does not guarantee non-commerciality. For clarity, using the Software in paid consulting work, in a product that is sold or offered for a fee, or as part of a hosted service provided for a fee is Commercial. If uncertain, obtain a written license from the Copyright Holder.
+- "Corresponding Source" means the preferred form of the work for making modifications, and includes all source files, scripts used to control compilation and installation of the executable, build and deployment scripts, configuration files, and any other files required to generate, install, run, or modify the object code version of the Software. For interpreted languages this includes the primary scripts and any modules required to build and modify the work.
+
+Grant of Copyright License
+Subject to the terms and conditions of this license, the Copyright Holder hereby grants You a worldwide, royalty‑free, non‑exclusive license to:
+- reproduce and use the Software;
+- prepare Derivative Works based on the Software;
+- Distribute and publicly display and perform the Software or Derivatives;
+provided that all such acts comply with the restrictions and requirements set forth below.
+
+Conditions
+1. Non‑Commercial Use Only; Entity Use Prohibition
+   - The rights granted above are limited to personal, individual, academic, research, and other non‑commercial uses by natural persons, provided those activities do not produce direct or indirect commercial benefit as defined above.
+   - Entity prohibition: Use, reproduction, modification, hosting, internal deployment, or distribution of the Software or any Derivative by any Entity (as defined above) is expressly prohibited regardless of whether the Entity characterizes the use as "non‑commercial" or does not receive monetary gain. Entities must obtain a separate, written license from the Copyright Holder to use the Software in any manner.
+   - Employees, contractors, or agents: An individual may use the Software for purely personal, non‑commercial activities independent of their employer; however, if the individual's use is in the scope of employment, contract, or otherwise benefits an Entity, such use is considered Entity use and is prohibited without a license.
+   - Any Commercial Use of the Software or any Derivative by any party is expressly prohibited without a separate, written commercial license from the Copyright Holder.
+   - SaaS / Hosting / Network Use: Offering the Software (or a Derivative) as a hosted service, via an API, or providing networked access is considered "Distribute" when the hosting or access is provided as part of a paid service, monetized product, or when the hosting entity gains direct or indirect commercial advantage. Hosting or providing the Software on behalf of an Entity (including nonprofits, associations, clubs, etc.) is prohibited unless that Entity holds a written license.
+     Examples:
+     a) An individual researcher running the Software on their personal machine for non‑commercial experiments is allowed.
+     b) A football association (even if organized as a nonprofit) deploying the Software for member services or internal tools is prohibited without a license.
+     c) A nonprofit hosting a public service that accepts donations is likely considered Entity use and requires a license; when uncertain, obtain a written license.
+
+2. Attribution
+   - Redistributions of the Software or Derivatives, in source or object form, must retain, in a reasonably prominent place, the following:
+     a) this copyright notice with year and Copyright Holder;
+     b) a copy of this license or a link to where the license is made available;
+     c) a list of significant changes made to the Software (if any);
+     d) a link to the original source of the Software (for example, a URL to the project's repository or project page);
+     e) clear attribution to the original source developers, such as names or handles and a statement like "Original work by <name(s) or handle(s)>"; inclusion of a CONTRIBUTORS file with names and roles satisfies this requirement.
+
+3. Share‑Alike (Copyleft)
+   - Any Derivative Work that You distribute, publicly display, or otherwise convey must be licensed to recipients under the CNC‑SA license. Derivatives must be provided under this same version of the CNC‑SA license unless the Copyright Holder explicitly publishes a successor version and states that recipients may adopt that later version.
+
+4. Source Availability for Object Distributions
+   - If You Distribute the Software or a Derivative in object or executable form, You must also make the complete Corresponding Source available under the CNC‑SA license either:
+     a) included with the object distribution; or
+     b) provided by a written offer, valid for at least three (3) years, to give any third party the Corresponding Source for no more than the cost of physically distributing the media; or
+     c) provided by posting the Corresponding Source at a persistent, publicly accessible URL and including that URL in the distribution.
+   - "Corresponding Source" is defined above in Definitions.
+
+5. No Sublicensing to Contradict Terms
+   - You may not apply legal terms or technological measures that legally or practically restrict recipients from exercising the rights granted by this license. You may not sublicense the Software in a manner that permits Commercial Use or otherwise contradicts the restrictions of this license.
+
+6. Contributor License Grant
+   - By submitting code, patches, or other contributions to the Software, a Contributor agrees to license those contributions under the CNC‑SA license and warrants they have the right to grant that license. Contributors also grant the Copyright Holder a perpetual, worldwide, non‑exclusive license to use, modify, and relicense those contributions for any purpose.
+
+7. Patent Rights and Retaliation
+   - Each Contributor grants You a non‑exclusive, worldwide, royalty‑free patent license under the Contributor's essential patent claims to make, use, sell, offer for sale, import, and otherwise transfer the Software or Derivatives, but only to the extent necessary to exercise the copyright license granted above and only for Non‑Commercial Use (subject to the Entity prohibition above).
+   - Patent retaliation: If You initiate patent litigation (including a cross‑claim or counterclaim) alleging that the Software or a contribution within it infringes a patent, then any patent licenses granted to You under this license by the Contributor whose contribution is the subject of the allegation shall terminate automatically and immediately. Termination of the patent license does not automatically terminate the copyright license granted under this document unless you otherwise breach other terms; however, without the patent license, patent claims may block the exercise of certain rights. The Copyright Holder may also pursue other remedies allowed by law.
+   - Clarifying effect: Patent license termination under this section removes only the patent license rights granted by the relevant Contributor(s); it does not, by itself, revoke other non‑patent rights granted by this license (unless you also breach those terms). Initiating patent litigation against a Contributor should be considered a material breach for the purposes of enforcement actions.
+
+8. Trademarks and Publicity
+   - This license does not grant permission to use the trade names, trademarks, service marks, or product names of the Copyright Holder, except as required for reasonable and customary use in describing the origin of the Software and reproducing the required notices.
+
+9. No Endorsement
+   - You may not imply endorsement or sponsorship by the Copyright Holder or Contributors without their prior written consent.
+
+Termination
+- This license and the rights granted hereunder will terminate automatically if You fail to comply with any term of this license. Termination does not terminate rights that others have received from You if those rights were granted under this license and in compliance with its terms. The Copyright Holder may, at their discretion, reinstate the license if You cure the breach within thirty (30) days of receiving a written notice describing the breach.
+
+Limitation of Liability and Warranty Disclaimer
+- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON‑INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Severability
+- If any provision of this license is held to be unenforceable under applicable law, that provision shall be limited or eliminated to the minimum extent necessary so that this license shall otherwise remain in full force and effect.
+
+Governing Law
+- Unless otherwise specified by the Copyright Holder, disputes arising under this license shall be governed by the laws of Sweden, without regard to conflict‑of‑law principles.
+
+Repository Metadata and Recommended Notices
+- Recommended SPDX identifier: "SPDX-License-Identifier: CNC-SA-1.0.1"
+- Suggested file header (source files):
+  /* Copyright (c) 2025 Dampish0
+     Licensed under the Custom Non-Commercial Share-Alike License (CNC-SA) v1.0.1; see LICENSE file. */
