@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/navbar';
+import NavBar from '../components/NavBar.jsx';
 import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';
 import '@fontsource/roboto/500.css';
