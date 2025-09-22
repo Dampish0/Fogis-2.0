@@ -6,6 +6,7 @@ import DetailPage from './pages/detailpage';
 import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
 import '@fontsource/roboto/500.css';
+import MatcherPage from './pages/MatcherPage';
 
 
 export const App = () => {
@@ -15,7 +16,8 @@ export const App = () => {
         <Route path='/' element={<HomePage/>}/>
         <Route path='/create' element={<CreatePage/>}/>
         <Route path='/note/:id' element={<DetailPage/>}/>
-        
+        <Route path='/matcher' element={<MatcherPage/>}/>
+
 
       </Routes>
     </div>
