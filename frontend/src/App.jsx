@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import HomePage from './pages/HomePage';
 import CreatePage from './pages/CreatePage';
 import DetailPage from './pages/detailpage';
+import NewsPage from './pages/NewsPage';
 import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
 
@@ -13,8 +14,8 @@ export const App = () => {
         <Route path='/' element={<HomePage/>}/>
         <Route path='/create' element={<CreatePage/>}/>
         <Route path='/note/:id' element={<DetailPage/>}/>
+        <Route path='/news' element={<NewsPage/>}/>
         
-
       </Routes>
     </div>
   )

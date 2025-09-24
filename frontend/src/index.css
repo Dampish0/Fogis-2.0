@@ -1,0 +1,117 @@
+/* ========= Basreset & grundtypografi ========= */
+html, body, #root { height: 100%; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f9fafb;       /* gray-50 */
+  color: #111827;            /* gray-900 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+               Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Standard länkstil */
+a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 150ms ease;
+}
+a:hover { text-decoration-color: currentColor; }
+
+/* ========= Återanvändbara komponentklasser ========= */
+
+/* Smal, centrerad content-container */
+.container-narrow {
+  padding: 1rem;             /* p-4 */
+  max-width: 768px;          /* ~max-w-3xl */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Primär sidrubrik */
+.page-title {
+  font-size: 1.5rem;         /* text-2xl */
+  line-height: 2rem;
+  font-weight: 600;          /* font-semibold */
+  margin-bottom: 1rem;       /* mb-4 */
+}
+
+/* Lista med vertikal spacing (motsv. space-y-3) */
+.list-space-y-3 { list-style: none; padding: 0; margin: 0; }
+.list-space-y-3 > * + * { margin-top: 0.75rem; }
+
+/* --- Högerställning av kortblocket --- */
+/* Varje <li> blir en rad som trycker sitt innehåll till höger */
+.cards-right > li {
+  display: flex;
+  justify-content: flex-end; /* placera blocket till höger */
+}
+
+/* Inre block som håller kort + summary med vettig maxbredd */
+.card-block {
+  width: 100%;
+  max-width: 600px;          /* justera 480–720 efter smak */
+}
+
+/* Kort (rad) för nyheter: bild + rubrik */
+.newscard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  transition: box-shadow 150ms ease;
+}
+.newscard:hover {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.newscard__img {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  object-fit: cover;
+  background: #f3f4f6;       /* gray-100 */
+  flex-shrink: 0;
+}
+
+.newscard__title {
+  font-size: 1.125rem;       /* text-lg */
+  line-height: 1.75rem;
+  font-weight: 500;          /* font-medium */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* Sammanfattning under kortet (valfritt) */
+.card-summary {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  opacity: 0.8;
+}
+
+/* Klickbar rad (fokusring när kortet är länk) */
+.as-link {
+  display: block;
+  border-radius: 0.25rem;
+  outline: none;
+  text-decoration: none;     /* låt hela kortet vara “rent” */
+  color: inherit;
+}
+.as-link:focus {
+  box-shadow:
+    0 0 0 2px #fff,          /* ring-offset-2 */
+    0 0 0 4px #3b82f6;       /* blå ring */
+}
+
+/* Enkel margin-top 24px */
+.mt-6 { margin-top: 1.5rem; }
