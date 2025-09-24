@@ -4,7 +4,7 @@ import { Box, Container } from '@mui/material';
 
 function MatcherPage() {
     return(
-        <div style={{background: "#102542", minHeight: "100vh"}}>
+        <div style={{background: "#f5f5f5", minHeight: "100vh"}}>
             <MatchDetail />
             <Container fixed>
                 <Box sx={{ display: "flex", gap: 3 }}>
