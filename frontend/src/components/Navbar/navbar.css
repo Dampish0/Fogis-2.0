@@ -1,4 +1,4 @@
-.NavBar{
+.NavBar {
     position: fixed;
     top: 0;
     bottom: auto;
@@ -12,12 +12,13 @@
     background: rgb(44, 44, 44);
     border-radius: 15px;
     margin: 10px;
-    border-Bottom: 1px solid #222;
+    border-bottom: 1px solid #222;
     box-Shadow: 0 8px 32px rgba(0,0,0,0.35);
 }
 
 body {
-    background: linear-gradient(135deg, #f4f7f1, #d1d3d3);
+    background: linear-gradient(135deg, #ecefe8, #c5e9e9);
+    padding-top: 100px;
 }
 
 .NavBar img {
@@ -39,7 +40,7 @@ body {
 
 .icons {
    display: flex;
-   gap: 5rem;
+   gap: 3rem;
    margin-right: 13rem;
    padding-top: 8px;
    padding-right: 50px;
@@ -48,18 +49,26 @@ body {
 
 .title
 {
+    background: transparent;
+    border: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
-    padding-top: 10px;
-    padding-left: 20px;
+    cursor: pointer;
+    padding: 6px 8px;
+}
+
+.title:focus-visible{
+    outline: 2px solid white;
+    outline-offset: 3px;
+    border-radius: 8px;
 }
 
 .title p 
 {
-   margin-top: 5px;
-   font-size: 10px;
+   margin-top: 4px;
+   font-size: 0.75rem;
    font-family: 'Roboto', sans-serif;
    color: white;
    letter-spacing: 1px;
@@ -70,11 +79,25 @@ body {
 
 .icon 
 {   
-    padding: 0 70px;
+    padding: 0 50px;
     transition: transform 0.3s ease;
 }
 .icon:hover {
     transform: scale(1.2);
 }
 
+@media(max-width: 900px) {
+    .icons {
+        gap: 1rem;
+    }
+}
+
+@media(max-width: 600px) {
+    .clubname{
+    display : none;
+    }
+    title p {
+        display: none;
+    }
+}
 

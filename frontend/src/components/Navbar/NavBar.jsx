@@ -24,25 +24,30 @@ import './navbar.css'
 
 function NavBar() {
   return (
-    <div className='NavBar'>
+    <nav className='NavBar'>
+      
        <img src={clublogo} alt="clublogo" />
        <h1 className="clubname">Husqvarna FF</h1>
+      
       <div className='icons'>
         <div className='title'>
       <HomeIcon className= "icon" style={{fontSize : "150%", cursor : "pointer" }}/> 
         <p>Hem</p>
         </div>
+      
          <div className='title'>
       <SportsSoccerIcon className="icon" style={{fontSize : "150%", cursor : "pointer"}}/> 
         <p>Matcher</p>
         </div>
+       
         <div className='title'>
       <EmojiEventsIcon className="icon" style={{fontSize : "150%", cursor : "pointer"}}/> 
        <p>Tävlingar</p>
         </div>
        </div>
+      <Avatar sx = {{width:40, height: 40, cursor: "pointer"}}/>
 
-    </div>
+    </nav>
   );
 }
 
