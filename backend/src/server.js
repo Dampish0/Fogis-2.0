@@ -1,8 +1,10 @@
 import express from "express";
 import notesRoutes from "./routes/notesRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import {connectDB} from "./config/db.js";
 import dotenv from "dotenv";
 import ratelimiter from "./middleware/ratelimiter.js";
+import cookieparser from "cookie-parser";
 
 dotenv.config();
 const port = process.env.PORT || 5002;
@@ -10,13 +12,17 @@ const port = process.env.PORT || 5002;
 const app = express();
 app.use(express.json()); // <-- This parses JSON bodies
 app.use(ratelimiter);
+app.use(cookieparser());
+
 
 app.use((req, res, next) => {
     console.log(`req method is ${req.method}, Req url is ${req.url}`);
     next();
 })
 
-app.use("/api/notes", notesRoutes)
+//app.use("/api/notes", notesRoutes)
+app.use("/api/auth", authRoutes)
+
 
 
 connectDB().then(() =>
