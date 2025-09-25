@@ -1,3 +1,17 @@
+:root {
+  /* Dark glass – bra läsbarhet över ljus bakgrund */
+  --glass-bg-1: rgba(27, 33, 44, 0.6);
+  --glass-bg-2: rgba(28, 34, 47, 0.38);
+  --glass-border: rgba(200, 200, 255, 0.18);
+  --fg: #ffffff;
+  --fg-soft: rgba(255, 255, 255, 0.75);
+  --hover-tint: rgba(255, 255, 255, 0.06);
+}
+
+
+
+
+
 .NavBar {
     position: fixed;
     top: 0;
@@ -9,16 +23,24 @@
     align-items: center;
     justify-content: space-between;
     padding: 5px 20px;
-    background: rgb(44, 44, 44);
+    background: linear-gradient(135deg, var(--glass-bg-1), var(--glass-bg-2));
+    border: 1px solid var(--glass-border);
     border-radius: 15px;
     margin: 10px;
     border-bottom: 1px solid #222;
-    box-Shadow: 0 8px 32px rgba(0,0,0,0.35);
+    box-Shadow: 0 8px 32px rgba(5, 11, 20, 0.35);
+    inset : 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    /* frostad glass effect*/
+    -webkit-backdrop-filter: blur(5px) saturate(20%);
+    backdrop-filter: blur(5px) saturate(20%);
+   
 }
 
 body {
     background: linear-gradient(135deg, #ecefe8, #c5e9e9);
     padding-top: 100px;
+    margin: 0;
 }
 
 .NavBar img {
