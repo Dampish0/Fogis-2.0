@@ -12,11 +12,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import clublogo from '../assets/hff.jpg'
+import clublogo from '../../assets/hff.jpg'
 import HomeIcon from '@mui/icons-material/Home';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import '../index.css'
+import './navbar.css'
+
 
 
 
@@ -24,12 +25,22 @@ import '../index.css'
 function NavBar() {
   return (
     <div className='NavBar'>
-      <img src={clublogo} alt="clublogo" />
+       <img src={clublogo} alt="clublogo" />
+       <h1 className="clubname">Husqvarna FF</h1>
       <div className='icons'>
-      <HomeIcon className= "icon"style={{fontSize : "250%", cursor : "pointer"}}/> 
-      <SportsSoccerIcon className="icon" style={{fontSize : "250%", cursor : "pointer"}} /> 
-      <EmojiEventsIcon className="icon" style={{fontSize : "250%", cursor : "pointer"}}/> 
-      </div>
+        <div className='title'>
+      <HomeIcon className= "icon" style={{fontSize : "150%", cursor : "pointer" }}/> 
+        <p>Hem</p>
+        </div>
+         <div className='title'>
+      <SportsSoccerIcon className="icon" style={{fontSize : "150%", cursor : "pointer"}}/> 
+        <p>Matcher</p>
+        </div>
+        <div className='title'>
+      <EmojiEventsIcon className="icon" style={{fontSize : "150%", cursor : "pointer"}}/> 
+       <p>Tävlingar</p>
+        </div>
+       </div>
 
     </div>
   );

@@ -5,10 +5,11 @@ import CreatePage from './pages/CreatePage';
 import DetailPage from './pages/detailpage';
 import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
+import '@fontsource/roboto/500.css';
 
 export const App = () => {
   return (
-    <div>
+    <div style={{ fontFamily: 'Roboto, sans-serif' }}>
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/create' element={<CreatePage/>}/>
