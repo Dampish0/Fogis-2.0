@@ -6,25 +6,72 @@
     padding: 10px;
     width: 50%;
     height: 100%;
+    font-family: "Roboto", sans-serif;
 }
 
 .match-card {
     border: 1px solid hsl(0, 0%, 0%);
     border-radius: 10px;
     box-shadow: 5px 5px 15px hsl(0, 0%, 80%);
-    margin: 5px;
+    margin: 1px;
+    font-family: "Roboto", sans-serif;
 }
 
 .scoreboard {
+    font-size: 24px;
+    text-align: center;
     display: center;
     justify-content: center;
+    font-family: "Roboto", sans-serif;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+    padding: 1px 10%;
+    font-family: "Roboto", sans-serif;
+}
+
+
+.score {
+    display: flex;
+    gap: 10%;
+    justify-content: space-evenly;
+    font-size: 40px;
+    letter-spacing: 0.1em;
+    font-family: "Roboto", sans-serif;
+    align-items: center;
 }
 
 .matcher {
     margin: 5px;
+    font-family: "Roboto", sans-serif;
 }
 
 .tabs {
+    display: flex;
+    gap: 10%;
+    justify-content: space-evenly;
     border: 1px solid hsl(0, 0%, 0%);
     border-radius: 5px;
+    font-family: "Roboto", sans-serif;
+}
+
+.match-content {
+    padding: 10px;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+.tabell-content {
+    padding: 10px;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+.lineups-content {
+    padding: 10px;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
 }
