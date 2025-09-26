@@ -7,14 +7,14 @@ export default function NewsPage() {
   const articles = [
     {
       id: 1,
-      title: "Första nyheten",
-      summary: "Kort sammanfattning om nyhet #1.",
+      title: "Sverige gjorde horhus med spanien",
+      summary: "Svergie töjde Spanien i vm-kvalet som aldrig förr",
       image: news1Png, 
       publishedAt: "2025-09-24T09:30:00Z",
     },
     {
       id: 2,
-      title: "Andra nyheten",
+      title: "Filip har en riktigt jävla hårig röv",
       image: news1Png,
       publishedAt: "2025-09-23T15:00:00Z",
     },
@@ -30,6 +30,12 @@ export default function NewsPage() {
       image: news1Png,
       publishedAt: "2025-09-21T18:45:00Z",
     },
+    {
+        id: 5,
+        title: "Fjärde nyheten",
+        image: news1Png,
+        publishedAt: "2025-09-21T18:45:00Z",
+      },
   ];
 
   if (!articles?.length) {
@@ -45,11 +51,13 @@ export default function NewsPage() {
   }
 
   const [first, ...rest] = articles;
-  const rightSide = rest.slice(0, 3); 
+  const rightSide = rest.slice(0, 4); 
 
   return (
     <div style={{ minHeight: "100vh" }}>
       <NavBar />
+
+     <h1>Nyheter</h1>
 
       <div className="news-root">
         <div className="news-layout">
@@ -75,11 +83,7 @@ export default function NewsPage() {
           </section>
 
           <section aria-label="Fler nyheter" className="right-col">
-            <div className="right-header">
-              <a href="/news/all" aria-label="Visa fler nyheter">
-                Fler nyheter →
-              </a>
-            </div>
+           
 
             <ul className="right-list">
               {rightSide.map((a) => (
