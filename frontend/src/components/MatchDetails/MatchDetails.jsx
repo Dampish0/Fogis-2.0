@@ -7,7 +7,7 @@ import TORD from '../../assets/Tord.png';
 
 function MatchDetails({}) {
 
-    const [activeTab, setActiveTab] = React.useState('lineups');
+    const [activeTab, setActiveTab] = React.useState('matchFacts');
 
     const renderTabContent = () => {
         switch (activeTab) {
