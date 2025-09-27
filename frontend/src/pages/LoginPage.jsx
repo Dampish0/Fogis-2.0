@@ -1,12 +1,102 @@
 import React from 'react'
 import img from '../assets/img4.jpg'
-import { Box, Button, Divider, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, IconButton, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [aboutUsIndex, setAboutUsIndex] = useState(0);
+  const aboutUsContents = [
+                <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
+                    Fotbollens administrativa informationssystem (FAIS) är en plattform för att lätt kunna hantera sina spelare i ett förbund, anmäla till tävlinfar, hantera domare och mer.
+                    <br/><br/>
+                    Utvecklad i webbutvecklingskursen.
+                </Typography>,
+                <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
+                    HEJ HEJ
+                </Typography>,
+                <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
+                   HEJ DÅ
+                </Typography>,
+
+  ];
+
+  const dotsList = [
+      <>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'white', borderRadius: '50%'}}></div>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
+      </>,
+      <>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'white', borderRadius: '50%'}}></div>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
+      </>,
+      <>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
+                    <div style={{width: '10px', height: '10px', marginTop: '15px', backgroundColor: 'white', borderRadius: '50%'}}></div>
+      </>,
+  ];
+
+  const textFieldColor = (color) => (
+    {
+                    '& label.Mui-focused': {
+                    color: color,
+                    },
+                    '& .MuiInput-underline:after': {
+                    borderBottomColor: color,
+                    },
+                    '& .MuiInputLabel-root': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-input': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                        borderColor: color,
+                    },
+                    '&:hover fieldset': {
+                        borderColor: color,
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: color,
+                    },
+                    },
+             }
+  );
+
+  const changeAboutUs = (leftOrRight) => {
+    setAboutUsIndex((aboutUsIndex + leftOrRight + 3) % 3);
+  }
+    
+  const ValidateEmail = (email) => {
+    const re = /.+@.+\..+/;
+    return re.test(email);
+  }
+
+  const attemptLogin = async (ema, pass) => {
+    try{
+
+    }
+    catch(err){
+
+    }
+  }
+  
+
+
+
   return (
     <div style={{
         width: '100vw',
@@ -61,17 +151,12 @@ export const LoginPage = () => {
                 <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
                     Om oss
                 </Typography>
-                <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
-                    Fotbollens administrativa informationssystem (FAIS) är en plattform för att lätt kunna hantera sina spelare i ett förbund, anmäla till tävlinfar, hantera domare och mer.
-                    <br/><br/>
-                    Utvecklad i webbutvecklingskursen.
-                </Typography>
+                    {aboutUsContents[aboutUsIndex]}
+                    
                 <div style={{position:'absolute', bottom:"32px", left:"0", width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: '20px'}}>
-                    <ArrowBackIcon style={{color: 'white'}}/>
-                    <div style={{width: '10px', height: '10px', marginTop: '7.5px', backgroundColor: 'white', borderRadius: '50%'}}></div>
-                    <div style={{width: '10px', height: '10px', marginTop: '7.5px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
-                    <div style={{width: '10px', height: '10px', marginTop: '7.5px', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: '50%'}}></div>
-                    <ArrowForwardIcon style={{color: 'white'}}/>
+                   <IconButton onClick={() => changeAboutUs(-1)} style={{color: 'white'}}><ArrowBackIcon /></IconButton>
+                    {dotsList[aboutUsIndex]}
+                    <IconButton onClick={() => changeAboutUs(1)} style={{color: 'white'}}><ArrowForwardIcon /></IconButton>
 
                 </div>
             </div>
@@ -81,7 +166,7 @@ export const LoginPage = () => {
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: `linear-gradient(120deg, rgba(0,0,0,0.65), rgba(0,0,0,0.2), rgba(0,0,0,0.65)), url(${img})`,
+          backgroundImage: `linear-gradient(120deg, rgba(0,0,0,0.25), rgba(0,0,0,0), rgba(0,0,0,0.25)), url(${img})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -131,35 +216,34 @@ export const LoginPage = () => {
         </Typography>
                     <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
 
-        <TextField id="emailbox" type="email" label="Email" variant="outlined"
-            sx={{
-                    '& label.Mui-focused': {
-                    color: 'white',
-                    },
-                    '& .MuiInput-underline:after': {
-                    borderBottomColor: 'white',
-                    },
-                    '& .MuiInputLabel-root': {
-                    color: 'white',
-                    },
-                    '& .MuiOutlinedInput-input': {
-                    color: 'white',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                        borderColor: 'white',
-                    },
-                    '&:hover fieldset': {
-                        borderColor: 'white',
-                    },
-                    '&.Mui-focused fieldset': {
-                        borderColor: 'white',
-                    },
-                    },
-             }}
+      <TextField onBlur={() => {
+            setEmailError(!ValidateEmail(email));
+            
+          }}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            if(emailError){ // if there has eben a error then validate agin
+              if(ValidateEmail(email)){ // to make it less annoying and 
+                setEmailError(false); // not always have it be red
+              }
+            }
+          }
+        }
+
+           id="emailbox" type="email" label="Email" variant="outlined"
+            sx={emailError ? textFieldColor("red") : textFieldColor("white") }
         />
-        <TextField id="passwordbox" type='password' label="Lösenord" variant="outlined"
-            wi
+        <TextField onSubmit={(e) =>{
+            if(!emailError && email.length > 0 && password.length > 0){
+              attemptLogin(email, password);
+            }
+        }}
+        onChange={(e) => {
+            setPassword(e.target.value)
+          }
+        }
+
+        id="passwordbox" type='password' label="Lösenord" variant="outlined"
             sx={{
                     '& label.Mui-focused': {
                     color: 'white',
@@ -187,7 +271,7 @@ export const LoginPage = () => {
              }}
         />
             <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
-        <Button variant="contained" color="primary" endIcon={<LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>Logga in</Button>
+        <Button onClick={() => attemptLogin(email, password)} variant="contained" color="primary" endIcon={<LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>Logga in</Button>
         <Link href="/forgotpass" style={{color: 'white', textDecoration: 'underline'}}>Glömt lösenord?</Link>
       </Box>
       <Box
