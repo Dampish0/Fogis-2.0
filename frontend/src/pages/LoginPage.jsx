@@ -8,11 +8,14 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useAuthStore } from '../store/authStore.js';
+import { NavLink, useNavigate } from 'react-router';
 
 
 
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  const [invalidLogin, setInvalidLogin] = useState(false);
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -125,9 +128,14 @@ export const LoginPage = () => {
     try{
 
       await login(ema, pass);
+      if(error){
+        console.log(error);
+        return;
+      }
       navigate('/');
     }
     catch(error){
+      setInvalidLogin(true);
       console.log(error);
     }
   }
@@ -301,6 +309,7 @@ export const LoginPage = () => {
               },
             }}
           />
+          {invalidLogin && <Typography sx={{ color: 'red', fontSize: '1.2rem', mt: -2 }}>Felaktiga inloggningsuppgifter</Typography>}
         <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
         <Button disabled={loading} type='submit' onClick={() => attemptLogin(email, password)} variant="contained" color="primary"
          endIcon={loading ? <></> : <LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>

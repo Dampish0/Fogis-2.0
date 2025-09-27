@@ -5,11 +5,16 @@ import {connectDB} from "./config/db.js";
 import dotenv from "dotenv";
 import ratelimiter from "./middleware/ratelimiter.js";
 import cookieparser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 const port = process.env.PORT || 5002;
 
 const app = express();
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
 app.use(express.json()); // <-- This parses JSON bodies
 app.use(ratelimiter);
 app.use(cookieparser());
