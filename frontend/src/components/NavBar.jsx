@@ -19,17 +19,27 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import eif from '../assets/eif.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-const NavBar = () => {
+const NavBar = (props) => {
 
 
-  return (
-    <div style={{  overflow: "hidden", backgroundColor: "black",
-       height: "60px",
-        maxWidth:"100vw",
-         borderRadius: "20px",
-          boxShadow: 
-          "0 4px 8px rgba(0, 0, 0, 0.8)",
-           margin: "16px",
+  return (<>
+    <div style={{
+      ...props.style,
+      position: "absolute",
+      overflow: "hidden",
+      background: "rgba(30, 30, 30, 0.7)",
+      backdropFilter: "blur(12px)", 
+      WebkitBackdropFilter: "blur(12px)",
+      height: "60px",
+      maxWidth: "100vw",
+      borderRadius: "20px",
+      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
+      //margin: "16px",
+      left: "16px",
+      right: "16px",
+      top: "16px",
+      marginBottom: "16px",
+      border: "1px solid rgba(255,255,255,0.08)",
     }}>
       <div style={{ display: "flex", alignItems: "center", height: "100%", flexDirection: "row" }}>
         <Typography style={{marginLeft: "10px", letterSpacing: "4px"}} variant="h5" component="div" sx={{ color: "white", padding: "16px" }}>
@@ -70,6 +80,8 @@ const NavBar = () => {
         </Button>
       </div>
     </div>
+    <div style={{height: "92px"}}></div>
+    </>
   );
 
 }

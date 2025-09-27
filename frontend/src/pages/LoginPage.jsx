@@ -5,6 +5,7 @@ import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import NavBar from '../components/NavBar';
 
 export const LoginPage = () => {
   return (
@@ -15,6 +16,9 @@ export const LoginPage = () => {
         overflow: 'hidden', 
         
         }}>
+        <NavBar style={{
+        zIndex: 10,
+      }} />
       <div
       style={{
         width: '100vw',
