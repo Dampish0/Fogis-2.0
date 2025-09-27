@@ -16,7 +16,7 @@ function MatchDetails({}) {
             case 'matchFacts':
                 return <div className="match-content">Match händelser</div>;
             case 'table':
-                return <div className="tabell-content">Tabell</div>;
+                return <div className="tabell-content">Tabell 2</div>;
             default:
                 return null;
         }

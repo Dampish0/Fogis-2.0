@@ -8,7 +8,9 @@ function MatcherPage() {
     return (
         <div>
             <NavBar />
-            <div>
+            <div className="page">
+                
+                <MatchCard title="Kommande matcher"/>
                 <MatchDetails />
             </div>
 
