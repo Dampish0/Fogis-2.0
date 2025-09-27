@@ -1,33 +1,43 @@
-.page {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
-}
+
 
 .matchdetails {
     position: absolute;
-    right: clamp(1px, 5%, 30px);
-    width: clamp(450px, 50%, 900px);
-    box-sizing: border-box;
-    margin: 10px 0 10px 50%;
-    border: 1px solid hsl(0, 0%, 0%);
+    background-color: rgba(30, 30, 30, 0.7);
+
+    box-shadow: 2px 2px 10px rgb(0, 0, 0);
+
+    right: clamp(1px, 1%, 30px);
+    width: clamp(200px, 50%, 1000px);
+    margin-top: 20px;
+
     border-radius: 10px;
-    box-shadow: 2px 2px 15px hsl(0, 0%, 20%);
+    
+
+    
     padding: 20px;
     font-family: "Roboto", sans-serif;
 }
 
-.match-card {
-    height: clamp(100px, 20%, 200px);
-    border: 1px solid hsl(0, 0%, 0%);
+
+.match-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 0 0;
+
+    left: clamp(1px, 1%, 30px);
+    width: clamp(100px, 40%, 400px);
+    height: clamp(300px, 50%, 600px);
     border-radius: 10px;
-    padding: 10px;
+    box-shadow: 1px 1px 10px rgb(0, 0, 0);
+    background-color: rgba(30, 30, 30, 0.7);
     
+    padding: 10px;
+
     font-family: "Roboto", sans-serif;
 }
-
 
 .scoreboard {
     font-size: 24px;
@@ -40,7 +50,9 @@
 .teams {
     display: flex;
     justify-content: space-between;
-    font-size: 25px;
+    font-size: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 1px 10%;
     font-family: "Roboto", sans-serif;
 }
@@ -55,35 +67,34 @@
     align-items: center;
 }
 
-.matcher {
-    margin: 5px;
-    font-family: "Roboto", sans-serif;
-}
-
 .tabs {
     display: flex;
     gap: 10%;
-    box-shadow: 2px 2px 10px hsl(0, 0%, 20%);
+    background-color: #f5f5f5;
+    box-shadow: 1px 1px 10px rgb(0, 0, 0);
     justify-content: space-evenly;
-    border: 1px solid hsl(0, 0%, 0%);
+    
     border-radius: 5px;
     
     font-family: "Roboto", sans-serif;
 }
 
 .match-content {
+    margin: 10px;
     padding: 10px;
     text-align: center;
     font-family: "Roboto", sans-serif;
 }
 
 .tabell-content {
+    margin: 10px;
     padding: 10px;
     text-align: center;
     font-family: "Roboto", sans-serif;
 }
 
 .lineups-content {
+    margin: 10px;
     padding: 10px;
     text-align: center;
     font-family: "Roboto", sans-serif;
