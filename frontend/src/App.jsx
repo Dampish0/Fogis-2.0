@@ -20,8 +20,7 @@ const theme = createTheme({
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div className='min-h-screen justify-center
-    relative overflow-hidden'>
+      <div>
       <Routes>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/' element={<HomePage/>}/>
