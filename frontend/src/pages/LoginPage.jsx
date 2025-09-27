@@ -25,9 +25,9 @@ export const LoginPage = () => {
         display: 'flex',
       }}
     >
-        <Typography style={{letterSpacing:"4px", textAlign:"center"}} variant="h1" component="h1" sx={{ color: 'white', mt: 0 }}>
+        {/* <Typography style={{letterSpacing:"4px", textAlign:"center"}} variant="h1" component="h1" sx={{ color: 'white', mt: 0 }}>
           FAIS
-        </Typography>    
+        </Typography>     */}
 
 
         {/* // om oss delen */}
@@ -38,6 +38,7 @@ export const LoginPage = () => {
                 height: '100vh',
                 width: '100vw',
                 position: 'relative',
+                left: "10%",
                 overflow: 'hidden',
             }}
             >
@@ -76,21 +77,22 @@ export const LoginPage = () => {
             </div>
         </div>
 
-    // login delen
         <div
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: `url(${img})`,
+          backgroundImage: `linear-gradient(120deg, rgba(0,0,0,0.65), rgba(0,0,0,0.2), rgba(0,0,0,0.65)), url(${img})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(6px)',
+          filter: 'blur(2px)',
           transform: 'scale(1.05)',
           zIndex: 0,
+          
         }}
       />
       
+    {/* // login delen */}
         <div style={{
           position: 'absolute',
           inset: 0,
@@ -106,6 +108,10 @@ export const LoginPage = () => {
         sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}
         autoComplete="off"
       style={{
+        position: 'absolute',
+        maxWidth: '19vw',
+        right: '10%',
+        overflow: 'hidden',
         width: '23.3vw',
         minHeight: "40%",
         backdropFilter: 'blur(14px) saturate(140%)',
