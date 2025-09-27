@@ -1,17 +1,19 @@
 import React from 'react'
 import img from '../assets/img4.jpg'
-import { Box, Button, Divider, Icon, IconButton, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Divider, Icon, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useAuthStore } from '../store/authStore.js';
 
 
 
 
 export const LoginPage = () => {
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
 
@@ -21,17 +23,32 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [aboutUsIndex, setAboutUsIndex] = useState(0);
   const aboutUsContents = [
+                <>
+                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
+                    Om oss
+                </Typography>
                 <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
                     Fotbollens administrativa informationssystem (FAIS) är en plattform för att lätt kunna hantera sina spelare i ett förbund, anmäla till tävlinfar, hantera domare och mer.
                     <br/><br/>
                     Utvecklad i webbutvecklingskursen.
-                </Typography>,
+                </Typography>
+                </>,
+                <>
+                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
+                    BÄST I TEST
+                </Typography>
                 <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
                     HEJ HEJ
-                </Typography>,
+                </Typography>
+                </>,
+                <>
+                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
+                    VARFÖR FAIS?
+                </Typography>
                 <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
                    HEJ DÅ
-                </Typography>,
+                </Typography>
+                </>,
 
   ];
 
@@ -90,12 +107,28 @@ export const LoginPage = () => {
     return re.test(email);
   }
 
+  const {login, loading, error} = useAuthStore();
   const attemptLogin = async (ema, pass) => {
+    if(!ValidateEmail(ema)){
+      setEmailError(true);
+      if(pass.length === 0){
+        setPasswordError(true);
+        return;
+      }
+      return;
+    }
+    if(pass.length === 0){
+      setPasswordError(true);
+      return;
+    }
+
     try{
 
+      await login(ema, pass);
+      navigate('/');
     }
-    catch(err){
-
+    catch(error){
+      console.log(error);
     }
   }
   
@@ -153,9 +186,7 @@ export const LoginPage = () => {
                     borderRadius: '36px',
                 }}
                 >
-                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
-                    Om oss
-                </Typography>
+
                     {aboutUsContents[aboutUsIndex]}
                     
                 <div style={{position:'absolute', bottom:"32px", left:"0", width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: '20px'}}>
@@ -238,53 +269,42 @@ export const LoginPage = () => {
             sx={emailError ? textFieldColor("red") : textFieldColor("white") }
         />
         <TextField onSubmit={(e) =>{
-            if(!emailError && email.length > 0 && password.length > 0){
-              attemptLogin(email, password);
+              if(!emailError && email.length > 0 && password.length > 0){
+                attemptLogin(email, password);
+              }
+          }}
+          onChange={(e) => {
+              setPassword(e.target.value)
             }
-        }}
-        onChange={(e) => {
-            setPassword(e.target.value)
           }
-        }
-        
-        id="passwordbox" type='password' label="Lösenord" variant="outlined"
-            sx={{
-                    '& label.Mui-focused': {
-                    color: 'white',
-                    },
-                    '& .MuiInput-underline:after': {
-                    borderBottomColor: 'white',
-                    },
-                    '& .MuiInputLabel-root': {
-                    color: 'white',
-                    },
-                    '& .MuiOutlinedInput-input': {
-                    color: 'white',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                        borderColor: 'white',
-                    },
-                    '&:hover fieldset': {
-                        borderColor: 'white',
-                    },
-                    '&.Mui-focused fieldset': {
-                        borderColor: 'white',
-                    },
-                    },
-             }}
-        >
-          <IconButton
-            aria-label="toggle password visibility"
-            onClick={() => setShowPassword(!showPassword)}
-            edge="end"
-            style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
-          >
-            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </IconButton>
-        </TextField>
+          
+          id="passwordbox" type={showPassword ? 'text' : 'password'} label="Lösenord" variant="outlined" 
+          onClick={(e) => {
+            if(passwordError){
+              setPasswordError(false);
+            }
+          }}
+            sx={passwordError ? textFieldColor("red") : textFieldColor("white") }
+            slotProps={{
+              input: {
+                endAdornment: 
+                <InputAdornment position="end">
+                  <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                  style={{ color: 'white' }}
+                >
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+                </InputAdornment>,
+              },
+            }}
+          />
         <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
-        <Button onClick={() => attemptLogin(email, password)} variant="contained" color="primary" endIcon={<LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>Logga in</Button>
+        <Button disabled={loading} type='submit' onClick={() => attemptLogin(email, password)} variant="contained" color="primary"
+         endIcon={loading ? <></> : <LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>
+        {loading ? <CircularProgress color='secondary'/> : "Logga in"}</Button>
         <Link href="/forgotpass" style={{color: 'white', textDecoration: 'underline'}}>Glömt lösenord?</Link>
       </Box>
       <Box

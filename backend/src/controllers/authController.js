@@ -2,7 +2,6 @@ import { User } from "../models/user.js";
 import bcrypt from "bcryptjs";
 import { generateVerificationCode } from "../utils/generateVerificationCode.js";
 import {generateTokenAndSetCookie} from "../utils/generateTokenAndSetCookie.js";
-import crypto from "crypto";
 import { SendLoginCredential, SendPasswordReset, SendPasswordResetSuccess } from "../utils/mailtrap/email.js";
 
 export async function createUser(req, res)
