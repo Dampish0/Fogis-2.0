@@ -6,19 +6,33 @@ import DetailPage from './pages/detailpage';
 import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
 import '@fontsource/roboto/500.css';
+import MatcherPage from './pages/MatcherPage';
+import LoginPage from './pages/LoginPage';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Roboto',
+  },
+});
 
 export const App = () => {
   return (
-    <div style={{ fontFamily: 'Roboto, sans-serif' }}>
+    <ThemeProvider theme={theme}>
+      <div className='min-h-screen justify-center
+    relative overflow-hidden'>
       <Routes>
+        <Route path='/login' element={<LoginPage/>}/>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/create' element={<CreatePage/>}/>
         <Route path='/note/:id' element={<DetailPage/>}/>
-        
+        <Route path='/matcher' element={<MatcherPage/>}/>
+
 
       </Routes>
     </div>
+    </ThemeProvider>
   )
 }
 
