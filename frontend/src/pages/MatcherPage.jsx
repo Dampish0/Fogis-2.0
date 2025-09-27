@@ -1,6 +1,6 @@
 import Container from '@mui/material/Container'
 import React from 'react'
-import NavBar from '../components/NavBar/NavBar.jsx'
+import NavBar from '../components/Navbar/NavBar.jsx'
 import ListMUI from '../components/ListMUI.jsx'
 import { Divider } from '@mui/material'
 
