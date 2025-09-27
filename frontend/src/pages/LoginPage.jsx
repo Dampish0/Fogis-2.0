@@ -1,10 +1,15 @@
 import React from 'react'
 import img from '../assets/img4.jpg'
-import { Box, Button, Divider, IconButton, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, Icon, IconButton, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
+
+
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -136,7 +141,7 @@ export const LoginPage = () => {
                 style={{
                     zIndex: 1,
                     width: '520px',
-                    minHeight: "40%",
+                    minHeight: "clamp(400px, 40%, 650px)",
                     backdropFilter: 'blur(14px) saturate(140%)',
                     WebkitBackdropFilter: 'blur(14px) saturate(140%)',
                     backgroundColor: 'rgba(0,0,0,0.25)',
@@ -170,7 +175,7 @@ export const LoginPage = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(2px)',
+          filter: 'blur(1px)',
           transform: 'scale(1.05)',
           zIndex: 0,
           
@@ -194,10 +199,9 @@ export const LoginPage = () => {
         autoComplete="off"
       style={{
         position: 'absolute',
-        maxWidth: '19vw',
         right: '10%',
         overflow: 'hidden',
-        width: '23.3vw',
+        width: 'clamp(400px, 23vw, 520px)',
         minHeight: "40%",
         backdropFilter: 'blur(14px) saturate(140%)',
         WebkitBackdropFilter: 'blur(14px) saturate(140%)',
@@ -242,7 +246,7 @@ export const LoginPage = () => {
             setPassword(e.target.value)
           }
         }
-
+        
         id="passwordbox" type='password' label="Lösenord" variant="outlined"
             sx={{
                     '& label.Mui-focused': {
@@ -269,8 +273,17 @@ export const LoginPage = () => {
                     },
                     },
              }}
-        />
-            <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
+        >
+          <IconButton
+            aria-label="toggle password visibility"
+            onClick={() => setShowPassword(!showPassword)}
+            edge="end"
+            style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
+          >
+            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </IconButton>
+        </TextField>
+        <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
         <Button onClick={() => attemptLogin(email, password)} variant="contained" color="primary" endIcon={<LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>Logga in</Button>
         <Link href="/forgotpass" style={{color: 'white', textDecoration: 'underline'}}>Glömt lösenord?</Link>
       </Box>
