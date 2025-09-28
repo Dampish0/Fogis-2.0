@@ -1,10 +1,10 @@
 import React from 'react'
-import NavBar from '../components/Navbar/NavBar';
+import NavBar from '../components/Navbar/NavBar.jsx';
 import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';
 import '@fontsource/roboto/500.css';
 
-const HomePage = () => {
+const HomePage = () => { 
   return (
     <div style={{backgroundColor: "#FFFFFF",
      overflow: "hidden",

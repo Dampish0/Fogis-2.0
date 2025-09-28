@@ -1,17 +1,29 @@
 import React from 'react'
 import img from '../assets/img4.jpg'
-import { Box, Button, Divider, Icon, IconButton, Link, TextField, Typography } from '@mui/material';
+import { Backdrop, Box, Button, CircularProgress, Divider, Icon, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
-
+import { useAuthStore } from '../store/authStore.js';
+import { NavLink, useNavigate } from 'react-router';
+import SendIcon from '@mui/icons-material/Send';
+import toast from 'react-hot-toast';
+import NavBar from '../components/Navbar/NavBar.jsx';
 
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  const [invalidLogin, setInvalidLogin] = useState(false);
+
+  const [forgotPass, setForgotPass] = useState(false);
+  const [InvalidForgotPassEmail, setInvalidForgotPassEmail] = useState(false);
+  const [emailForgotPass, setEmailForgotPass] = useState("");
+  const [emailErrorForgotPass, setEmailErrorForgotPass] = useState(false);
+  const [forgotPassSuccess, setForgotPassSuccess] = useState(false);
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
 
@@ -21,17 +33,32 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [aboutUsIndex, setAboutUsIndex] = useState(0);
   const aboutUsContents = [
+                <>
+                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
+                    Om oss
+                </Typography>
                 <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
                     Fotbollens administrativa informationssystem (FAIS) är en plattform för att lätt kunna hantera sina spelare i ett förbund, anmäla till tävlinfar, hantera domare och mer.
                     <br/><br/>
                     Utvecklad i webbutvecklingskursen.
-                </Typography>,
+                </Typography>
+                </>,
+                <>
+                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
+                    BÄST I TEST
+                </Typography>
                 <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
                     HEJ HEJ
-                </Typography>,
+                </Typography>
+                </>,
+                <>
+                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
+                    VARFÖR FAIS?
+                </Typography>
                 <Typography sx={{ color: 'white', fontSize: '1.15rem' }}>
                    HEJ DÅ
-                </Typography>,
+                </Typography>
+                </>,
 
   ];
 
@@ -90,15 +117,61 @@ export const LoginPage = () => {
     return re.test(email);
   }
 
+  const {login, loading, error, sendPassResetRequest} = useAuthStore();
   const attemptLogin = async (ema, pass) => {
+    if(!ValidateEmail(ema)){
+      setEmailError(true);
+      if(pass.length === 0){
+        setPasswordError(true);
+        return;
+      }
+      return;
+    }
+    if(pass.length === 0){
+      setPasswordError(true);
+      return;
+    }
+
     try{
 
+      await login(ema, pass);
+      if(error){
+        console.log(error);
+        return;
+      }
+      toast.success("Inloggad!", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
+      navigate('/');
     }
-    catch(err){
-
+    catch(error){
+      setInvalidLogin(true);
+      toast.error("Ett fel inträffade.", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
+      console.log(error);
     }
   }
   
+  const sendPassReset = async (ema) => {
+    if(!ValidateEmail(ema)){
+      setEmailErrorForgotPass(true);
+      return;
+    }
+    try{
+      await sendPassResetRequest(ema);
+      toast.success("Återställning av lösenord skickad!", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
+      setForgotPassSuccess(true);
+    }catch(error){
+      toast.error("Ett fel inträffade.", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
+      setInvalidForgotPassEmail(true);
+      console.log(error);
+    }
+  }
 
 
 
@@ -120,10 +193,73 @@ export const LoginPage = () => {
         display: 'flex',
       }}
     >
+      <NavBar style={{ zIndex: 4 }}></NavBar>
         {/* <Typography style={{letterSpacing:"4px", textAlign:"center"}} variant="h1" component="h1" sx={{ color: 'white', mt: 0 }}>
           FAIS
         </Typography>     */}
+        <Backdrop sx={{zIndex:4}} open={forgotPass} onClick={(e) => {
+          if(e.target === e.currentTarget){ setForgotPass(false);}
+        }}>
+            <Box 
+        
+                component="form"
+                sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}
+                autoComplete="off"
+              style={{
+                overflow: 'hidden',
+                width: 'clamp(400px, 23vw, 520px)',
+                minHeight: "30%",
+                backdropFilter: 'blur(14px) saturate(20%)',
+                WebkitBackdropFilter: 'blur(14px) saturate(20%)',
+                backgroundColor: 'rgba(0,0,0,0.25)', 
+                padding: '32px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '36px',
+              }}
+                >
+                <Typography variant="h3" component="h1" sx={{ color: 'white', mt: 0 }} style={{textAlign:"center"}}>
+                  Glömt lösenord?
+                </Typography>
+                            <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
 
+              <TextField onBlur={() => {
+                    setEmailErrorForgotPass(!ValidateEmail(emailForgotPass));
+                    
+                  }}
+                  onChange={(e) => {
+                    setEmailForgotPass(e.target.value)
+                    if(emailErrorForgotPass){ // if there has eben a error then validate agin
+                      if(ValidateEmail(emailForgotPass)){ // to make it less annoying and 
+                        setEmailErrorForgotPass(false); // not always have it be red
+                      }
+                    }
+                  }
+                }
+                onSubmit={(e) =>{
+                      if(!emailErrorForgotPass && emailForgotPass.length > 0 && !loading && forgotPass && ValidateEmail(emailForgotPass)){
+                        sendPassReset(emailForgotPass);
+                      }
+                      
+                  }}
+
+                  id="emailbox" type="email" label="Email" variant="outlined"
+                    sx={emailErrorForgotPass ? textFieldColor("red") : textFieldColor("white") }
+                />
+                {InvalidForgotPassEmail && <Typography sx={{ color: 'red', fontSize: '1.2rem', mt: -2 }}>Ogiltig e-postadress</Typography>}
+                {forgotPassSuccess && <Typography sx={{ color: 'green', fontSize: '1.2rem', mt: -2 }}>Återställningslänk skickad!</Typography>}
+                {forgotPassSuccess && <Typography sx={{ color: 'green', fontSize: '1.2rem', mt: -2 }}>Kontrollera din e-postinkorg.</Typography>}
+
+                <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
+                <Button disabled={loading} type='submit' onClick={() => sendPassReset(emailForgotPass)} variant="contained" color="primary"
+                endIcon={loading ? <></> : <SendIcon />} sx={{fontSize: '1rem', width: '70%'}}>
+                {loading ? <CircularProgress color='secondary'/> : "Skicka Återställningslänk"}</Button>
+
+              </Box>
+        </Backdrop>
 
         {/* // om oss delen */}
         <div
@@ -153,9 +289,7 @@ export const LoginPage = () => {
                     borderRadius: '36px',
                 }}
                 >
-                <Typography variant="h4" sx={{ color: 'white', mb: 2 }}>
-                    Om oss
-                </Typography>
+
                     {aboutUsContents[aboutUsIndex]}
                     
                 <div style={{position:'absolute', bottom:"32px", left:"0", width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: '20px'}}>
@@ -238,54 +372,44 @@ export const LoginPage = () => {
             sx={emailError ? textFieldColor("red") : textFieldColor("white") }
         />
         <TextField onSubmit={(e) =>{
-            if(!emailError && email.length > 0 && password.length > 0){
-              attemptLogin(email, password);
+              if(!emailError && email.length > 0 && password.length > 0 && !loading && !forgotPass && ValidateEmail(email)){
+                attemptLogin(email, password);
+              }
+          }}
+          onChange={(e) => {
+              setPassword(e.target.value)
             }
-        }}
-        onChange={(e) => {
-            setPassword(e.target.value)
           }
-        }
-        
-        id="passwordbox" type='password' label="Lösenord" variant="outlined"
-            sx={{
-                    '& label.Mui-focused': {
-                    color: 'white',
-                    },
-                    '& .MuiInput-underline:after': {
-                    borderBottomColor: 'white',
-                    },
-                    '& .MuiInputLabel-root': {
-                    color: 'white',
-                    },
-                    '& .MuiOutlinedInput-input': {
-                    color: 'white',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                        borderColor: 'white',
-                    },
-                    '&:hover fieldset': {
-                        borderColor: 'white',
-                    },
-                    '&.Mui-focused fieldset': {
-                        borderColor: 'white',
-                    },
-                    },
-             }}
-        >
-          <IconButton
-            aria-label="toggle password visibility"
-            onClick={() => setShowPassword(!showPassword)}
-            edge="end"
-            style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
-          >
-            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </IconButton>
-        </TextField>
+          
+          id="passwordbox" type={showPassword ? 'text' : 'password'} label="Lösenord" variant="outlined" 
+          onClick={(e) => {
+            if(passwordError){
+              setPasswordError(false);
+            }
+          }}
+            sx={passwordError ? textFieldColor("red") : textFieldColor("white") }
+            slotProps={{
+              input: {
+                endAdornment: 
+                <InputAdornment position="end">
+                  <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                  style={{ color: 'white' }}
+                >
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+                </InputAdornment>,
+              },
+            }}
+          />
+          {invalidLogin && <Typography sx={{ color: 'red', fontSize: '1.2rem', mt: -2 }}>Felaktiga inloggningsuppgifter</Typography>}
         <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
-        <Button onClick={() => attemptLogin(email, password)} variant="contained" color="primary" endIcon={<LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>Logga in</Button>
-        <Link href="/forgotpass" style={{color: 'white', textDecoration: 'underline'}}>Glömt lösenord?</Link>
+        <Button disabled={loading} type='submit' onClick={() => attemptLogin(email, password)} variant="contained" color="primary"
+         endIcon={loading ? <></> : <LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>
+        {loading ? <CircularProgress color='secondary'/> : "Logga in"}</Button>
+        <Button onClick={() => setForgotPass(true)} style={{textDecoration: 'underline' ,color: 'white'}}>Glömt lösenord?</Button>
       </Box>
       <Box
         component="footer"
