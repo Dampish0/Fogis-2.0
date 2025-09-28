@@ -1,5 +1,5 @@
 import React from 'react'
-import img from '../assets/img4.jpg'
+import img from '../assets/img4copy.jpg'
 import { Backdrop, Box, Button, CircularProgress, Divider, Icon, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
@@ -309,7 +309,7 @@ export const LoginPage = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(1px)',
+          filter: 'blur(0px)', // -------------------------------- BLUR ON IMAGE
           transform: 'scale(1.05)',
           zIndex: 0,
           

@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBar.jsx";
 import "./NewsPage.css";               
 import news1Png from "../../assets/background.png";
 import toast from 'react-hot-toast';
