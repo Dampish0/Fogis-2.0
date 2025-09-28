@@ -1,5 +1,13 @@
 # Fogis 2.0
 
+| Name | github username |
+|----------|----------|
+| John Molin    | mojo0224   |
+| Samuel Yousef    | SamuelAmsih   |
+| Filip Yousif   | Itachi-nika   |
+| Elias Dovkrans    | Dampish0  |
+
+
 > **Important:** A zipped file in this directory contains a full local build, including the .env file required by the backend.
 
 ## Quick start
