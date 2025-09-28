@@ -2,18 +2,12 @@
 
 .matchdetails {
     position: absolute;
-    background-color: rgba(30, 30, 30, 0.7);
-
-    box-shadow: 2px 2px 10px rgb(0, 0, 0);
-
+    background-color: aliceblue;
+    box-shadow: 2px 2px 10px rgba(82, 82, 82, 0.629);
     right: clamp(1px, 1%, 30px);
-    width: clamp(200px, 50%, 1000px);
+    width: clamp(200px, 46%, 1000px);
     margin-top: 20px;
-
     border-radius: 10px;
-    
-
-    
     padding: 20px;
     font-family: "Roboto", sans-serif;
 }
@@ -71,12 +65,51 @@
     display: flex;
     gap: 10%;
     background-color: #f5f5f5;
-    box-shadow: 1px 1px 10px rgb(0, 0, 0);
+    
     justify-content: space-evenly;
-    
+
     border-radius: 5px;
-    
+    box-shadow: 0.5px 0.5px 0.5px rgb(0, 0, 0);
     font-family: "Roboto", sans-serif;
+}
+
+.tab-button {
+    position: relative;
+    font-weight: 500;
+    background: transparent !important;
+    color: #000000 !important;
+    transition: color 0.3s ease;
+}
+
+.tab-button.active {
+    color: #1976d2 !important;
+}
+
+.tab-button.active::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    width: 60%;
+    height: 3px;
+    background-color: #1976d2;
+    border-radius: 2px;
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.tab-button::after {
+    content: "";
+    position: absolute;
+     bottom: -3px;
+     left: 50%;
+     transform: translateX(-50%) scaleX(0);
+     width: 60%;
+     height: 3px;
+    background-color: #010101;
+    border-radius: 2px;
+     transition: transform 0.3s ease, width 0.3s ease;
+
 }
 
 .match-content {
@@ -99,3 +132,88 @@
     text-align: center;
     font-family: "Roboto", sans-serif;
 }
+
+/* ---- Underflik / filter ---- */
+.subtabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.chip {
+  background: transparent;
+  border: 1px solid rgba(25, 118, 210, 0.25);
+  color: black !important;         /* allt svart som standard */
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.chip:hover { transform: translateY(-1px); }
+.chip-ico { margin-right: 6px; }
+
+.chip.active {
+  background: rgba(25,118,210,0.1);
+  color: #1976d2 !important;       /* aktiv blå */
+  border-color: #1976d2;
+}
+
+/* ---- Layout för händelser ---- */
+.facts { width: 100%; }
+
+.events-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;   /* vänster | divider | höger */
+  gap: 12px;
+}
+
+.divider-vertical {
+  width: 1px;
+  background: rgba(0,0,0,0.12);
+  margin: 0 4px;
+}
+
+.events-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.events-title {
+  font-weight: 700;
+  opacity: .9;
+  margin-bottom: 4px;
+}
+
+.events-empty {
+  opacity: .6;
+  padding: 6px 0;
+}
+
+/* Enskild händelse */
+.event-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* ikon | namn | minut */
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);   /* subtil bakgrund mot din mörka bakgrund */
+}
+
+.event-ico { width: 20px; text-align: center; }
+.event-player { color: black; }         /* namn alltid svart */
+.event-minute { opacity: 0.7; }
+
+/* valfri nyans per typ, om du vill: */
+.type-goal   { color: green}
+.type-yellow { color: yellow}
+.type-red    {color: red}
+.type-assist { color: blue}
+.type-sub    { color: orange}
