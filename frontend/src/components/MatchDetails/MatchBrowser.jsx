@@ -49,7 +49,7 @@ export const MatchBrowser = (props) => {
             <Tab style={{ color: selectedTab === 1 ? "white" : "gray"}} label="Pågående" />
             <Tab style={{ color: selectedTab === 2 ? "white" : "gray"}} label="Avslutade" />
         </Tabs>
-    <TableContainer style={{maxHeight: "clamp(300px, 65vh, 1200px)", backgroundColor: "#030712", borderRadius: "14px", border: "1px solid rgba(255, 255, 255, 0.1)"}} component={Paper}>
+    <TableContainer style={{maxHeight: "clamp(300px, 200vh, 1600px)", backgroundColor: "#030712", borderRadius: "14px", border: "1px solid rgba(255, 255, 255, 0.1)"}} component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small">
         <TableHead>
           <TableRow>
