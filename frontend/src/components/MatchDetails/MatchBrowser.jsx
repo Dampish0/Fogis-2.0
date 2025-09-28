@@ -36,7 +36,7 @@ export const MatchBrowser = (props) => {
 
   return (
     <div style={{...props.style,
-        width: "clamp(720px, 40vw, 1200px)",
+        width: "clamp(720px, 46vw, 1200px)",
         backgroundColor: "rgba(30, 30, 30, 0.7)",
         backdropFilter: "blur(12px)", 
         WebkitBackdropFilter: "blur(12px)",
