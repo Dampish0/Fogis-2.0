@@ -61,6 +61,17 @@ export const useAuthStore = create((set) => ({
         }
     },
 
+    sendPassResetRequest: async (email) => {
+        set({loading: true, error: null});
+        try {
+            await axios.post(`${apiURL}/api/auth/forgotpass`, {email: email}, {withCredentials: true});
+            set({loading: false});
+        } catch (error) {
+            set({error: error.response?.data?.message || "Misslyckades att skicka återställningslänk", loading: false});
+            throw error;
+        }
+    },
+
     resetPassword: async (token, newPassword) => {
         set({loading: true, error: null});
         try {

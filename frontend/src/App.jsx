@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import '@fontsource/roboto/500.css';
 import MatcherPage from './pages/MatcherPage';
 import LoginPage from './pages/LoginPage';
+import Backdrop from '@mui/material/Backdrop';
+import NewPasswordPage from './pages/newPasswordPage';
+
 
 import { Toaster } from 'react-hot-toast';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -52,7 +55,8 @@ export const App = () => {
   }, [checkAuth])
   
   if(isCheckingAuth){
-    return <CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/>
+    return <Backdrop sx={{zIndex:4}} open={true} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>
+
   }
 
   return (
@@ -64,8 +68,11 @@ export const App = () => {
           <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
           <Route path='/note/:id' element={<ProtectedRoute><DetailPage/></ProtectedRoute>}/>
           <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
+          <Route path='/reset-password/:token' element={<NewPasswordPage/>}/>
 
 
+
+          <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
           </Routes>
         <Toaster/>
       </div>

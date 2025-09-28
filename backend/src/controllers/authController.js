@@ -135,7 +135,7 @@ export async function forgotPass(req, res)
 
         await user.save();
 
-        await SendPasswordReset("elias.dovkrans@gmail.com", `${process.env.CLIENT_URL}/api/auth/resetpass/${resetToken}`);
+        await SendPasswordReset("elias.dovkrans@gmail.com", `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
         
         res.status(200).json({success: true, message:"Länk för återställning av lösenord skickad."});
     }

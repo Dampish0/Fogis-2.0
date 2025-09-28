@@ -1,6 +1,6 @@
 import React from 'react'
 import img from '../assets/img4.jpg'
-import { Box, Button, CircularProgress, Divider, Icon, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
+import { Backdrop, Box, Button, CircularProgress, Divider, Icon, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -9,13 +9,18 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useAuthStore } from '../store/authStore.js';
 import { NavLink, useNavigate } from 'react-router';
-
-
+import SendIcon from '@mui/icons-material/Send';
 
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const [invalidLogin, setInvalidLogin] = useState(false);
+
+  const [forgotPass, setForgotPass] = useState(false);
+  const [InvalidForgotPassEmail, setInvalidForgotPassEmail] = useState(false);
+  const [emailForgotPass, setEmailForgotPass] = useState("");
+  const [emailErrorForgotPass, setEmailErrorForgotPass] = useState(false);
+  const [forgotPassSuccess, setForgotPassSuccess] = useState(false);
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -110,7 +115,7 @@ export const LoginPage = () => {
     return re.test(email);
   }
 
-  const {login, loading, error} = useAuthStore();
+  const {login, loading, error, sendPassResetRequest} = useAuthStore();
   const attemptLogin = async (ema, pass) => {
     if(!ValidateEmail(ema)){
       setEmailError(true);
@@ -140,6 +145,19 @@ export const LoginPage = () => {
     }
   }
   
+  const sendPassReset = async (ema) => {
+    if(!ValidateEmail(ema)){
+      setEmailErrorForgotPass(true);
+      return;
+    }
+    try{
+      await sendPassResetRequest(ema);
+      setForgotPassSuccess(true);
+    }catch(error){
+      setInvalidForgotPassEmail(true);
+      console.log(error);
+    }
+  }
 
 
 
@@ -164,7 +182,69 @@ export const LoginPage = () => {
         {/* <Typography style={{letterSpacing:"4px", textAlign:"center"}} variant="h1" component="h1" sx={{ color: 'white', mt: 0 }}>
           FAIS
         </Typography>     */}
+        <Backdrop sx={{zIndex:4}} open={forgotPass} onClick={(e) => {
+          if(e.target === e.currentTarget){ setForgotPass(false);}
+        }}>
+            <Box 
+        
+                component="form"
+                sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}
+                autoComplete="off"
+              style={{
+                overflow: 'hidden',
+                width: 'clamp(400px, 23vw, 520px)',
+                minHeight: "30%",
+                backdropFilter: 'blur(14px) saturate(20%)',
+                WebkitBackdropFilter: 'blur(14px) saturate(20%)',
+                backgroundColor: 'rgba(0,0,0,0.25)', 
+                padding: '32px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '36px',
+              }}
+                >
+                <Typography variant="h3" component="h1" sx={{ color: 'white', mt: 0 }} style={{textAlign:"center"}}>
+                  Glömt lösenord?
+                </Typography>
+                            <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
 
+              <TextField onBlur={() => {
+                    setEmailErrorForgotPass(!ValidateEmail(emailForgotPass));
+                    
+                  }}
+                  onChange={(e) => {
+                    setEmailForgotPass(e.target.value)
+                    if(emailErrorForgotPass){ // if there has eben a error then validate agin
+                      if(ValidateEmail(emailForgotPass)){ // to make it less annoying and 
+                        setEmailErrorForgotPass(false); // not always have it be red
+                      }
+                    }
+                  }
+                }
+                onSubmit={(e) =>{
+                      if(!emailErrorForgotPass && emailForgotPass.length > 0 && !loading && forgotPass && ValidateEmail(emailForgotPass)){
+                        sendPassReset(emailForgotPass);
+                      }
+                      
+                  }}
+
+                  id="emailbox" type="email" label="Email" variant="outlined"
+                    sx={emailErrorForgotPass ? textFieldColor("red") : textFieldColor("white") }
+                />
+                {InvalidForgotPassEmail && <Typography sx={{ color: 'red', fontSize: '1.2rem', mt: -2 }}>Ogiltig e-postadress</Typography>}
+                {forgotPassSuccess && <Typography sx={{ color: 'green', fontSize: '1.2rem', mt: -2 }}>Återställningslänk skickad!</Typography>}
+                {forgotPassSuccess && <Typography sx={{ color: 'green', fontSize: '1.2rem', mt: -2 }}>Kontrollera din e-postinkorg.</Typography>}
+
+                <Divider sx={{ bgcolor: "rgba(255,255,255,0.25)", height: 2, width: "70%" }} />
+                <Button disabled={loading} type='submit' onClick={() => sendPassReset(emailForgotPass)} variant="contained" color="primary"
+                endIcon={loading ? <></> : <SendIcon />} sx={{fontSize: '1rem', width: '70%'}}>
+                {loading ? <CircularProgress color='secondary'/> : "Skicka Återställningslänk"}</Button>
+
+              </Box>
+        </Backdrop>
 
         {/* // om oss delen */}
         <div
@@ -277,7 +357,7 @@ export const LoginPage = () => {
             sx={emailError ? textFieldColor("red") : textFieldColor("white") }
         />
         <TextField onSubmit={(e) =>{
-              if(!emailError && email.length > 0 && password.length > 0){
+              if(!emailError && email.length > 0 && password.length > 0 && !loading && !forgotPass && ValidateEmail(email)){
                 attemptLogin(email, password);
               }
           }}
@@ -314,7 +394,7 @@ export const LoginPage = () => {
         <Button disabled={loading} type='submit' onClick={() => attemptLogin(email, password)} variant="contained" color="primary"
          endIcon={loading ? <></> : <LoginIcon />} sx={{fontSize: '1.2rem', width: '70%'}}>
         {loading ? <CircularProgress color='secondary'/> : "Logga in"}</Button>
-        <Link href="/forgotpass" style={{color: 'white', textDecoration: 'underline'}}>Glömt lösenord?</Link>
+        <Button onClick={() => setForgotPass(true)} style={{textDecoration: 'underline' ,color: 'white'}}>Glömt lösenord?</Button>
       </Box>
       <Box
         component="footer"
