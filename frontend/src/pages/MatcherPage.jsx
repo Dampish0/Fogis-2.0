@@ -7,7 +7,7 @@ import MatchCard from "../components/MatchDetails/MatchCard";
 import MatchDetails from "../components/MatchDetails/MatchDetails";
 import SearchBar from '../components/SearchBar.jsx'
 import MatchField from '../components/MatchDetails/MatchField.jsx'
-import MatchBrowser from '../components/matchdetails/MatchBrowser.jsx'
+import MatchBrowser from '../components/MatchDetails/MatchBrowser.jsx'
 
 
 
