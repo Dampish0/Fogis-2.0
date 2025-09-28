@@ -24,6 +24,9 @@ const theme = createTheme({
 });
 
 const ProtectedRoute = ({children}) => {
+  // temporay dev test code
+  return children;
+  // --------------------
   const {isAuthenticated, isCheckingAuth} = useAuthStore();
 
   if(isCheckingAuth){
@@ -38,6 +41,9 @@ const ProtectedRoute = ({children}) => {
 }
 
 const RedirectAuthenticated = ({children}) => {
+  // temporay dev test code
+  return children;
+  // --------------------
   const {isAuthenticated} = useAuthStore();
   if(isAuthenticated){
     return <Navigate to="/" replace/>
@@ -55,7 +61,7 @@ export const App = () => {
   }, [checkAuth])
   
   if(isCheckingAuth){
-    return <Backdrop sx={{zIndex:4}} open={true} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>
+    return <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>
 
   }
 

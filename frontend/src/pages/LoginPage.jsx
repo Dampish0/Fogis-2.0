@@ -10,6 +10,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useAuthStore } from '../store/authStore.js';
 import { NavLink, useNavigate } from 'react-router';
 import SendIcon from '@mui/icons-material/Send';
+import toast from 'react-hot-toast';
+import NavBar from '../components/Navbar/NavBar.jsx';
 
 
 export const LoginPage = () => {
@@ -137,10 +139,16 @@ export const LoginPage = () => {
         console.log(error);
         return;
       }
+      toast.success("Inloggad!", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
       navigate('/');
     }
     catch(error){
       setInvalidLogin(true);
+      toast.error("Ett fel inträffade.", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
       console.log(error);
     }
   }
@@ -152,8 +160,14 @@ export const LoginPage = () => {
     }
     try{
       await sendPassResetRequest(ema);
+      toast.success("Återställning av lösenord skickad!", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
       setForgotPassSuccess(true);
     }catch(error){
+      toast.error("Ett fel inträffade.", {
+        style: { fontFamily: 'Roboto, sans-serif' }
+      });
       setInvalidForgotPassEmail(true);
       console.log(error);
     }
@@ -179,6 +193,7 @@ export const LoginPage = () => {
         display: 'flex',
       }}
     >
+      <NavBar style={{ zIndex: 4 }}></NavBar>
         {/* <Typography style={{letterSpacing:"4px", textAlign:"center"}} variant="h1" component="h1" sx={{ color: 'white', mt: 0 }}>
           FAIS
         </Typography>     */}
