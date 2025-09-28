@@ -15,7 +15,7 @@ function createData(name, result, date, details, id) {
 const handleClickArrow = (id) => {
     
 }
-const randPlaces = ["huskvarna", "Skövde", "Jönköping", "norrköping", "Linköping", "Stockholm"];
+const randPlaces = ["Huskvarna", "Skövde", "Jönköping", "Norrköping", "Linköping", "Stockholm"];
 const rows = [];
 for (let i = 0; i < 10; i++) {
     const ts = Date.now() + (((parseInt((Math.random() * 10) +1) % 10) - 5) *  24 * 1000 * 60 * 60);

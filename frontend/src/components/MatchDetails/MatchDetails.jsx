@@ -3,6 +3,14 @@ import Button from '@mui/material/Button';
 import './MatchDetail.css';
 import HFF from '../../assets/hff.png';
 import TORD from '../../assets/Tord.png';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+
 
 
 function MatchDetails({}) {
@@ -21,17 +29,16 @@ function MatchDetails({}) {
     { minute: 83, type: "goal",   player: "Lionel Messi", team: "away" },
     { minute: 2,  type: "red",    player: "Cristiano Ronaldo", team: "home" },
     { minute: 68, type: "sub",    player: "In: J. Doe / Ut: A. Doe", team: "home" },
-  ];
-
+    ];
 
     const renderTabContent = () => {
         switch (activeTab) {
             case 'lineups':
-                return <div className="lineups-content">Lineups</div>;
+                return <div className="lineups-content">Lineups 1</div>;
             case 'matchFacts':
                 return <MatchFacts events={events} />;
             case 'table':
-                return <div className="tabell-content">Tabell 2</div>;
+                return <Tabell style={{ padding: '16px', maxHeight: '400px', overflowY: 'auto' }} />;
             default:
                 return null;
         }
@@ -69,9 +76,60 @@ function MatchDetails({}) {
                          className={activeTab === 'table'? 'tab-button active' : 'tab-button'}
                          >Tabell</Button>
                 </div>
-                <div className="tab-content">{renderTabContent()}</div>
+                <div className="tab-content" style={{ margin: "20px 0", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.6)" }}>{renderTabContent()}</div>
         </div>
     );
+}
+
+function createTeam(teamname) {
+  return { teamname };
+}
+
+const rows = [
+  createTeam('Husqvarna FF'),
+  createTeam('IK Tord'),
+  createTeam('Lag 3'),
+  createTeam('Lag 4'),
+  createTeam('Lag 5'),
+  createTeam('Lag 6'),
+  createTeam('Lag 7'),
+  createTeam('Lag 8'),
+  createTeam('Lag 9'),
+  createTeam('Lag 10'),
+];
+
+function Tabell() {
+  return (
+    <TableContainer component={Paper} >
+      <Table >
+        <TableHead style={{ backgroundColor: 'aliceblue' }}> 
+          <TableRow >
+            
+            <TableCell>Lag</TableCell>
+            <TableCell>Poäng</TableCell>
+            <TableCell>Matcher</TableCell>
+            <TableCell>Vunna</TableCell>
+            <TableCell>Oavgjorda</TableCell>
+            <TableCell>Förluster</TableCell>
+            <TableCell>Målskillnad</TableCell>
+            
+          </TableRow>
+        </TableHead>
+        <TableBody style={{}}>
+          {rows.map((row) => (
+            <TableRow 
+            key={row.teamname}
+            style={{ backgroundColor: 'aliceblue', '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell components="th" scope="row">
+                {row.teamname}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>  
+  );
 }
 
 function MatchFacts({ events }) {
@@ -102,32 +160,34 @@ function MatchFacts({ events }) {
   const away = filtered.filter((e) => e.team === "away");
 
   return (
-    <div className="facts">
+    <div className="facts" >
       {/* Underflik / filterrad */}
       <div className="subtabs">
         {["all", "goal", "yellow", "red", "assist", "sub"].map((key) => (
-          <button
+          <Button
+            
             key={key}
             className={`chip ${filter === key ? "active" : ""}`}
             onClick={() => setFilter(key)}
             aria-pressed={filter === key}
+            
           >
-            {key !== "all" ? <span className="chip-ico">{iconMap[key]}</span> : null}
+            {key !== "all" ? <span className="chip-ico" style={{ color: "white" }}>{iconMap[key]}</span> : null}
             {labelMap[key]}
-          </button>
+          </Button>
         ))}
       </div>
 
       {/* Två kolumner: Hemma | Borta */}
       <div className="events-grid">
         <div className="events-col">
-          <div className="events-title">Hemma</div>
+          <div className="events-title" style={{ color: "white" }}>Hemma</div>
           {home.length === 0 && <div className="events-empty">–</div>}
           {home.map((e, i) => (
-            <div className="event-item" key={`h-${i}`}>
-              <span className={`event-ico type-${e.type}`}>{iconMap[e.type]}</span>
-              <span className="event-player">{e.player}</span>
-              <span className="event-minute">{e.minute}'</span>
+            <div className="event-item" key={`h-${i}`} >
+              <span className={`event-ico type-${e.type}`} style={{ color: "white" }}>{iconMap[e.type]}</span>
+              <span className="event-player" style={{ color: "white" }}>{e.player}</span>
+              <span className="event-minute" style={{ color: "white" }}>{e.minute}'</span>
             </div>
           ))}
         </div>
@@ -135,13 +195,13 @@ function MatchFacts({ events }) {
         <div className="divider-vertical" aria-hidden="true" />
 
         <div className="events-col">
-          <div className="events-title">Borta</div>
+          <div className="events-title" style={{ color: "white" }}>Borta</div>
           {away.length === 0 && <div className="events-empty">–</div>}
           {away.map((e, i) => (
             <div className="event-item" key={`a-${i}`}>
-              <span className={`event-ico type-${e.type}`}>{iconMap[e.type]}</span>
-              <span className="event-player">{e.player}</span>
-              <span className="event-minute">{e.minute}'</span>
+              <span className={`event-ico type-${e.type}`} style={{ color: "white" }}>{iconMap[e.type]}</span>
+              <span className="event-player" style={{ color: "white" }}>{e.player}</span>
+              <span className="event-minute" style={{ color: "white" }}>{e.minute}'</span>
             </div>
           ))}
         </div>

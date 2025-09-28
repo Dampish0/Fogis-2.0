@@ -7,20 +7,20 @@ import MatchCard from "../components/MatchDetails/MatchCard";
 import MatchDetails from "../components/MatchDetails/MatchDetails";
 import SearchBar from '../components/SearchBar.jsx'
 import MatchField from '../components/MatchDetails/MatchField.jsx'
+import MatchBrowser from '../components/matchdetails/MatchBrowser.jsx'
 
 
 
 function MatcherPage() {
     return (
-        <div style={{ backgroundColor: "#fffffff5", minHeight: "100vh" }}>
+        <div style={{ background: 'linear-gradient(#314158, #1c1c1c)', minHeight: "150vh" }}>
             <NavBar />
             <div>
                 <MatchDetails />
             </div>
             <SearchBar />
-            <div style ={{ display: "flex", flexDirection: "row", gap: "20px"}}>
-                <MatchField title="Kommande matcher" />
-                <MatchField title="Tidigare matcher" />
+            <div>
+                <MatchBrowser style={{ marginTop: "20px", left: "2vw", position:"relative", maxWidth: "45vw" }}></MatchBrowser>
             </div>
         </div>
     );
