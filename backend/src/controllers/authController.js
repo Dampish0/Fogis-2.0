@@ -1,8 +1,8 @@
 import { User } from "../models/user.js";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import { generateVerificationCode } from "../utils/generateVerificationCode.js";
 import {generateTokenAndSetCookie} from "../utils/generateTokenAndSetCookie.js";
-import crypto from "crypto";
 import { SendLoginCredential, SendPasswordReset, SendPasswordResetSuccess } from "../utils/mailtrap/email.js";
 
 export async function createUser(req, res)
@@ -94,6 +94,7 @@ export async function login(req, res)
     
     }
     catch(error){
+        console.log("Error in login: ", error.message);
         res.status(400).json({success:false,   message:"error in login.", err: error.message});
 
     }
@@ -134,7 +135,7 @@ export async function forgotPass(req, res)
 
         await user.save();
 
-        await SendPasswordReset("elias.dovkrans@gmail.com", `${process.env.CLIENT_URL}/api/auth/resetpass/${resetToken}`);
+        await SendPasswordReset("elias.dovkrans@gmail.com", `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
         
         res.status(200).json({success: true, message:"Länk för återställning av lösenord skickad."});
     }

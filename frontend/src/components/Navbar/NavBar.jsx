@@ -17,9 +17,34 @@ import { Divider } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import eif from '../../assets/hff.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { NavLink, useNavigate } from 'react-router';
 
 const NavBar = (props) => {
+  const navigate = useNavigate();
 
+  const homeClick = () => {
+    navigate('/');
+  }
+
+  const matcherClick = () => {
+    navigate('/matcher');
+  }
+
+  const competitionsClick = () => {
+    navigate('/tavlingar');
+  }
+
+  const logoClick = () => {
+    navigate('/');
+  }
+
+  const notificationsClick = () => {
+    //dropdown meny
+  }
+
+  const profileClick = () => {
+    //dropdown meny
+  }
 
   return (<>
     <div style={{
@@ -41,18 +66,18 @@ const NavBar = (props) => {
       border: "1px solid rgba(255,255,255,0.08)",
     }}>
       <div style={{ display: "flex", alignItems: "center", height: "100%", flexDirection: "row" }}>
-        <Typography style={{marginLeft: "10px", letterSpacing: "4px"}} variant="h5" component="div" sx={{ color: "white", padding: "16px" }}>
+        <Typography onClick={() => logoClick()} style={{cursor: "pointer", marginLeft: "10px", letterSpacing: "4px"}} variant="h5" component="div" sx={{ color: "white", padding: "16px" }}>
           FAIS
         </Typography>
-        <Button sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
+        <Button onClick={() => homeClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
           Hem
         </Button>
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
-        <Button sx={{fontSize: "16px", marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
+        <Button onClick={() => matcherClick()} sx={{fontSize: "16px", marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
           Matcher
         </Button>
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
-        <Button sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
+        <Button onClick={() => competitionsClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
           Tävlingar
         </Button>
 
@@ -60,12 +85,12 @@ const NavBar = (props) => {
 
 
         {/* HÖGRA SIDAN */}
-        <IconButton size="large"
+        <IconButton onClick={() => notificationsClick()} size="large"
          sx={{alignSelf: "right", color: "white", marginLeft: "auto" }}>
           <NotificationsIcon />
         </IconButton>
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
-        <Button style={{color: "white", marginRight: "10px"}}>
+        <Button onClick={() => profileClick()} style={{color: "white", marginRight: "10px"}}>
           <KeyboardArrowDownIcon sx={{ color: "white" }}/>
 
           <Typography 
