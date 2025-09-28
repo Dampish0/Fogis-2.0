@@ -52,7 +52,7 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
   background: #fff;
   border: 1px solid #e5e7eb;
   min-height: 0;
-  height: 80%;
+  height: 50%;
 }
 .hero-img {
   position: absolute; inset: 0;
@@ -84,7 +84,7 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
   flex-direction: column;
   padding: 0px 0px 160px;
   padding-right: clamp(1.5rem, 6vw, 2rem);
-  margin-top: -32px;
+  margin-top: -4px;
 }
 
 

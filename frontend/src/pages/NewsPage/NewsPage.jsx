@@ -32,12 +32,6 @@ export default function HomePage() {
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
-    {
-      id: 5,
-      title: "Femte nyheten",
-      image: news1Png,
-      dateText: "Sön 21 sep 2025",
-    },
   ];
 
   if (!articles?.length) {
@@ -92,7 +86,7 @@ export default function HomePage() {
             </a>
           </section>
 
-          <section aria-label="Fler nyheter" className="right-col">
+          <section aria-label="Fler nyheter" className="right1-col">
             
             <ul className="right-list">
               {rightSide.map((a) => (

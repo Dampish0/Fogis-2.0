@@ -35,12 +35,6 @@ export default function HomePage() {
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
-    {
-      id: 5,
-      title: "Femte nyheten",
-      image: news1Png,
-      dateText: "Sön 21 sep 2025",
-    },
   ];
 
   if (!articles?.length) {
@@ -61,16 +55,25 @@ export default function HomePage() {
   return (
     <div style={{ minHeight: "100vh" }}>
       <NavBar />
+      <div style={{height: '8vh'}}></div>
 
-      <Typography style={{marginLeft:'40px', fontSize:'20px'}}>Nyheter</Typography>
+      <div style={{      background: "rgba(30, 30, 30, 0.7)",
+      backdropFilter: "blur(12px)", 
+      WebkitBackdropFilter: "blur(12px)",
+      zIndex:6, position:"absolute", left:"50%", top:"9vh", transform: "translate(-50%, -10%)", marginLeft:'40px',
+      borderRadius: "20px", padding: "8px 24px", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
+      }}>
+        <Typography variant="h4" style={{ color: "#fff" }}>Nyheter</Typography>
+      </div>
 
       <div className="news-root">
+        
         <div className="news-layout">
-          <section aria-label="Utvald nyhet" className="left-col">
-            <a href={`/news/${first.id}`} className="as-link">
-              <article className="hero-card">
+          <section  aria-label="Utvald nyhet" className="left-col">
+            <a  href={`/news/${first.id}`} className="as-link">
+              <article  className="hero-card">
                 {first.image && (
-                  <img
+                  <img 
                     src={first.image}
                     alt={first.title}
                     className="hero-img"

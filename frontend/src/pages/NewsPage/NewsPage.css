@@ -52,7 +52,7 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
   background: #fff;
   border: 1px solid #e5e7eb;
   min-height: 0;
-  height: 80%;
+  height: 66.3vh;
 }
 .hero-img {
   position: absolute; inset: 0;
@@ -78,7 +78,7 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
 }
 
 
-.right-col {
+.right1-col {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -217,7 +217,7 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
 
 @media (max-width: 900px) {
   .news-layout { grid-template-columns: 1fr !important; min-height: auto; }
-  .left-col, .left-col .as-link, .left-col .hero-card, .right-col { height: auto; }
+  .left-col, .left-col .as-link, .left-col .hero-card, .right1-col { height: auto; }
 
   .newscard__header { grid-template-columns: 120px 1fr; }
   .newscard__header--split { min-height: 140px; }
