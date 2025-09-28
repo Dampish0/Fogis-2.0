@@ -75,8 +75,8 @@ export const App = () => {
           <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
           <Route path='/note/:id' element={<ProtectedRoute><DetailPage/></ProtectedRoute>}/>
           <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
-          <Route path='/reset-password/:token' element={<NewPasswordPage/>}/>
-          <Route path='/news' element={<NewsPage/>}/>
+          <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
+          <Route path='/news' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
 
 
 
