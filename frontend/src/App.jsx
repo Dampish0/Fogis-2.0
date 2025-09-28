@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import CreatePage from './pages/CreatePage';
 import DetailPage from './pages/detailpage';
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ import MatcherPage from './pages/MatcherPage';
 import LoginPage from './pages/LoginPage';
 import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
+import NewsPage from './pages/NewsPage/NewsPage';
 
 
 import { Toaster } from 'react-hot-toast';
@@ -75,6 +76,7 @@ export const App = () => {
           <Route path='/note/:id' element={<ProtectedRoute><DetailPage/></ProtectedRoute>}/>
           <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
           <Route path='/reset-password/:token' element={<NewPasswordPage/>}/>
+          <Route path='/news' element={<NewsPage/>}/>
 
 
 
