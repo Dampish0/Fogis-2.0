@@ -38,6 +38,3 @@ connectDB().then(() =>
 });
 
 
-
-
-//mongodb+srv://eliasdovkrans_db_user:h4n2jwrg8eA4HjbV@cluster0.b1ayp6m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
