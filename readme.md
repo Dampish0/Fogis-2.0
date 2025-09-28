@@ -30,6 +30,7 @@
 2. The backend server will start and listen for requests. port 5001 is going to be used here.
 
 ### Run frontend and backend
+#### The backend expects the fronted to be on port 5173.
 1. In one terminal (RUN ONE BY ONE PLEASE):
    ```bash
    cd frontend
