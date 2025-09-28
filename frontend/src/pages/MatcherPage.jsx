@@ -1,6 +1,6 @@
 import Container from '@mui/material/Container'
 import React from 'react'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/Navbar/NavBar'
 import ListMUI from '../components/ListMUI'
 import { Divider } from '@mui/material'
 
