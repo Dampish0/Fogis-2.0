@@ -29,7 +29,7 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
 }
 
 
-.news-root {
+.news-root1 {
   --title-h: 80px;               
   padding-top: calc(var(--title-h) + 16px); 
 }

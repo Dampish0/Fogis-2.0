@@ -66,7 +66,7 @@ export default function HomePage() {
       </div>
 
 
-      <div className="news-root">
+      <div className="news-root1">
         <div className="news-layout">
           <section aria-label="Utvald nyhet" className="left-col">
             <a href={`/news/${first.id}`} className="as-link">

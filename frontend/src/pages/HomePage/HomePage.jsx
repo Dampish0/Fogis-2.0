@@ -9,6 +9,7 @@ import Link from '@mui/material/Link';
 import { Backdrop, Typography } from '@mui/material';
 import NewsDetail from '../../components/News/NewsDetail.jsx';
 
+
 export default function HomePage() {
 
   const [selectedNews, setSelectedNews] = React.useState(false);
@@ -93,11 +94,19 @@ export default function HomePage() {
 
 
 
-      <div style={{ background: "rgba(30, 30, 30, 0.7)",
-      backdropFilter: "blur(12px)", 
-      WebkitBackdropFilter: "blur(12px)",
-      zIndex:6, position:"absolute", left:"50%", top:"clamp(100px, 8vh, 200px)", transform: "translate(-50%, -10%)", marginLeft:'40px',
-      borderRadius: "20px", padding: "8px 24px", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
+      <div style={{ 
+        background: "rgba(30, 30, 30, 0.7)",
+        backdropFilter: "blur(12px)", 
+        WebkitBackdropFilter: "blur(12px)",
+        zIndex:6, 
+        position:"absolute", 
+        left:"50%", 
+        top:"clamp(100px, 8vh, 200px)", 
+        transform: "translate(-50%, -10%)", 
+        marginLeft:'40px',
+        borderRadius: "20px", 
+        padding: "8px 24px", 
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
       
       }}>
         <Typography variant="h4" style={{ color: "#fff" }}>SENASTE NYHETER</Typography>
