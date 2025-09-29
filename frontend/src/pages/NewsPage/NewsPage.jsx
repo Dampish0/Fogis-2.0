@@ -4,6 +4,7 @@ import "./NewsPage.css";
 import news1Png from "../../assets/background.png";
 import toast from 'react-hot-toast';
 import Link from '@mui/material/Link'
+import { Typography } from '@mui/material';
 
 export default function HomePage() {
   const articles = [
@@ -53,7 +54,17 @@ export default function HomePage() {
     <div style={{ minHeight: "100vh" }}>
       <NavBar />
 
-      <h1>Nyheter</h1>
+
+      <div style={{ background: "rgba(30, 30, 30, 0.7)",
+      backdropFilter: "blur(12px)", 
+      WebkitBackdropFilter: "blur(12px)",
+      zIndex:6, position:"absolute", left:"50%", top:"clamp(100px, 8vh, 200px)", transform: "translate(-50%, -10%)", marginLeft:'40px',
+      borderRadius: "20px", padding: "8px 24px", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
+      
+      }}>
+        <Typography variant="h4" style={{ color: "#fff" }}>NYHETER</Typography>
+      </div>
+
 
       <div className="news-root">
         <div className="news-layout">

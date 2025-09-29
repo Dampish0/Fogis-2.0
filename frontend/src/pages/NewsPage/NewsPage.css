@@ -29,7 +29,12 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
 }
 
 
-.news-root { --nav-h: 64px; }
+.news-root {
+  --title-h: 80px;               
+  padding-top: calc(var(--title-h) + 16px); 
+}
+
+
 .news-layout {
   max-width: 1800px;
   margin: 0 auto;
@@ -55,8 +60,10 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
   height: 66.3vh;
 }
 .hero-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
+  position: absolute; 
+  inset: 0;
+  width: 100%; 
+  height: 100%;
   object-fit: cover; object-position: center;
 }
 .hero-content {
