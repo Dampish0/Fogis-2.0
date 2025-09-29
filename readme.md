@@ -25,6 +25,7 @@
 1. Open a terminal and run (RUN ONE BY ONE PLEASE):
     ```bash
     cd backend
+    npm install
     npm run dev
     ```
 2. The backend server will start and listen for requests. port 5001 is going to be used here.
@@ -33,14 +34,15 @@
 #### The backend expects the fronted to be on port 5173.
 1. In one terminal (RUN ONE BY ONE PLEASE):
    ```bash
-   cd frontend
-   npm install
-   npm run dev
+    cd frontend
+    npm install
+    npm run dev
    ```
 2. In a second terminal:
    ```bash
-   cd backend
-   npm run dev
+    cd backend
+    npm install
+    npm run dev
    ```
    
 Note: the backend only has implemented authentication (users, login, reset password, etc.).
