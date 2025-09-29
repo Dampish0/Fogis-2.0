@@ -159,7 +159,7 @@ Duis dui purus, vulputate quis ultricies id, vestibulum sit amet metus. Nulla fa
       borderRadius: "20px", padding: "8px 24px", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
       
       }}>
-        <Typography variant="h4" style={{ color: "#fff" }}>Nyheter</Typography>
+        <Typography variant="h4" style={{ color: "#fff" }}>SENASTE NYHETER</Typography>
       </div>
 
       <div className="news-root">
@@ -202,7 +202,7 @@ Duis dui purus, vulputate quis ultricies id, vestibulum sit amet metus. Nulla fa
           <section aria-label="Fler nyheter" className="right-col">
             <div className="right-header">
               <a href="/news" className="right-more" aria-label="Visa alla nyheter">
-                Se fler nyheter
+                SE FLER NYHETER
               </a>
             </div>
 
