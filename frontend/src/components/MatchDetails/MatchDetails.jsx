@@ -17,19 +17,25 @@ function MatchDetails({}) {
 
     const [activeTab, setActiveTab] = React.useState('matchFacts');
 
+    /* mockdata, ta bort senare och hämta från databas*/
     const events = [
-    { minute: 4,  type: "goal",   player: "Lionel Messi", team: "away" },
-    { minute: 7,  type: "goal",   player: "Lionel Messi", team: "away" },
-    { minute: 9,  type: "yellow", player: "Varane",       team: "home" },
-    { minute: 24, type: "goal",   player: "Suarez",       team: "away" },
-    { minute: 25, type: "yellow", player: "Lionel Messi", team: "away" },
-    { minute: 45, type: "red",    player: "Sergio Ramos", team: "home" },
-    { minute: 52, type: "assist", player: "Neymar",       team: "away" },
-    { minute: 77, type: "goal",   player: "Rakitic",      team: "away" },
-    { minute: 83, type: "goal",   player: "Lionel Messi", team: "away" },
-    { minute: 2,  type: "red",    player: "Cristiano Ronaldo", team: "home" },
-    { minute: 68, type: "sub",    player: "In: J. Doe / Ut: A. Doe", team: "home" },
-    ];
+  { minute: 0, type: "half_start" },
+
+  { minute: 41, type: "goal",   player: "11 Yousif", team: "home" },
+  { minute: 41, type: "assist", player: "8 Yousef",  team: "home" },
+
+  { minute: 45, type: "half_end" },
+  { minute: 45, type: "added_time", extra: 2 },      // visar "+ 2"
+
+  { minute: 78, type: "red", player: "9 Dovkrans", team: "away" },
+
+  { minute: 90, type: "added_time", extra: 5 },      // visar "+ 5"
+  { minute: 93, type: "sub",   player: "2 Molin",   team: "home" },
+ 
+
+  { minute: 95, type: "full_time" },
+];
+
 
     const renderTabContent = () => {
         switch (activeTab) {
@@ -133,81 +139,93 @@ function Tabell() {
 }
 
 function MatchFacts({ events }) {
-  const [filter, setFilter] = React.useState("all"); // all | goal | yellow | red | assist | sub
+  // för strukturens skull sorterar vi stigande tid
+  const sorted = [...events].sort((a, b) => b.minute - a.minute);
 
-  const iconMap = {
-    goal: "⚽",
+  // Hjälp: vilka typer ska centreras i mitten?
+  const centerTypes = new Set([
+    "half_start",
+    "half_end",
+    "full_time",
+    "added_time"
+  ]);
+
+  const labelByType = {
+    goal: "⚽️",
     yellow: "🟨",
     red: "🟥",
-    assist: "🎯",
+    assist: "Assist 🎯",
     sub: "🔁",
+    half_start: " 🏁 ",
+    half_end: " Första halvlek ",
+    full_time: "Slut signal 📢",
+    added_time: "+", // visas som + x
   };
-
-  const labelMap = {
-    all: "Alla",
-    goal: "Mål",
-    yellow: "Gult",
-    red: "Rött",
-    assist: "Assist",
-    sub: "Byte",
-  };
-
-  const filtered = events
-    .filter((e) => (filter === "all" ? true : e.type === filter))
-    .sort((a, b) => a.minute - b.minute);
-
-  const home = filtered.filter((e) => e.team === "home");
-  const away = filtered.filter((e) => e.team === "away");
 
   return (
-    <div className="facts" >
-      {/* Underflik / filterrad */}
-      <div className="subtabs">
-        {["all", "goal", "yellow", "red", "assist", "sub"].map((key) => (
-          <Button
-            
-            key={key}
-            className={`chip ${filter === key ? "active" : ""}`}
-            onClick={() => setFilter(key)}
-            aria-pressed={filter === key}
-            
+    <div className="timeline">
+      <div className="tl-line" aria-hidden="true"></div>
+
+      {sorted.map((e, idx) => {
+        const isCenter = centerTypes.has(e.type);
+        const prev = sorted[idx - 1];
+        const assistUnderGoal =
+          e.type === "assist" &&
+          prev &&
+          prev.type === "goal" &&
+          prev.minute === e.minute &&
+          prev.team === e.team;
+
+    
+        if (isCenter) {
+          return (
+            <div className="tl-row" key={idx}>
+              <div className="tl-left tl-muted"></div>
+              <div className="tl-center">
+                <span className="tl-dot"></span>
+                <div className="tl-center-label">
+                  {e.type === "added_time" ? `+ ${e.extra || e.minute}` : (labelByType[e.type] || e.label)}
+                </div>
+              </div>
+              <div className="tl-right tl-muted"></div>
+            </div>
+          );
+        }
+
+    // Vanlig händelse: text vänster, minut höger
+    
+    const leftText = e.customText
+          ? e.customText
+          : `${e.player} – ${labelByType[e.type] || e.type}`;
+
+        return (
+          <div
+            className={`tl-row ${e.type === "assist" ? "assist" : ""} ${assistUnderGoal ? "assist-compact" : ""}`}
+            key={idx}
           >
-            {key !== "all" ? <span className="chip-ico" style={{ color: "white" }}>{iconMap[key]}</span> : null}
-            {labelMap[key]}
-          </Button>
-        ))}
-      </div>
+            <div className="tl-left">{leftText}</div>
 
-      {/* Två kolumner: Hemma | Borta */}
-      <div className="events-grid">
-        <div className="events-col">
-          <div className="events-title" style={{ color: "white" }}>Hemma</div>
-          {home.length === 0 && <div className="events-empty">–</div>}
-          {home.map((e, i) => (
-            <div className="event-item" key={`h-${i}`} >
-              <span className={`event-ico type-${e.type}`} style={{ color: "white" }}>{iconMap[e.type]}</span>
-              <span className="event-player" style={{ color: "white" }}>{e.player}</span>
-              <span className="event-minute" style={{ color: "white" }}>{e.minute}'</span>
+            <div className="tl-center">
+              <div className="tl-center">
+               {(e.type === "goal" || e.type === "yellow" || e.type === "red" || e.type === "sub") && (
+               <span className="tl-dot"></span>
+               )}
             </div>
-          ))}
-        </div>
 
-        <div className="divider-vertical" aria-hidden="true" />
-
-        <div className="events-col">
-          <div className="events-title" style={{ color: "white" }}>Borta</div>
-          {away.length === 0 && <div className="events-empty">–</div>}
-          {away.map((e, i) => (
-            <div className="event-item" key={`a-${i}`}>
-              <span className={`event-ico type-${e.type}`} style={{ color: "white" }}>{iconMap[e.type]}</span>
-              <span className="event-player" style={{ color: "white" }}>{e.player}</span>
-              <span className="event-minute" style={{ color: "white" }}>{e.minute}'</span>
             </div>
-          ))}
-        </div>
-      </div>
+
+            {/* Visa ingen tid för assist */}
+            {e.type === "assist" ? (
+              <div className="tl-right tl-right-hidden" />
+            ) : (
+              <div className="tl-right">{e.minute}’</div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
+
 
 export default MatchDetails;
