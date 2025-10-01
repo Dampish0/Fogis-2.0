@@ -66,7 +66,7 @@ export default function HomePage() {
       id: 4,
       title: "Publiktapp när MFF vände och vann mot Värnamo",
       image: news4Png,
-      dateText: "Sön 28 sep 2025",
+      dateText: "28 September",
       bodyText: `Malmö FF bröt sin svaga hemmatrend genom att vända och vinna med 3-2 mot IFK Värnamo, men på läktarna märktes läget i klubben. Endast 15 226 åskådare tog sig till Eleda Stadion - den sämsta allsvenska publiksiffran för MFF på nära tre år. Mittbacken Pontus Jansson reagerade när siffran lästes upp under matchen och konstaterade att trenden är negativ.
     
     Publiktappet följer på en period utan hemmaseger på nästan sex veckor och en svag Europa League-premiär i veckan, då 11 478 såg förlusten mot Ludogorets. Mot Värnamo fick publiken åtminstone se en vändning, men Jansson menar att det krävs mer än tre poäng för att vända stämningen: segrar är avgörande, men supportrarna behöver också något tydligt att tro på.
