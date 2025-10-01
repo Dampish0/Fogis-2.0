@@ -33,6 +33,30 @@ export default function HomePage() {
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
+    {
+      id: 5,
+      title: "Femte nyheten",
+      image: news1Png,
+      dateText: "Sön 21 sep 2025",
+    },
+    {
+      id: 6,
+      title: "Sjätte nyheten",
+      image: news1Png,
+      dateText: "Sön 21 sep 2025",
+    },
+    {
+      id: 7,
+      title: "Sjunde nyheten",
+      image: news1Png,
+      dateText: "Sön 21 sep 2025",
+    },
+    {
+      id: 8,
+      title: "Åttonde nyheten",
+      image: news1Png,
+      dateText: "Sön 21 sep 2025",
+    },
   ];
 
   if (!articles?.length) {
@@ -48,7 +72,8 @@ export default function HomePage() {
   }
 
   const [first, ...rest] = articles;
-  const rightSide = rest.slice(0, 4);
+  const rightSide = rest.slice(0, 3);
+  const secondRow = rest.slice(3, 7);
 
   return (
     <div style={{ minHeight: "100vh" }}>
@@ -134,6 +159,35 @@ export default function HomePage() {
                       </div>
                     </a>
                   </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+           <section aria-label="Nyheter under" className="below-grid">
+            <ul className="grid-list">
+              {secondRow.map((a) => (
+                <li key={a.id}>
+                  <a href={`/news/${a.id}`} className="as-link" aria-label={`Läs: ${a.title}`}>
+                    <article className="newscard newscard--vertical glass">
+                      {a.image && (
+                        <img
+                          src={a.image}
+                          alt={a.title}
+                          className="newscard__media newscard__media--top"
+                          loading="lazy"
+                        />
+                      )}
+                      <div className="newscard__text newscard__text--tight">
+                        {a.dateText && (
+                          <time className="newscard__date" aria-label={`Publicerad ${a.dateText}`}>
+                            {a.dateText}
+                          </time>
+                        )}
+                        <h3 className="newscard__title">{a.title}</h3>
+                      </div>
+                    </article>
+                  </a>
                 </li>
               ))}
             </ul>
