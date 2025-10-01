@@ -12,7 +12,7 @@ import { IconButton, InputAdornment, Paper, Tab, TableBody, Tabs, TextField } fr
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 
-const teamOne = ["11 Yousif", "8 Yousef", "9 Dovkrans", "4 tyson", "7 jesús"];
+    const teamOne = ["11 Yousif", "8 Yousef", "9 Dovkrans", "4 tyson", "7 jesús"];
     const teamTwo = ["10 Molin", "7 Svensson", "6 Karlsson", "5 rogan", "3 abdi"];
     const allEvents = ["goal", "yellow", "red", "sub", "assist", "added_time", "half_start", "half_end", "full_time"];
 

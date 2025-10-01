@@ -19,8 +19,42 @@ import eif from '../../assets/hff.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavLink, useNavigate } from 'react-router';
 
+
+const setMUI = (color) => (
+    {
+                    '& label.Mui-focused': {
+                    color: color,
+                    },
+                    '& .MuiInput-underline:after': {
+                    borderBottomColor: color,
+                    },
+                    '& .MuiInputLabel-root': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-input': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: '34px', 
+                    '& fieldset': {
+                        borderColor: color,
+                    },
+                    '&:hover fieldset': {
+                        borderColor: color,
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: color,
+                    },
+                    },
+             }
+  );
+
 const NavBar = (props) => {
   const navigate = useNavigate();
+
+  const [ShowDropDownProfile, setShowDropDownProfile] = React.useState(false);
+  const [ShowDropDownNotifications, setShowDropDownNotifications] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const homeClick = () => {
     navigate('/');
@@ -42,9 +76,14 @@ const NavBar = (props) => {
     //dropdown meny
   }
 
-  const profileClick = () => {
-    //dropdown meny
+  const profileClick = (e) => {
+    setShowDropDownProfile(e.currentTarget);
   }
+
+  const handleProfileClick = (e) => {
+    setShowDropDownProfile(null);
+  }
+    
 
   return (<>
     <div style={{
@@ -90,7 +129,7 @@ const NavBar = (props) => {
           <NotificationsIcon />
         </IconButton>
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
-        <Button onClick={() => profileClick()} style={{color: "white", marginRight: "10px"}}>
+        <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
           <KeyboardArrowDownIcon sx={{ color: "white" }}/>
 
           <Typography 
@@ -101,7 +140,51 @@ const NavBar = (props) => {
           <Avatar src={eif} sx={{ width: 32, height: 32, marginLeft: "8px" }}>
           
           </Avatar>
+          
         </Button>
+         <Menu
+            id="basic-menu"
+            anchorEl={ShowDropDownProfile}
+            open={Boolean(ShowDropDownProfile)}
+            onClick={handleProfileClick}
+            onClose={(e) => setShowDropDownProfile(null)}
+            style={{color: "green"}}
+            slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              overflow: 'visible',
+              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              mt: 1.5,
+              '& .MuiAvatar-root': {
+                bgcolor: "black",
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              '&::before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+            <MenuItem >Profile</MenuItem>
+            <MenuItem >Settings</MenuItem>
+            <MenuItem >Logout</MenuItem>
+      </Menu>
       </div>
     </div>
     <div style={{height: "92px"}}></div>
