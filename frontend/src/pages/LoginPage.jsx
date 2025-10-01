@@ -309,8 +309,8 @@ export const LoginPage = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(0px)', // -------------------------------- BLUR ON IMAGE
-          transform: 'scale(1.05)',
+          // filter: 'blur(0px)', // -------------------------------- BLUR ON IMAGE
+          // transform: 'scale(1.05)',
           zIndex: 0,
           
         }}

@@ -1,34 +1,47 @@
 import React from 'react'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TableHead from '@mui/material/TableHead';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
-import { IconButton, Paper, Tab, TableBody, Tabs } from '@mui/material';
+import { IconButton, InputAdornment, Paper, Tab, TableBody, Tabs, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
-function createData(name, result, date, details, id) {
-  return { name, result, date, details, id };
-}
-
-const handleClickArrow = (id) => {
-    
-}
-const randPlaces = ["Huskvarna", "Skövde", "Jönköping", "Norrköping", "Linköping", "Stockholm"];
-const rows = [];
-for (let i = 0; i < 10; i++) {
-    const ts = Date.now() + (((parseInt((Math.random() * 10) +1) % 10) - 5) *  24 * 1000 * 60 * 60);
-    rows.push(createData(`${randPlaces[i % randPlaces.length]} vs ${randPlaces[(i + 1) % randPlaces.length]}`, `${parseInt((Math.random() * 10) +1) % 10} - ${parseInt((Math.random() * 10) +1) % 10}`, (new Date(ts)).toISOString().slice(0, 10),
-    <IconButton onClick={() => handleClickArrow(i)}>
-        <ArrowForwardIcon style={{ color: "white" }}/>
-    </IconButton>,
-    i
-));
-}
-
+  const textFieldColor = (color) => (
+    {
+                    '& label.Mui-focused': {
+                    color: color,
+                    },
+                    '& .MuiInput-underline:after': {
+                    borderBottomColor: color,
+                    },
+                    '& .MuiInputLabel-root': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-input': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: '34px', 
+                    '& fieldset': {
+                        borderColor: color,
+                    },
+                    '&:hover fieldset': {
+                        borderColor: color,
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: color,
+                    },
+                    },
+             }
+  );
 
 export const MatchBrowser = (props) => {
+  const data = props.DisplayData || [];
+  const [DisplayData, setDisplayData] = React.useState(data);
+    const [searchTerm, setSearchTerm] = React.useState("");
     const [selectedTab, setSelectedTab] = React.useState(1);
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);
@@ -44,6 +57,40 @@ export const MatchBrowser = (props) => {
         padding: "20px",
         boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
     }}>
+
+      <TextField onChange={(e) => {
+        setSearchTerm(e.target.value);
+        setDisplayData(data.filter((match) => match.name.toLowerCase().includes(e.target.value.toLowerCase())
+         || match.id.toString() === e.target.value));
+      
+      }}
+      
+       label="Sök match...." fullWidth style={{ color: "white", borderRadius: "34px" }}  sx={{ mb: 2, ...textFieldColor("white")}}
+      slotProps={{
+                    input: {
+                      endAdornment: 
+                      <InputAdornment position="start" style={{ color: "white" }}>
+
+
+                        {searchTerm.length == 0 ? <SearchIcon /> : 
+                        <IconButton onClick={() => {
+                          setSearchTerm("");
+                          setDisplayData(data);
+                        }}>
+                        <CancelIcon style={{ color: "white", marginRight: "-6px" }}/>
+                        </IconButton>
+                      
+                      }
+
+
+                        </InputAdornment>
+                    }
+                  }}
+      >
+        
+      </TextField>
+
+
         <Tabs value={selectedTab} onChange={handleChange} centered>
             <Tab style={{ color: selectedTab === 0 ? "white" : "gray"}} label="Kommande" />
             <Tab style={{ color: selectedTab === 1 ? "white" : "gray"}} label="Pågående" />
@@ -61,7 +108,8 @@ export const MatchBrowser = (props) => {
           </TableRow>
         </TableHead>
         <TableBody style={{backgroundColor: "#1d293d"}}>
-          {rows.map((row) => (
+          {props.DisplayData.map((row) => (
+
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
