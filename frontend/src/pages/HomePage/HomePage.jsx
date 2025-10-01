@@ -4,9 +4,9 @@ import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';
 import '@fontsource/roboto/500.css';
 import news1Png from "../../assets/Mbappe.png";
-import news2Png from "../../assets/Mbappe.png";
-import news3Png from "../../assets/Mbappe.png";
-import news4Png from "../../assets/Mbappe.png";
+import news2Png from "../../assets/Olsen.png";
+import news3Png from "../../assets/Noah.png";
+import news4Png from "../../assets/Malmo.png";
 import "./HomePage.css"; 
 import Link from '@mui/material/Link';
 import { Backdrop, Typography } from '@mui/material';
@@ -33,7 +33,7 @@ export default function HomePage() {
       title: "Mbappé hattrick när Real Madrid körde över Kairat Almaty",
       summary: "Kylian Mbappé dominerade med tre mål när Real Madrid tog en övertygande seger i Champions League mot Kairat Almaty.",
       image: news1Png,
-      dateText: "Tis 30 sep 2025",
+      dateText: "30 September",
       bodyText: `Real Madrid tog ett tidigt grepp om matchen och satte tempot direkt från avspark. Bortalaget rullade boll med tålamod och växlade snabbt upp när ytorna öppnade sig. Kairat Almaty försökte ligga kompakt, men fick svårt att hantera Madrids rörelse och genombrottskraft.
     
     Kylian Mbappé var konstant spelbar i djupled och kombinerade fint med lagkamraterna. Efter ett par tidiga försök kom utdelningen, och därefter fortsatte Real Madrid att kontrollera händelserna. I andra halvlek ökade bortalaget trycket ytterligare, och Mbappé fullbordade sitt hattrick efter ett väl avvägt inspel i straffområdet och en säker avslutning från elvameterspunkten.
@@ -42,24 +42,36 @@ export default function HomePage() {
     },
     {
       id: 2,
-      title: "ronaldo blir kidnappad",
-      summary: "Bla bla bla",
-      image: news1Png,
-      dateText: "27 September",
+      title: "Robin Olsen slutar i landslaget",
+      image: news2Png,
+      dateText: "30 September",
+      bodyText: `Robin Olsen meddelar att han slutar i det svenska herrlandslaget. Beskedet kommer mitt under VM-kvalet och sätter punkt för en landslagskarriär som omfattar 79 A-landskamper sedan debuten 2015. Han har representerat Sverige i två EM-slutspel och ett VM.
+    
+    I samband med beslutet lyfter Olsen fram den senaste tidens förändrade förtroendesituation under förbundskapten Jon Dahl Tomasson. Han gör klart att han inte ser någon återkomst så länge nuvarande ledarstab är på plats, men betonar samtidigt stolthet över åren i Blågult.
+    
+    Svenska landslaget går nu vidare med en ny målvaktslösning inför kommande kvalmatcher.`
     },
     {
       id: 3,
-      title: "Nyhet 3",
-      summary: "Bla bla bla",
-      image: news1Png,
-      dateText: "27 September",
+      title: "Tolf varnades i slutminuterna - missar Hammarby",
+      image: news3Png,
+      dateText: "29 September",
+      bodyText: `IFK Göteborgs ytterback Noah Tolf varnades i den 94:e minuten borta mot Öster efter ett gruff med Patriot Sejdiu när bollen skulle sättas i spel. Situationen uppstod när Tolf ville få igång spelet snabbt vid ett inkast och spelarna rök ihop - domaren visade gult till båda.
+
+      Varningen innebär att Tolf är avstängd i nästa match mot Hammarby, något han själv beskriver som onödigt. Han tar på sig ansvaret och säger att han “får lära sig tänka lite extra när det är 90+”.
+
+      Utöver avstängningen väntar sannolikt böter till lagets interna böteskassa, som sköts av Jonas Bager och Pontus Dahlberg. “Det kommer nog svida lite om jag får böter”, konstaterar Tolf.`
     },
     {
       id: 4,
-      title: "Nyhet 4",
-      summary: "Bla bla bla",
-      image: news1Png,
-      dateText: "27 September",
+      title: "Publiktapp när MFF vände och vann mot Värnamo",
+      image: news4Png,
+      dateText: "Sön 28 sep 2025",
+      bodyText: `Malmö FF bröt sin svaga hemmatrend genom att vända och vinna med 3-2 mot IFK Värnamo, men på läktarna märktes läget i klubben. Endast 15 226 åskådare tog sig till Eleda Stadion - den sämsta allsvenska publiksiffran för MFF på nära tre år. Mittbacken Pontus Jansson reagerade när siffran lästes upp under matchen och konstaterade att trenden är negativ.
+    
+    Publiktappet följer på en period utan hemmaseger på nästan sex veckor och en svag Europa League-premiär i veckan, då 11 478 såg förlusten mot Ludogorets. Mot Värnamo fick publiken åtminstone se en vändning, men Jansson menar att det krävs mer än tre poäng för att vända stämningen: segrar är avgörande, men supportrarna behöver också något tydligt att tro på.
+    
+    Nu väntar en period utan hemmamatcher. Nästa gång MFF spelar på Eleda Stadion är den 23 oktober i Europa League mot Dinamo Zagreb. Fram till dess väntar tre raka bortamatcher i liga och Europa - med ett landslagsuppehåll insprängt däremellan.`
     },
   ];
 
