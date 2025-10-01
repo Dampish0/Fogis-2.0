@@ -120,7 +120,6 @@ export default function HomePage() {
                 showNewsDetail(0);
               }}  aria-label="Utvald nyhet" className="left-col">
             <a 
-            //href={`/news/${first.id}`}
              className="as-link">
               <article style={{cursor: "pointer"}}  className="hero-card">
                 {first.image && (
@@ -165,7 +164,7 @@ export default function HomePage() {
                         e.preventDefault();
                         showNewsDetail(a.id-1);
                       }}
-                      //href={`/news/${a.id}`}
+                      
                       style={{ cursor: "pointer"}}
                       className="as-link"
                       aria-label={`Läs: ${a.title}`}

@@ -1,59 +1,82 @@
 import React from "react";
 import NavBar from "../../components/Navbar/NavBar.jsx";
-import "./NewsPage.css";               
+import "./NewsPage.css";
 import news1Png from "../../assets/background.png";
-import toast from 'react-hot-toast';
-import Link from '@mui/material/Link'
-import { Typography } from '@mui/material';
+import { Backdrop, Typography } from "@mui/material";
+import NewsDetail from "../../components/News/NewsDetail.jsx";
 
-export default function HomePage() {
+export default function NewsPage() {
+
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  
+  React.useEffect(() => {
+    if (isOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev || "";
+      };
+    }
+  }, [isOpen]);
+
+ 
   const articles = [
     {
       id: 1,
       title: "Nyhet",
       summary: "Bla bla bla",
+      bodyText: "Full text för Nyhet 1…",
       image: news1Png,
       dateText: "27 September",
     },
     {
       id: 2,
       title: "Nyhet 2",
+      bodyText: "Full text för Nyhet 2…",
       image: news1Png,
       dateText: "Tis 23 sep 2025",
     },
     {
       id: 3,
       title: "Tredje nyheten",
+      bodyText: "Full text för Nyhet 3…",
       image: news1Png,
       dateText: "Mån 22 sep 2025",
     },
     {
       id: 4,
       title: "Fjärde nyheten",
+      bodyText: "Full text för Nyhet 4…",
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
     {
       id: 5,
       title: "Femte nyheten",
+      bodyText: "Full text för Nyhet 5…",
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
     {
       id: 6,
       title: "Sjätte nyheten",
+      bodyText: "Full text för Nyhet 6…",
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
     {
       id: 7,
       title: "Sjunde nyheten",
+      bodyText: "Full text för Nyhet 7…",
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
     {
       id: 8,
       title: "Åttonde nyheten",
+      bodyText: "Full text för Nyhet 8…",
       image: news1Png,
       dateText: "Sön 21 sep 2025",
     },
@@ -71,31 +94,72 @@ export default function HomePage() {
     );
   }
 
+
   const [first, ...rest] = articles;
-  const rightSide = rest.slice(0, 3);
-  const secondRow = rest.slice(3, 7);
+  const rightSide = rest.slice(0, 3); 
+  const secondRow = rest.slice(3, 7); 
+
+
+  const openById = (id) => {
+    const idx = articles.findIndex((a) => a.id === id);
+    setSelectedIndex(idx >= 0 ? idx : 0);
+    setIsOpen(true);
+  };
+  const closeModal = () => setIsOpen(false);
+
+  const selectedArticle = articles[selectedIndex] || articles[0];
 
   return (
     <div style={{ minHeight: "100vh" }}>
       <NavBar />
 
-
-      <div style={{ background: "rgba(30, 30, 30, 0.7)",
-      backdropFilter: "blur(12px)", 
-      WebkitBackdropFilter: "blur(12px)",
-      zIndex:6, position:"absolute", left:"50%", top:"clamp(100px, 8vh, 200px)", transform: "translate(-50%, -10%)", marginLeft:'40px',
-      borderRadius: "20px", padding: "8px 24px", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
-      
-      }}>
-        <Typography variant="h4" style={{ color: "#fff" }}>NYHETER</Typography>
+      <div
+        style={{
+          background: "rgba(30, 30, 30, 0.7)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          zIndex: 6,
+          position: "absolute",
+          left: "50%",
+          top: "clamp(100px, 8vh, 200px)",
+          transform: "translate(-50%, -10%)",
+          marginLeft: "40px",
+          borderRadius: "20px",
+          padding: "8px 24px",
+          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
+        }}
+      >
+        <Typography variant="h4" style={{ color: "#fff" }}>
+          NYHETER
+        </Typography>
       </div>
 
+      <Backdrop
+        style={{ zIndex: 10 }}
+        open={isOpen}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeModal();
+        }}
+      >
+        <NewsDetail
+          newsImage={selectedArticle.image}
+          title={selectedArticle.title}
+          newsText={selectedArticle.bodyText || selectedArticle.summary || ""}
+        />
+      </Backdrop>
 
       <div className="news-root1">
         <div className="news-layout">
           <section aria-label="Utvald nyhet" className="left-col">
-            <a href={`/news/${first.id}`} className="as-link">
-              <article className="hero-card">
+            <a
+              href="#"
+              className="as-link"
+              onClick={(e) => {
+                e.preventDefault();
+                openById(first.id);
+              }}
+            >
+              <article className="hero-card" style={{ cursor: "pointer" }}>
                 {first.image && (
                   <img
                     src={first.image}
@@ -112,26 +176,32 @@ export default function HomePage() {
                       </time>
                     </div>
                   )}
-
                   <h2 className="hero-title">{first.title}</h2>
                   {first.summary && (
-                    <p style={{ marginTop: 6, opacity: 0.9 }}>{first.summary}</p>
+                    <p style={{ marginTop: 6, opacity: 0.9 }}>
+                      {first.summary}
+                    </p>
                   )}
                 </div>
               </article>
             </a>
           </section>
 
+          {/* Höger: 3 kort */}
           <section aria-label="Fler nyheter" className="right1-col">
-            
             <ul className="right-list">
               {rightSide.map((a) => (
                 <li key={a.id}>
                   <div className="card-block">
                     <a
-                      href={`/news/${a.id}`}
+                      href="#"
                       className="as-link"
                       aria-label={`Läs: ${a.title}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openById(a.id);
+                      }}
+                      style={{ cursor: "pointer" }}
                     >
                       <div className="newscard glass">
                         <div className="newscard__header newscard__header--split">
@@ -143,7 +213,6 @@ export default function HomePage() {
                               loading="lazy"
                             />
                           )}
-
                           <div className="newscard__text">
                             {a.dateText && (
                               <time
@@ -164,11 +233,20 @@ export default function HomePage() {
             </ul>
           </section>
 
-           <section aria-label="Nyheter under" className="below-grid">
+          <section aria-label="Nyheter under" className="below-grid">
             <ul className="grid-list">
               {secondRow.map((a) => (
                 <li key={a.id}>
-                  <a href={`/news/${a.id}`} className="as-link" aria-label={`Läs: ${a.title}`}>
+                  <a
+                    href="#"
+                    className="as-link"
+                    aria-label={`Läs: ${a.title}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openById(a.id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
                     <article className="newscard newscard--vertical glass">
                       {a.image && (
                         <img
@@ -180,7 +258,10 @@ export default function HomePage() {
                       )}
                       <div className="newscard__text newscard__text--tight">
                         {a.dateText && (
-                          <time className="newscard__date" aria-label={`Publicerad ${a.dateText}`}>
+                          <time
+                            className="newscard__date"
+                            aria-label={`Publicerad ${a.dateText}`}
+                          >
                             {a.dateText}
                           </time>
                         )}
