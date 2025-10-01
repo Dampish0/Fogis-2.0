@@ -87,7 +87,7 @@
 }
 
 .tab-button.active {
-    color: #314158 !important;
+    color: #046bfb;
 }
 
 .tab-button.active::after {
@@ -98,7 +98,7 @@
     transform: translateX(-50%) scale(1);
     width: 60%;
     height: 3px;
-    background-color: #314158;
+    background-color: #0569f6;
     border-radius: 2px;
     transition: transform 0.3s ease, width 0.3s ease;
 }
@@ -111,7 +111,7 @@
     transform: translateX(-50%) scaleX(0);
     width: 60%;
     height: 3px;
-    background-color: #010101;
+    background-color: #0569f6;;
     border-radius: 2px;
     transition: transform 0.3s ease, width 0.3s ease;
 
@@ -216,9 +216,119 @@
 .event-player { color: black; }         /* namn alltid svart */
 .event-minute { opacity: 0.7; }
 
-/* valfri nyans per typ, om du vill: */
-.type-goal   { color: green}
-.type-yellow { color: yellow}
-.type-red    {color: red}
-.type-assist { color: blue}
-.type-sub    { color: orange}
+.tl-row.assist .tl-left {
+  opacity: 0.7;          /* 👈 lägre än mål */
+  font-size: 0.93rem;
+}
+
+/* assist direkt under mål i samma minut: dra ihop vertikalt */
+.tl-row.assist-compact {
+  margin-top: -6px;      /* 👈 gör att assist “hänger ihop” med målet ovanför */
+}
+
+/* ingen tid på assist – behåll grid utan att sprätta layout */
+.tl-right-hidden {
+  visibility: hidden;
+  width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* mindre dot för assist (valfritt men snyggt) */
+.tl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+}
+
+.tl-dot-assist {
+  width: 8px;
+  height: 8px;
+  opacity: 0.9;
+}
+
+/* === Timeline layout === */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+  color: #fff; /* läsbarhet mot mörk bakgrund */
+  font-family: "Roboto", sans-serif;
+}
+
+/* Vertikal linje i mitten av containern */
+.timeline .tl-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.25);
+}
+
+
+
+.tl-row {
+  display: grid;
+  grid-template-columns: 120px 20px 120px; /* fasta kolumner nära mitten */
+  justify-content: center; /*  centrera hela raden */
+  align-items: center;
+  gap: 4px;
+  min-height: 24px;
+}
+
+
+/* Vänster & höger innehåll */
+.tl-left, .tl-right {
+  font-size: 0.98rem;
+  line-height: 1.2;
+  padding: 0;
+  margin: 0;
+}
+
+/* Dämpad (för tomma fält runt center items) */
+.tl-muted { opacity: 0.6; }
+
+/* Center-kolumn: dot + ev. label i mitten */
+.tl-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+}
+
+/* Text som ska stå centrerat över mittlinjen (milestones, +2, +5, etc.) */
+.tl-center-label {
+  position: absolute;
+  top: -22px;             /* flyttar labeln upp lite över dotten */
+  white-space: nowrap;
+  font-weight: 600;
+  text-align: center;
+  transform: translateY(-2px);
+}
+
+/* Små justeringar för högerkolumn (minut) */
+.tl-right { text-align: left; opacity: 0.9; }
+
+/* Om du vill att assist ska ligga visuellt "under" ett mål, gör marginal lite mindre */
+.tl-row + .tl-row .tl-left { margin-top: -4px; }
+
+/* Färgnyanser per typ (valfritt) */
+.type-goal    { color: #81c784; }  /* grön ton */
+.type-assist  { color: #90caf9; }  /* blå ton */
+.type-yellow  { color: #fdd835; }  /* gul */
+.type-red     { color: #ef5350; }  /* röd */
+.type-sub     { color: #bdbdbd; }  /* grå */

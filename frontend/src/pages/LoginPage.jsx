@@ -1,5 +1,5 @@
 import React from 'react'
-import img from '../assets/img4copy.jpg'
+import img from '../assets/frontpagebg.jpg'
 import { Backdrop, Box, Button, CircularProgress, Divider, Icon, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useState } from "react";
 import LoginIcon from '@mui/icons-material/Login';
@@ -305,7 +305,7 @@ export const LoginPage = () => {
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: `linear-gradient(120deg, rgba(0,0,0,0.25), rgba(0,0,0,0), rgba(0,0,0,0.25)), url(${img})`,
+          backgroundImage: `url(${img})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
