@@ -8,7 +8,7 @@ const NewsDetail = (props) => {
       maxHeight: "90vh",     
       overflowY: "auto",      
       overflowX: "hidden",
-    
+      maxWidth: "clamp(600px, 70vw, 1000px)",
       padding: "24px",
       borderRadius: "14px",
       background: "rgba(30, 30, 30, 0.7)",
