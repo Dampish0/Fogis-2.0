@@ -3,7 +3,10 @@ import NavBar from '../../components/Navbar/NavBar.jsx';
 import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';
 import '@fontsource/roboto/500.css';
-import news1Png from "../../assets/background.png";
+import news1Png from "../../assets/Mbappe.png";
+import news2Png from "../../assets/Mbappe.png";
+import news3Png from "../../assets/Mbappe.png";
+import news4Png from "../../assets/Mbappe.png";
 import "./HomePage.css"; 
 import Link from '@mui/material/Link';
 import { Backdrop, Typography } from '@mui/material';
@@ -27,10 +30,15 @@ export default function HomePage() {
   const articles = [
     {
       id: 1,
-      title: "Nyhet 1",
-      summary: "Bla bla bla",
+      title: "Mbappé hattrick när Real Madrid körde över Kairat Almaty",
+      summary: "Kylian Mbappé dominerade med tre mål när Real Madrid tog en övertygande seger i Champions League mot Kairat Almaty.",
       image: news1Png,
-      dateText: "27 September",
+      dateText: "Tis 30 sep 2025",
+      bodyText: `Real Madrid tog ett tidigt grepp om matchen och satte tempot direkt från avspark. Bortalaget rullade boll med tålamod och växlade snabbt upp när ytorna öppnade sig. Kairat Almaty försökte ligga kompakt, men fick svårt att hantera Madrids rörelse och genombrottskraft.
+    
+    Kylian Mbappé var konstant spelbar i djupled och kombinerade fint med lagkamraterna. Efter ett par tidiga försök kom utdelningen, och därefter fortsatte Real Madrid att kontrollera händelserna. I andra halvlek ökade bortalaget trycket ytterligare, och Mbappé fullbordade sitt hattrick efter ett väl avvägt inspel i straffområdet och en säker avslutning från elvameterspunkten.
+    
+    Mot slutet av matchen behöll Real Madrid sin struktur och stängde ner hemmalagets försök till anfall. Helhetsintrycket var ett disciplinerat bortalag med tydlig matchplan och hög kvalitet i sista tredjedelen. Resultatet speglade händelseförloppet och gav Real Madrid en välförtjänt seger samt en tydlig signal inför kommande omgångar.`
     },
     {
       id: 2,

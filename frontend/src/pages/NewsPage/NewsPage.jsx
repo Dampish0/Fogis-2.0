@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "../../components/Navbar/NavBar.jsx";
 import "./NewsPage.css";
-import news1Png from "../../assets/background.png";
+import news1Png from "../../assets/Mbappe.png";
 import { Backdrop, Typography } from "@mui/material";
 import NewsDetail from "../../components/News/NewsDetail.jsx";
 

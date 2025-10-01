@@ -25,10 +25,11 @@ const NewsDetail = (props) => {
     display: "block",
     margin: "0 auto",
     borderRadius: "12px",
-    width: "100%",       
+    width: "auto",       
     height: "auto",
-    maxHeight: "40vh",   
-    objectFit: "cover"
+    maxWidth: "100%",
+    maxHeight: "60vh",   
+    objectFit: "contain"
   }}
 />
 
