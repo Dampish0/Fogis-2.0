@@ -74,7 +74,9 @@ a:not(.as-link):hover { text-decoration-color: currentColor; }
 }
 
 .hero-meta {
-  font-size: 0.875rem; opacity: 0.95; margin-bottom: 0.25rem;
+  font-size: 0.875rem; 
+  opacity: 0.95; 
+  margin-bottom: 0.25rem;
 }
 
 
