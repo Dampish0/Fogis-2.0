@@ -24,9 +24,15 @@ const userSchema = new mongoose.Schema({
         default: 'user',
     },
     // role id, if you are a referee, this is your referee id, if you are a trainer, this is your club id
-    roleId:{
+    refereeId: {
         type: mongoose.Schema.Types.ObjectId,
-        refPath: 'role',
+        ref: 'referee',
+        default: null,
+    },
+    clubId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'club',
+        default: null,
     },
 
 
