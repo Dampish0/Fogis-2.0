@@ -108,7 +108,7 @@ export const MatchBrowser = (props) => {
           </TableRow>
         </TableHead>
         <TableBody style={{backgroundColor: "#1d293d"}}>
-          {props.DisplayData.map((row) => (
+          {DisplayData.map((row) => (
 
             <TableRow
               key={row.id}

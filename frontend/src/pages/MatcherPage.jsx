@@ -87,7 +87,7 @@ export const MatcherPage = () => {
 
 
     return (
-        <div style={{ background: 'linear-gradient(#314158, #1c1c1c)', minHeight: "150vh" }}>
+        <div style={{overflow:"hidden", background: 'linear-gradient(#314158, #1c1c1c)', minHeight: "150vh" }}>
             <NavBar />
             <div>
                 <MatchDetails events={gameData[selectedMatchId].events}

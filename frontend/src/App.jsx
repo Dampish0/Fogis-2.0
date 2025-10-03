@@ -27,7 +27,7 @@ const theme = createTheme({
 
 const ProtectedRoute = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated, isCheckingAuth} = useAuthStore();
 
@@ -44,7 +44,7 @@ const ProtectedRoute = ({children}) => {
 
 const RedirectAuthenticated = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated} = useAuthStore();
   if(isAuthenticated){

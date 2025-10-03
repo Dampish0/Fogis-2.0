@@ -257,7 +257,7 @@ function MatchFacts({ events }) {
           prev.minute === e.minute &&
           prev.team === e.team;
 
-      const isAway = e.team == "away"; // Change "IK Tord" to your away team variable if dynamic
+      const isAway = e.team == "away"; 
 
         if (isCenter) {
           return (

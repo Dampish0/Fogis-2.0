@@ -18,7 +18,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import eif from '../../assets/hff.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavLink, useNavigate } from 'react-router';
-
+import useAuthStore from '../../store/authStore';
 
 const setMUI = (color) => (
     {
@@ -50,6 +50,8 @@ const setMUI = (color) => (
   );
 
 const NavBar = (props) => {
+    const {isAuthenticated} = useAuthStore();
+
   const navigate = useNavigate();
 
   const [ShowDropDownProfile, setShowDropDownProfile] = React.useState(false);
@@ -128,8 +130,9 @@ const NavBar = (props) => {
          sx={{alignSelf: "right", color: "white", marginLeft: "auto" }}>
           <NotificationsIcon />
         </IconButton>
+
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
-        <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
+        {isAuthenticated ?  <> <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
           <KeyboardArrowDownIcon sx={{ color: "white" }}/>
 
           <Typography 
@@ -178,13 +181,24 @@ const NavBar = (props) => {
             },
           },
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        // transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        // anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
             <MenuItem >Profile</MenuItem>
             <MenuItem >Settings</MenuItem>
             <MenuItem >Logout</MenuItem>
-      </Menu>
+      </Menu> </> : <> <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
+
+          <Typography 
+          variant="h6" component="div" sx={{ color: "white", padding: "16px 2px 16px 2px"  }}
+          >
+            Utloggad
+          </Typography>
+          <Avatar sx={{ width: 32, height: 32, marginLeft: "8px" }}>
+          
+          </Avatar>
+          
+        </Button></>}
       </div>
     </div>
     <div style={{height: "92px"}}></div>
