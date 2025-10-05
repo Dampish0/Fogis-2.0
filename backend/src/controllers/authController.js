@@ -18,7 +18,7 @@ export async function createUser(req, res)
             return res.status(403).json({message: "You are not authorized to create this user."});
         }
 
-        const userAlreadyExists = await User.findOne({email:email})
+        const userAlreadyExists = await User.findOne({email:email.toLowerCase()})
         if(userAlreadyExists){
             return res.status(400).json({message:"User already exists."});
         }
@@ -27,7 +27,7 @@ export async function createUser(req, res)
         //const verifcode = generateVerificationCode();
         const user = new User(
             {
-                email: email,
+                email: email.toLowerCase(),
                 password: hashpass,
                 name: name,
                 role: authRole,
@@ -52,7 +52,7 @@ export async function createUser(req, res)
             }
         })
 
-        await SendLoginCredential(name, email, password);
+        await SendLoginCredential(name, email.toLowerCase(), password);
     }
     catch(error){
         res.status(400).json({success:false,   message:"error in createUser.", err: error.message});
@@ -65,7 +65,7 @@ export async function login(req, res)
 {   
     try{
         const {email, password} = req.body;
-        const user = await User.findOne({email: email})
+        const user = await User.findOne({email: email.toLowerCase()});
         if(!user){
             return res.status(400).json({
                 success:false,
@@ -123,7 +123,7 @@ export async function forgotPass(req, res)
 {   
     try{
         const {email} = req.body;
-        const user = await User.findOne({email: email});
+        const user = await User.findOne({email: email.toLowerCase()});
 
         if(!user){
             return res.status(400).json({
@@ -171,7 +171,7 @@ export async function resetPass(req, res)
 
         await user.save();
 
-        await SendPasswordResetSuccess(user.email,user.name);
+        await SendPasswordResetSuccess(user.email.toLowerCase(),user.name);
 
         res.status(200).json({success: true, message:"Lösenordet har återställts."});
     }

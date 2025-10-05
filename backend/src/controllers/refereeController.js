@@ -1,6 +1,6 @@
 import { Match } from '../models/match.js';
 import { Team } from '../models/team.js';
-import { User } from '../models/player.js';
+import { User } from '../models/user.js';
 import { Referee } from '../models/referee.js';
 
 export async function createReferee(req, res)
@@ -19,8 +19,9 @@ export async function createReferee(req, res)
 //only admin and above has access
 export async function getReferees(req, res)
 {
+    const { page = 1, limit = 10, ...filters } = req.query;
     try{
-        const referees = await Referee.find().select("-history");
+        const referees = await Referee.find(filters).select("-history").skip((page - 1) * limit).limit(limit);
         res.status(200).json(referees);
     }catch(error){
         console.error("Error fetching referees:", error);
