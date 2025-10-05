@@ -8,10 +8,14 @@ import { SendLoginCredential, SendPasswordReset, SendPasswordResetSuccess } from
 export async function createUser(req, res)
 {   
     try{
-        const {email, password, name} = req.body;
+        const {email, password, name, authRole} = req.body;
 
-        if(!email || !password || !name){
+        if(!email || !password || !name || !authRole){
             throw new Error("All Fields are required.")
+        }
+
+        if(authRole == "superadmin" || authRole == "dev"){
+            return res.status(403).json({message: "You are not authorized to create this user."});
         }
 
         const userAlreadyExists = await User.findOne({email:email})
@@ -26,6 +30,7 @@ export async function createUser(req, res)
                 email: email,
                 password: hashpass,
                 name: name,
+                role: authRole,
                 //verificationToken: verifcode,
                 //verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
             }
@@ -83,7 +88,7 @@ export async function login(req, res)
         await user.save()
     
 
-            res.status(201).json({
+            res.status(200).json({
             success:true,
             message: "Inloggning lyckades.",
             user:{
@@ -193,5 +198,31 @@ export async function checkAuth(req, res)
     }catch(error){
         console.log("Error in checkAuth: ", error.message);
         res.status(400).json({success: false, message:"error in checkAuth.", err: error.message});
+    }
+}
+
+export async function verifyRole(req, res)
+{   
+    try{
+        const {role} = req.body;
+        const user = await User.findById(req.userId).select("-password"); 
+        if(!user){
+            return res.status(400).json({
+                success: false,
+                message: "Ogiltig användare.",
+            })  
+        }
+        if(user.role !== role){
+            return res.status(403).json({
+                success: false,
+                message: "Åtkomst nekad.",
+            })  
+        }
+        res.status(200).json({success: true, message:"Användaren har rätt roll.", user: user});
+
+    }
+    catch(error){
+        console.log("Error in verifyRole: ", error.message);
+        res.status(400).json({success: false, message:"error in verifyRole.", err: error.message});
     }
 }

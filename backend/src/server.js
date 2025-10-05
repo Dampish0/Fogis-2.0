@@ -1,10 +1,12 @@
 import express from "express";
 import authRoutes from "./routes/authRoutes.js";
+import matchRoutes from "./routes/matchRoutes.js";
 import {connectDB} from "./config/db.js";
 import dotenv from "dotenv";
 import ratelimiter from "./middleware/ratelimiter.js";
 import cookieparser from "cookie-parser";
 import cors from "cors";
+import Agenda from "./config/agendaConfig.js";
 
 dotenv.config();
 const port = process.env.PORT || 5001;
@@ -19,6 +21,7 @@ app.use(express.json()); // <-- This parses JSON bodies
 app.use(ratelimiter);
 app.use(cookieparser());
 
+Agenda.start();
 
 app.use((req, res, next) => {
     console.log(`req method is ${req.method}, Req url is ${req.url}`);
@@ -26,6 +29,7 @@ app.use((req, res, next) => {
 })
 
 //app.use("/api/notes", notesRoutes)
+app.use("/api/matches", matchRoutes)
 app.use("/api/auth", authRoutes)
 
 

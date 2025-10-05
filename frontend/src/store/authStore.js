@@ -83,6 +83,20 @@ export const useAuthStore = create((set) => ({
         }
     },
 
+    verifyRole: async (role) => {
+        set({loading: true, error: null});
+        try {
+            const response = await axios.post(`${apiURL}/api/auth/verify-role`, {role}, {withCredentials: true});
+            if(response.data.success === false){
+                set({error: response.data.message, loading: false});
+                return;
+            }
+            set({loading: false});
+        } catch (error) {
+            set({error: error.response?.data?.message || "Misslyckades att verifiera roll", loading: false});
+            throw error;
+        }
+    },
 
 }));
 

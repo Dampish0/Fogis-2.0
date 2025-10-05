@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const matchSchema = new mongoose.Schema({
+    status: {
+        type: String,
+        enum: ['scheduled', 'in_progress', 'pending_completion', 'completed', 'delayed', 'canceled', 'Other'],
+        default: 'scheduled',
+    },
     date: {
         type: Date,
         required: true,
@@ -106,11 +111,6 @@ const matchSchema = new mongoose.Schema({
         assistingPlayer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Player',
-        },
-        team: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Team',
-            required: true,
         },
         description: String,
     }],

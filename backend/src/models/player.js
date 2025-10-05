@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const playerSchema = new mongoose.Schema({
+    suspendedUntill:{
+        type: Number,
+        default: 0,
+    },
+
     name:{
         type: String,
         required: true,

@@ -20,8 +20,9 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type: String,
-        enum: ['referee', 'admin', 'superadmin', 'trainer'],
-        default: 'user',
+        enum: ['trainer', 'referee', 'admin', 'superadmin', 'dev'],
+        required: true,
+        default: 'trainer',
     },
     // role id, if you are a referee, this is your referee id, if you are a trainer, this is your club id
     refereeId: {
