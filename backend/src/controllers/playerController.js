@@ -1,6 +1,6 @@
-import { Player } from "../models/player";
-import { Club } from "../models/club";
-import { Team } from "../models/team";
+import { Player } from "../models/player.js";
+import { Club } from "../models/club.js";
+import { Team } from "../models/team.js";
 
 export async function createPlayer(req, res)
 {

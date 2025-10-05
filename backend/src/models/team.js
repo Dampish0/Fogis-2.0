@@ -11,6 +11,10 @@ const teamSchema = new mongoose.Schema({
         ref: 'Club',
         required: true,
     },
+    ageGroup:{
+        type: String,
+        required: true,
+    },
     logoUrl:{
         type: String,
     },
@@ -23,6 +27,10 @@ const teamSchema = new mongoose.Schema({
         ref: 'Arena',
         required: true,
     },
+    players:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Player',
+    }],
     lineup: [{
         player: {
             type: mongoose.Schema.Types.ObjectId,

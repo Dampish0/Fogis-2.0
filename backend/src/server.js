@@ -5,7 +5,9 @@ import authRoutes from "./routes/authRoutes.js";
 import matchRoutes from "./routes/matchRoutes.js";
 import refereeRoutes from "./routes/refereeRoutes.js";
 import clubRoutes from "./routes/clubRoutes.js";
-
+import teamRoutes from "./routes/teamRoutes.js";
+import playerRoutes from "./routes/playerRoutes.js";
+import arenaRoutes from "./routes/arenaRoutes.js";
 
 import {connectDB} from "./config/db.js";
 import dotenv from "dotenv";
@@ -40,7 +42,9 @@ app.use("/api/matches", matchRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/referees", refereeRoutes)
 app.use("/api/clubs", clubRoutes)
-
+app.use("/api/teams", teamRoutes)
+app.use("/api/players", playerRoutes)
+app.use("/api/arenas", arenaRoutes)
 
 
 
