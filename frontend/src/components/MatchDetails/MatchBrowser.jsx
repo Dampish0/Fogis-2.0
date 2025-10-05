@@ -97,13 +97,13 @@ export const MatchBrowser = (props) => {
             <Tab style={{ color: selectedTab === 2 ? "white" : "gray"}} label="Avslutade" />
         </Tabs>
     <TableContainer style={{maxHeight: "clamp(300px, 200vh, 1600px)", backgroundColor: "#030712", borderRadius: "14px", border: "1px solid rgba(255, 255, 255, 0.1)"}} component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small">
+      <Table sx={{ minWidth: 500 }} size="small">
         <TableHead>
           <TableRow>
             <TableCell style={{ color: "white" }}>LAG</TableCell>
             <TableCell style={{ color: "white" }} align="right">Resultat</TableCell>
             <TableCell style={{ color: "white" }} align="right">Datum</TableCell>
-            <TableCell style={{ color: "white" }} align="right">match id</TableCell>
+             {/* <TableCell style={{ color: "white" }} align="right">match id</TableCell> */}
             <TableCell style={{ color: "white" }} align="right">Se detaljer</TableCell>
           </TableRow>
         </TableHead>
@@ -120,7 +120,7 @@ export const MatchBrowser = (props) => {
                 <TableCell style={{ color: "white" }} align="right">{row.result}</TableCell>
 
               <TableCell style={{ color: "white" }} align="right">{row.date}</TableCell>
-              <TableCell style={{ color: "white" }} align="right">{row.id}</TableCell>
+              {/* <TableCell style={{ color: "white" }} align="right">{row.id}</TableCell> */}
               <TableCell style={{ color: "white" }} align="right">{row.details}</TableCell>
             </TableRow>
           ))}
