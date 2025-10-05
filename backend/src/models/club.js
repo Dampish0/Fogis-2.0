@@ -6,11 +6,11 @@ const clubSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    trainerID:{
+    trainers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-    },
+    }],
     location:{
         type: String,
         required: true,

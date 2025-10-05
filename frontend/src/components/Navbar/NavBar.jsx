@@ -95,7 +95,7 @@ const NavBar = (props) => {
       background: "rgba(30, 30, 30, 0.7)",
       backdropFilter: "blur(12px)", 
       WebkitBackdropFilter: "blur(12px)",
-      height: "60px",
+      height: "clamp(50px, 6vh, 92px)",
       maxWidth: "100vw",
       borderRadius: "20px",
       boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
