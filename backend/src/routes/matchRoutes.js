@@ -2,6 +2,7 @@ import express from "express";
 import { createMatch, deleteMatch, getMatchById, getMatches, updateMatch } from "../controllers/matchController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { getAuthRoleMiddleware } from "../middleware/verifyAuthorityLevel.js";
+import ratelimiter from "../middleware/ratelimiter.js";
 
 const router = express.Router();
 
@@ -14,6 +15,6 @@ router.post("/", verifyToken, getAuthRoleMiddleware(createMatchAllowedRoles), cr
 router.get("/", verifyToken, getAuthRoleMiddleware(getAllMatchesAllowedRoles), getMatches);
 router.get("/:id", verifyToken, getAuthRoleMiddleware(getAllMatchesAllowedRoles), getMatchById);
 router.put("/:id", verifyToken, getAuthRoleMiddleware(updateMatchAllowedRoles), updateMatch);
-router.delete("/:id", verifyToken, getAuthRoleMiddleware(deleteMatchAllowedRoles), deleteMatch);
+router.delete("/:id", verifyToken, getAuthRoleMiddleware(deleteMatchAllowedRoles), ratelimiter, deleteMatch);
 
 export default router;

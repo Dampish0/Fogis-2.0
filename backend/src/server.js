@@ -18,7 +18,7 @@ app.use(cors({
     credentials: true,
 }));
 app.use(express.json()); // <-- This parses JSON bodies
-app.use(ratelimiter);
+// app.use(ratelimiter);
 app.use(cookieparser());
 
 Agenda.start();
