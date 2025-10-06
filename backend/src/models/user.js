@@ -18,13 +18,62 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    isVerified:{
-        type: Boolean,
-        default: false,
+    role:{
+        type: String,
+        enum: ['trainer', 'referee', 'admin', 'superadmin', 'dev'],
+        required: true,
+        default: 'trainer',
     },
+    // role id, if you are a referee, this is your referee id, if you are a trainer, this is your club id
+    refereeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'referee',
+        default: null,
+    },
+    clubId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'club',
+        default: null,
+    },
+
+
     resetPasswordToken: String,
     resetPasswordExpiresAt: String,
 
+    actions: [{
+        type: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+        description: String,
+    }],
+
+    notifications: [{
+        message: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+        read: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+    }],
+
+    adminCases: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'AdminCase',
+    }],
 
 }, {timestamps: true})
 

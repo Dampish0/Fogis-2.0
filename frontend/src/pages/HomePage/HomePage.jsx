@@ -11,6 +11,7 @@ import "./HomePage.css";
 import Link from '@mui/material/Link';
 import { Backdrop, Typography } from '@mui/material';
 import NewsDetail from '../../components/News/NewsDetail.jsx';
+import PageFooter from '../../components/PageFooter.jsx';
 
 
 export default function HomePage() {
@@ -97,7 +98,7 @@ export default function HomePage() {
 
   return (
     <div style={{
-     minHeight: "100vh" }}>
+     minHeight: "100vh", overflowX: "hidden",  }}>
       <NavBar />
       <div style={{height: 'clamp(100px, 8vh, 200px)'}}></div>
 
@@ -123,13 +124,12 @@ export default function HomePage() {
         left:"50%", 
         top:"clamp(100px, 8vh, 200px)", 
         transform: "translate(-50%, -10%)", 
-        marginLeft:'40px',
         borderRadius: "20px", 
         padding: "8px 24px", 
         boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
       
       }}>
-        <Typography variant="h4" style={{ color: "#fff" }}>SENASTE NYHETER</Typography>
+        <Typography variant="h6" style={{ color: "#fff" }}>SENASTE NYHETER</Typography>   
       </div>
 
       <div className="news-root">
@@ -170,7 +170,7 @@ export default function HomePage() {
 
           <section aria-label="Fler nyheter" className="right-col">
             <div className="right-header">
-              <a href="/news" className="right-more" aria-label="Visa alla nyheter">
+              <a href="/nyheter" className="right-more" aria-label="Visa alla nyheter">
                 SE FLER NYHETER
               </a>
             </div>
@@ -221,6 +221,27 @@ export default function HomePage() {
           </section>
         </div>
       </div>
+
+      <div style={{ 
+        background: "rgba(30, 30, 30, 0.7)",
+        backdropFilter: "blur(12px)", 
+        WebkitBackdropFilter: "blur(12px)",
+        zIndex:6, 
+        position:"relative", 
+        left:"50%", 
+        transform: "translate(-50%, 0%)",
+        width: "fit-content",
+        borderRadius: "20px", 
+        padding: "8px 24px", 
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
+        marginBottom: "80px"
+      }}>
+        <Typography variant="h6" style={{ color: "#fff" }}>Top lagen i serien</Typography>   
+      </div>
+      <div style={{ color: "#000000", textAlign: "center", margin:"0 auto", marginBottom: "400px" }}>
+        <Typography variant="h3">Här är en tabell med top 5 lagen i serien.</Typography>
+      </div>
+      <PageFooter />
     </div>
   );
 }

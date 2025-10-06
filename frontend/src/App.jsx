@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
+import CompetitionPage from './pages/CompetitionPage';
 
 
 import { Toaster } from 'react-hot-toast';
@@ -73,10 +74,10 @@ export const App = () => {
           <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
           <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
           <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
-          <Route path='/note/:id' element={<ProtectedRoute><DetailPage/></ProtectedRoute>}/>
           <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
           <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
-          <Route path='/news' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
+          <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
+          <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
 
 
 

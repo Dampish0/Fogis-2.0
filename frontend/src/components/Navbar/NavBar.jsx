@@ -18,9 +18,45 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import eif from '../../assets/hff.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavLink, useNavigate } from 'react-router';
+import useAuthStore from '../../store/authStore';
+
+const setMUI = (color) => (
+    {
+                    '& label.Mui-focused': {
+                    color: color,
+                    },
+                    '& .MuiInput-underline:after': {
+                    borderBottomColor: color,
+                    },
+                    '& .MuiInputLabel-root': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-input': {
+                    color: color,
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: '34px', 
+                    '& fieldset': {
+                        borderColor: color,
+                    },
+                    '&:hover fieldset': {
+                        borderColor: color,
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: color,
+                    },
+                    },
+             }
+  );
 
 const NavBar = (props) => {
+    const {isAuthenticated} = useAuthStore();
+
   const navigate = useNavigate();
+
+  const [ShowDropDownProfile, setShowDropDownProfile] = React.useState(false);
+  const [ShowDropDownNotifications, setShowDropDownNotifications] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const homeClick = () => {
     navigate('/');
@@ -42,9 +78,14 @@ const NavBar = (props) => {
     //dropdown meny
   }
 
-  const profileClick = () => {
-    //dropdown meny
+  const profileClick = (e) => {
+    setShowDropDownProfile(e.currentTarget);
   }
+
+  const handleProfileClick = (e) => {
+    setShowDropDownProfile(null);
+  }
+    
 
   return (<>
     <div style={{
@@ -54,7 +95,7 @@ const NavBar = (props) => {
       background: "rgba(30, 30, 30, 0.7)",
       backdropFilter: "blur(12px)", 
       WebkitBackdropFilter: "blur(12px)",
-      height: "60px",
+      height: "clamp(50px, 6vh, 92px)",
       maxWidth: "100vw",
       borderRadius: "20px",
       boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
@@ -89,8 +130,9 @@ const NavBar = (props) => {
          sx={{alignSelf: "right", color: "white", marginLeft: "auto" }}>
           <NotificationsIcon />
         </IconButton>
+
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
-        <Button onClick={() => profileClick()} style={{color: "white", marginRight: "10px"}}>
+        {isAuthenticated ?  <> <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
           <KeyboardArrowDownIcon sx={{ color: "white" }}/>
 
           <Typography 
@@ -101,7 +143,62 @@ const NavBar = (props) => {
           <Avatar src={eif} sx={{ width: 32, height: 32, marginLeft: "8px" }}>
           
           </Avatar>
+          
         </Button>
+         <Menu
+            id="basic-menu"
+            anchorEl={ShowDropDownProfile}
+            open={Boolean(ShowDropDownProfile)}
+            onClick={handleProfileClick}
+            onClose={(e) => setShowDropDownProfile(null)}
+            style={{color: "green"}}
+            slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              overflow: 'visible',
+              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              mt: 1.5,
+              '& .MuiAvatar-root': {
+                bgcolor: "black",
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              '&::before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+              },
+            },
+          },
+        }}
+        // transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        // anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+            <MenuItem >Profile</MenuItem>
+            <MenuItem >Settings</MenuItem>
+            <MenuItem >Logout</MenuItem>
+      </Menu> </> : <> <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
+
+          <Typography 
+          variant="h6" component="div" sx={{ color: "white", padding: "16px 2px 16px 2px"  }}
+          >
+            Utloggad
+          </Typography>
+          <Avatar sx={{ width: 32, height: 32, marginLeft: "8px" }}>
+          
+          </Avatar>
+          
+        </Button></>}
       </div>
     </div>
     <div style={{height: "92px"}}></div>
