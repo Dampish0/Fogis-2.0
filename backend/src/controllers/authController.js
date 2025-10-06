@@ -65,7 +65,7 @@ export async function login(req, res)
 {   
     try{
         const {email, password} = req.body;
-        const user = await User.findOne({email: email.toLowerCase()});
+        const user = await User.findOne({email: email.toLowerCase()}).populate("clubId", "name teams players");
         if(!user){
             return res.status(400).json({
                 success:false,
@@ -183,7 +183,7 @@ export async function resetPass(req, res)
 export async function checkAuth(req, res)
 {   
     try{
-        const user = await User.findById(req.userId).select("-password");
+        const user = await User.findById(req.userId).select("-password").populate("clubId", "name teams players");
 
         if(!user){
             return res.status(400).json({
@@ -205,7 +205,7 @@ export async function verifyRole(req, res)
 {   
     try{
         const {role} = req.body;
-        const user = await User.findById(req.userId).select("-password"); 
+        const user = await User.findById(req.userId).select("-password").populate("clubId", "name teams players"); 
         if(!user){
             return res.status(400).json({
                 success: false,
