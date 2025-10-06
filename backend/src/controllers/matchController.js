@@ -8,8 +8,6 @@ import { updatePlayerHistory } from './playerController.js';
 
 Agenda.define('fetch lineups', async (job) => {
     const { matchId } = job.attrs.data;
-    // Your logic to fetch/lock lineups for this match
-
     // const HomeTeam = await Match.findById(matchId).populate('homeTeam');
     // const AwayTeam = await Match.findById(matchId).populate('awayTeam');
     const match = await Match.findById(matchId).populate('homeTeam').populate('awayTeam');
@@ -75,9 +73,9 @@ export async function createMatch(req, res)
 
         await newMatch.save();
 
-        // Schedule the lineup job 30 minutes before match
+        // Schedule the lineup job 60 minutes before match
         const matchTime = new Date(matchDate);
-        const lineupTime = new Date(matchTime.getTime() - 30 * 60000);
+        const lineupTime = new Date(matchTime.getTime() - 60 * 60000);
         await Agenda.schedule(lineupTime, 'fetch lineups', { matchId: newMatch._id });
 
         res.status(201).json({
