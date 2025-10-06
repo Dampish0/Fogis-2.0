@@ -54,7 +54,7 @@ export async function getPlayerById(req, res)
 {
     try{
         const { id } = req.params;
-        const player = await Player.findById(id).populate("clubId").populate("teamId");
+        const player = await Player.findById(id).populate("clubId").populate("teamId clubId");
         if(!player){
             return res.status(404).json({ message: "Player not found" });
         }

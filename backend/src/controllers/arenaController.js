@@ -23,7 +23,8 @@ export async function getArenas(req, res)
     try {
         const arenas = await Arena.find(filters)
             .skip((page - 1) * limit)
-            .limit(limit);
+            .limit(limit)
+            .populate('homeTeams', 'name');
 
         const total = await Arena.countDocuments(filters);
         res.status(200).json({ arenas, total });
@@ -37,7 +38,7 @@ export async function getArenaById(req, res)
 {
     try {
         const { id } = req.params;
-        const arena = await Arena.findById(id);
+        const arena = await Arena.findById(id).populate('homeTeams', 'name');
 
         if (!arena) {
             return res.status(404).json({ message: "Arena not found" });

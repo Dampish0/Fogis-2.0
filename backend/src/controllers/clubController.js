@@ -52,7 +52,7 @@ export async function getClubById(req, res)
     try{
         const { id } = req.params;
 
-        const club = await Club.findById(id).populate('trainers', '-password -resetToken -resetTokenExpiry').populate('teams');
+        const club = await Club.findById(id).populate('trainers', '-password -resetToken -resetTokenExpiry').populate('teams players');
         if (!club) {
             return res.status(404).json({ message: "Club not found" });
         }

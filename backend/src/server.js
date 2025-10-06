@@ -8,6 +8,7 @@ import clubRoutes from "./routes/clubRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import playerRoutes from "./routes/playerRoutes.js";
 import arenaRoutes from "./routes/arenaRoutes.js";
+import seriesRoutes from "./routes/seriesRoutes.js";
 
 import {connectDB} from "./config/db.js";
 import dotenv from "dotenv";
@@ -45,6 +46,7 @@ app.use("/api/clubs", clubRoutes)
 app.use("/api/teams", teamRoutes)
 app.use("/api/players", playerRoutes)
 app.use("/api/arenas", arenaRoutes)
+app.use("/api/series", seriesRoutes)
 
 
 

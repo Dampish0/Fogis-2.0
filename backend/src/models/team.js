@@ -44,11 +44,6 @@ const teamSchema = new mongoose.Schema({
         }
     }],
 
-    homeArena: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Arena',
-    }
-
 }, {timestamps: true})
 
 export const Team = mongoose.model('Team', teamSchema);

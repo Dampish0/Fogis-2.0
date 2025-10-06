@@ -3,20 +3,52 @@ import { Team } from '../models/team.js';
 import { Player } from '../models/player.js';
 import { Referee } from '../models/referee.js';
 import Agenda from '../config/agendaConfig.js';
+import { recalculateStandings } from './seriesController.js';
 
 Agenda.define('fetch lineups', async (job) => {
     const { matchId } = job.attrs.data;
     // Your logic to fetch/lock lineups for this match
 
-    const HomeTeam = await Match.findById(matchId).populate('homeTeam');
-    const AwayTeam = await Match.findById(matchId).populate('awayTeam');
+    // const HomeTeam = await Match.findById(matchId).populate('homeTeam');
+    // const AwayTeam = await Match.findById(matchId).populate('awayTeam');
+    const match = await Match.findById(matchId).populate('homeTeam').populate('awayTeam');
+    if (!match) {
+        console.error(`Match ${matchId} not found`);
+        return;
+    }
 
-    const HomeLineup = HomeTeam.lineup;
-    const AwayLineup = AwayTeam.lineup;
+    const HomeLineup = match.homeTeam.lineup || [];
+    const AwayLineup = match.awayTeam.lineup || [];
 
-    const match = await Match.findById(matchId);
-    match.homeTeamLineup = HomeLineup;
-    match.awayTeamLineup = AwayLineup;
+    if(HomeLineup.length === 0 || AwayLineup.length === 0 && (match.homeTeamLineup.length < 11 || match.awayTeamLineup.length < 11)){
+        // walkover
+        if(HomeLineup.length === 0 && AwayLineup.length === 0 && (match.homeTeamLineup.length < 11 || match.awayTeamLineup.length < 11)){
+            match.status = "draw";
+            match.winner = null; // draw
+        }
+        if(HomeLineup.length > 0 && AwayLineup.length === 0 && (match.awayTeamLineup.length !== 11)){
+            match.status = "walkover";
+            match.winner = match.homeTeam; // walkover
+        }
+        if(HomeLineup.length === 0 && AwayLineup.length > 0 && (match.homeTeamLineup.length !== 11)){
+            match.status = "walkover";
+            match.winner = match.awayTeam; // walkover
+        }
+
+        await match.save();
+
+        console.error(`One or both teams for match ${matchId} do not have a lineup.`);
+        return;
+    }
+
+    if(match.homeTeamLineup.length !== 11){//if lineup has less than 11 players, overwrite
+        match.homeTeamLineup = HomeLineup;
+    }
+    if(match.awayTeamLineup.length !== 11){//if lineup has less than 11 players, overwrite
+        match.awayTeamLineup = AwayLineup;
+    }
+
+
     await match.save();
 
 
@@ -79,7 +111,8 @@ export async function getMatches(req, res)
             ];
         }
 
-        const query = Match.find(filters).sort({ date: -1 }).skip((page - 1) * limit).limit(limit);
+        const query = Match.find(filters).sort({ date: -1 }).skip((page - 1) * limit).limit(limit)
+        .populate('homeTeam awayTeam winner arena');
         const matches = await query;
         const totalMatches = await Match.countDocuments(filters);
 
@@ -99,7 +132,10 @@ export async function getMatchById(req, res)
 {
     try{
         const matchId = req.params.id;
-        const match = await Match.findById(matchId);
+        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees');
+        //for more efficieny in the future we should do specific populates
+        // .populate('homeTeam awayTeam arena referees', 'location name imageUrl logoUrl players');
+
 
         const user = req.reqUser;
         const role = user.role;
@@ -184,21 +220,21 @@ export async function updateMatch(req, res)
                     break;
                 case 'yellow_card':
                     await addEvent(match, { time, type, team, player, assistingPlayer, description });
-                break;
+                    break;
                 case 'red_card':
                     await handleRedCard(match, player, backendData);
                     await addEvent(match, { time, type, team, player, assistingPlayer, description });
                     break;
-                break;
                 case 'end_match':
                     match.status = 'pending_completion';
                     await addEvent(match, { time, type, team, player, assistingPlayer, description });
                     await match.save();
-                break;
+                    break;
                 case 'finish_match_report':
                     match.status = 'completed';
                     await match.save();
-                break;
+                    await recalculateStandings(match.series);
+                    break;
                 case 'substitution':
                 case 'injury':
                 case 'VAR_review':

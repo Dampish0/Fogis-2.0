@@ -6,6 +6,11 @@ const matchSchema = new mongoose.Schema({
         enum: ['scheduled', 'in_progress', 'pending_completion', 'completed', 'delayed', 'canceled', 'Other'],
         default: 'scheduled',
     },
+    winner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Team',
+    },
+
     date: {
         type: Date,
         required: true,
@@ -114,6 +119,12 @@ const matchSchema = new mongoose.Schema({
         },
         description: String,
     }],
+
+    series: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Series',
+    },
+
 }, {timestamps: true})
 
 export const Match = mongoose.model('Match', matchSchema);

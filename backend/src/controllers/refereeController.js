@@ -38,9 +38,9 @@ export async function getRefereeById(req, res)
 
         const referee = await (role != "admin" && role != "superadmin" && role != "dev"
             ?
-            Referee.findById(id).select("-persNmr")
+            Referee.findById(id).select("-persNmr -history")
             :
-            Referee.findById(id)).populate('history');
+            Referee.findById(id)).select('-history');
 
         if (!referee) {
             return res.status(404).json({ message: "Referee not found" });
@@ -48,6 +48,31 @@ export async function getRefereeById(req, res)
         res.status(200).json(referee);
     }catch(error){
         console.error("Error fetching referee:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export async function getRefereeMatches(req, res)
+{
+    try{
+        const { id } = req.params;
+        const requester = req.reqUser;
+        const role = requester.role;
+        const { page = 1, limit = 10, ...filters } = req.query;
+        filters.referees = id;
+
+        if(role === "referee" && requester.refereeId.toString() !== id){
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        const matches = await Match.find(filters)
+            .sort({ date: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .populate('homeTeam awayTeam winner arena');    
+        res.status(200).json(matches);
+    }catch(error){
+        console.error("Error fetching referee matches:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
