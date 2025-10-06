@@ -4,6 +4,7 @@ import { Player } from '../models/player.js';
 import { Referee } from '../models/referee.js';
 import Agenda from '../config/agendaConfig.js';
 import { recalculateStandings } from './seriesController.js';
+import { updatePlayerHistory } from './playerController.js';
 
 Agenda.define('fetch lineups', async (job) => {
     const { matchId } = job.attrs.data;
@@ -201,13 +202,13 @@ export async function updateMatch(req, res)
         const status = match.status;
 
         // referee can only update certain fields
-        if(role === "referee"){
+        if(role === "referee" && user.refereeType === "main"){
             if(status === "completed"){
                 return res.status(403).json({success: false, message: "You are not authorized to update a completed match."});
             }
 
             //check fields in newEvent
-            const {time, type, team, player, assistingPlayer, description, backendData} = updates.newEvent;
+            const {time, type, team, player, assistingPlayer, description, eventTypeDataField} = updates.newEvent;
 
             switch(type){
                 case 'goal':
@@ -222,8 +223,8 @@ export async function updateMatch(req, res)
                     await addEvent(match, { time, type, team, player, assistingPlayer, description });
                     break;
                 case 'red_card':
-                    await handleRedCard(match, player, backendData);
-                    await addEvent(match, { time, type, team, player, assistingPlayer, description });
+                   // await handleRedCard(match, player, eventTypeDataField);
+                    await addEvent(match, { time, type, team, player, assistingPlayer, description, eventTypeDataField });
                     break;
                 case 'end_match':
                     match.status = 'pending_completion';
@@ -234,6 +235,10 @@ export async function updateMatch(req, res)
                     match.status = 'completed';
                     await match.save();
                     await recalculateStandings(match.series);
+                    await updatePlayerHistory(match._id, match.homeTeamLineup.map(p => p._id)
+                                                        .concat(match.awayTeamLineup.map(p => p._id)
+                                                        ));
+                    await handleSuspensions(match);
                     break;
                 case 'substitution':
                 case 'injury':

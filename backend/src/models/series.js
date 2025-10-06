@@ -52,6 +52,11 @@ const seriesSchema = new mongoose.Schema({
         ref: 'Team',
         required: true,
     }],
+
+    matches: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Match',
+    }],
 }, {timestamps: true})
 
 export const Series = mongoose.model('Series', seriesSchema);

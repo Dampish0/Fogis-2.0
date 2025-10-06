@@ -40,6 +40,40 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpiresAt: String,
 
+    actions: [{
+        type: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+        description: String,
+    }],
+
+    notifications: [{
+        message: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+        read: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+    }],
+
+    adminCases: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'AdminCase',
+    }],
 
 }, {timestamps: true})
 

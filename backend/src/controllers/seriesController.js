@@ -80,8 +80,16 @@ export async function recalculateStandings(seriesId) {
         });
 
         // Fetch all matches in the series
-        const matches = await Match.find({ series: seriesId, status: 'completed' });
-        matches.forEach(match => {
+        await series.populate({
+            path: 'matches',
+            match: { status: 'completed' },
+            select: 'homeTeam awayTeam homeScore awayScore winner status',
+        });
+
+        if (!Array.isArray(series.matches)) {
+            throw new Error("No matches found for this series");
+        }
+        series.matches.forEach(match => {
                 const homeTeamId = match.homeTeam.toString();
                 const awayTeamId = match.awayTeam.toString();
                 const homeScore = match.homeScore;
@@ -109,7 +117,7 @@ export async function recalculateStandings(seriesId) {
                     standingsMap.get(awayTeamId).draws += 1;
                 }
                 else{
-                    console.error("Error in recalculating standings:", error);
+                    console.error("Error in recalculating standings:", match);
                     return;
                 }
             });

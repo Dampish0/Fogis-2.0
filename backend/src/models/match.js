@@ -43,6 +43,7 @@ const matchSchema = new mongoose.Schema({
         },
         refereeType: {
             type: String, // or enum if you have specific types
+            enum: ['main', 'assistant', 'var', 'other'],
             required: true,
         }
     }],
@@ -108,6 +109,10 @@ const matchSchema = new mongoose.Schema({
                 'other',
             ],
             required: true,
+        },
+        eventTypeDataField: {
+            type: Number,
+            default: 0,
         },
         player: {
             type: mongoose.Schema.Types.ObjectId,

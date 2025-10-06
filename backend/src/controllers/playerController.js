@@ -1,6 +1,7 @@
 import { Player } from "../models/player.js";
 import { Club } from "../models/club.js";
 import { Team } from "../models/team.js";
+import { AdminCase } from "../models/adminCase.js";
 
 export async function createPlayer(req, res)
 {
@@ -121,4 +122,40 @@ export async function deletePlayer(req, res)
         console.error("Error deleting player:", error);
         res.status(500).json({ message: "Internal server error" });
     }
+}
+
+export async function updateStatisticPlayer(matchEvents) {
+    
+}
+
+export async function updatePlayerHistory(matchId, playerIds) {
+    try {
+        await Player.updateMany(
+            { _id: { $in: playerIds } },
+            { $addToSet: { history: matchId } }
+        );
+    } catch (error) {
+        console.error("Error updating player history:", error);
+    }
+}
+
+export async function handleSuspensions(match, events) {
+
+    //we need to file a admin case for each player as main referee
+
+    const filedBy = match.referees.find(r => r.refereeType === 'main')?.referee;
+
+    const redCardedPlayers = events.filter(e => e.type === 'red_card').map(e => e.player);
+
+    const adminCase = new AdminCase({
+        caseType: 'Avstängning',
+        description: `Rött kort i match ${match._homeTeam} vs ${match.awayTeam} den ${new Date(match.scheduledDate).toLocaleDateString()}`,
+        filedBy,
+        involvedPlayers: redCardedPlayers,
+        matchOfIncident: match._id,
+        status: 'open',
+    });
+
+
+    
 }
