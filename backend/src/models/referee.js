@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 //soccer
 const refereeSchema = new mongoose.Schema({
+    suspended:{
+        type: Boolean,
+        default: false,
+    },
+
     name:{
         type: String,
         required: true,
@@ -17,6 +22,7 @@ const refereeSchema = new mongoose.Schema({
     history: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Match',
+        default: []
     }],
 
 }, {timestamps: true})

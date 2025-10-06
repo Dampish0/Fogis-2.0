@@ -1,6 +1,16 @@
 import mongoose from 'mongoose';
 
 const matchSchema = new mongoose.Schema({
+    status: {
+        type: String,
+        enum: ['scheduled', 'in_progress', 'pending_completion', 'completed', 'delayed', 'canceled', 'Other'],
+        default: 'scheduled',
+    },
+    winner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Team',
+    },
+
     date: {
         type: Date,
         required: true,
@@ -33,6 +43,7 @@ const matchSchema = new mongoose.Schema({
         },
         refereeType: {
             type: String, // or enum if you have specific types
+            enum: ['main', 'assistant', 'var', 'other'],
             required: true,
         }
     }],
@@ -99,6 +110,10 @@ const matchSchema = new mongoose.Schema({
             ],
             required: true,
         },
+        eventTypeDataField: {
+            type: Number,
+            default: 0,
+        },
         player: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Player',
@@ -107,13 +122,14 @@ const matchSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Player',
         },
-        team: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Team',
-            required: true,
-        },
         description: String,
     }],
+
+    series: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Series',
+    },
+
 }, {timestamps: true})
 
 export const Match = mongoose.model('Match', matchSchema);

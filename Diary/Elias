@@ -1,0 +1,9 @@
+week 1: we discuseed what website to build and started drawing some basic sketches.
+
+week 2: we created a git repo and started to write down and plan more thoroughly. We also drew the website more and the routes and pages we planned to use. We also decided to watch a 4 hour tutorial.
+
+week 3: We start testing out react and mongodb to learn more and understand how we can build out the website with it.
+
+week 4: coding on the page started, i worked on authentication and the login page. We still were not sure how to split up workload on each page and component but we learned alot. I also managed to make a match-browser, a component to search for games, upcoming, past and ongoing.
+
+week 5: we presented the website and i started further working on the backend and creating a model/controller and route for everything. also improved loginPage to scale better on smaller laptops and smaller displays.

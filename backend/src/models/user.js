@@ -20,8 +20,9 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type: String,
-        enum: ['referee', 'admin', 'superadmin', 'trainer'],
-        default: 'user',
+        enum: ['trainer', 'referee', 'admin', 'superadmin', 'dev'],
+        required: true,
+        default: 'trainer',
     },
     // role id, if you are a referee, this is your referee id, if you are a trainer, this is your club id
     refereeId: {
@@ -39,6 +40,40 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpiresAt: String,
 
+    actions: [{
+        type: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+        description: String,
+    }],
+
+    notifications: [{
+        message: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+        read: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+    }],
+
+    adminCases: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'AdminCase',
+    }],
 
 }, {timestamps: true})
 

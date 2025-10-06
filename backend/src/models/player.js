@@ -1,6 +1,15 @@
 import mongoose from 'mongoose';
 
 const playerSchema = new mongoose.Schema({
+    suspendedUntill:{
+        type: Number,
+        default: 0,
+    },
+    toBeSuspended:{
+        type: Boolean,
+        default: false,
+    },
+
     name:{
         type: String,
         required: true,
@@ -29,10 +38,6 @@ const playerSchema = new mongoose.Schema({
     },
     
     statistics: {
-        gameHistory: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Match',
-        }],
         goals: [{
             goalDate: {
                 type: Date,
@@ -42,7 +47,13 @@ const playerSchema = new mongoose.Schema({
                 default: 0,
             },
         }],
+
     },
+
+    history: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Match',
+    }],
 
 }, {timestamps: true})
 

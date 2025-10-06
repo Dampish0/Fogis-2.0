@@ -41,3 +41,5 @@ const clubSchema = new mongoose.Schema({
     }],
 
 }, {timestamps: true})
+
+export const Club = mongoose.model('Club', clubSchema);
