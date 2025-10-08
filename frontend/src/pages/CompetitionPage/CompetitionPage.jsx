@@ -3,8 +3,7 @@ import NavBar from "../../components/Navbar/NavBar";
 import { Container, Typography, List, ListItemButton, ListItemText } from "@mui/material";
 import "./CompetitionPage.css";
 
-
-//Elias?
+// Elias
 const setMUI = (color) => ({
   "& label.Mui-focused": { color },
   "& .MuiInput-underline:after": { borderBottomColor: color },
@@ -18,19 +17,18 @@ const setMUI = (color) => ({
   },
 });
 
-
 const seriesData = [
-  { id: 1, name: "Division 1 Norra", season: "2025", teams: 14 },
-  { id: 2, name: "Division 2 Södra", season: "2025", teams: 12 },
-  { id: 3, name: "Juniorallsvenskan", season: "2025", teams: 16 },
-  { id: 4, name: "Damettan Västra", season: "2025", teams: 12 },
+  { id: 1, name: "Division 1 Norra" },
+  { id: 2, name: "Division 2 Södra" },
+  { id: 3, name: "Division 3 Västra" },
+  { id: 4, name: "Division 4 Östra" },
 ];
 
 const cupsData = [
-  { id: "c1", name: "Svenska Cupen", stage: "Kvalomgång", start: "2025-03-10" },
-  { id: "c2", name: "Göteborg Cup", stage: "Gruppspel", start: "2025-05-02" },
-  { id: "c3", name: "Skåne Invitational", stage: "Slutspel", start: "2025-06-15" },
-  { id: "c4", name: "Stockholm Open", stage: "Gruppspel", start: "2025-08-20" },
+  { id: "c1", name: "Svenska Cupen" },
+  { id: "c2", name: "Göteborg Cup" },
+  { id: "c3", name: "Eko Cup" },
+  { id: "c4", name: "Hyundai Cup" },
 ];
 
 const CompetitionPage = () => {
@@ -59,24 +57,19 @@ const CompetitionPage = () => {
               Serier
             </Typography>
 
-            <List className="list">
+            <List className="list" aria-label="Lista över serier">
               {seriesData.map((s, idx) => (
                 <li key={s.id} className="listRow">
                   <ListItemButton
                     className="listItem"
                     onClick={() => handleSerieClick(s)}
+                    disableRipple
+                    disableTouchRipple
+                    disableFocusRipple
                   >
                     <ListItemText
-                      primary={
-                        <span className="rowTitle">
-                          {s.name} <span className="tag">{s.season}</span>
-                        </span>
-                      }
-                      secondary={
-                        <span className="rowMeta">
-                          {s.teams} lag • dubbelmöten
-                        </span>
-                      }
+                      primary={<span className="rowTitle">{s.name}</span>}
+                      secondary={null}
                     />
                   </ListItemButton>
                   {idx !== seriesData.length - 1 && <div className="rowDivider" />}
@@ -92,24 +85,19 @@ const CompetitionPage = () => {
               Cuper
             </Typography>
 
-            <List className="list">
+            <List className="list" aria-label="Lista över cuper">
               {cupsData.map((c, idx) => (
                 <li key={c.id} className="listRow">
                   <ListItemButton
                     className="listItem"
                     onClick={() => handleCupClick(c)}
+                    disableRipple
+                    disableTouchRipple
+                    disableFocusRipple
                   >
                     <ListItemText
-                      primary={
-                        <span className="rowTitle">
-                          {c.name} <span className="tag tag--alt">{c.stage}</span>
-                        </span>
-                      }
-                      secondary={
-                        <span className="rowMeta">
-                          Start {c.start}
-                        </span>
-                      }
+                      primary={<span className="rowTitle">{c.name}</span>}
+                      secondary={null}
                     />
                   </ListItemButton>
                   {idx !== cupsData.length - 1 && <div className="rowDivider" />}
