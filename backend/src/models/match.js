@@ -9,6 +9,7 @@ const matchSchema = new mongoose.Schema({
     winner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team',
+        default: null,
     },
 
     date: {
@@ -17,13 +18,11 @@ const matchSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: true,
     },
     //arena object
     arena: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Arena',
-        required: true,
     },
     homeTeam: {
         type: mongoose.Schema.Types.ObjectId,

@@ -5,8 +5,8 @@ import { Match } from "../models/match.js";
 export async function createSeries(req, res)
 {
     try{
-        const { name, description, teams, startDate, endDate } = req.body;
-        const series = new Series({ name, description, teams, startDate, endDate });
+        const { name, description, teams, startDate, endDate, gender, ageGroup, level } = req.body;
+        const series = new Series({ name, description, teams, startDate, endDate, gender, ageGroup, level });
         await series.save();
         res.status(201).json(series);
     }catch(error){

@@ -12,7 +12,7 @@ import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
 import CompetitionPage from './pages/CompetitionPage';
-
+import TestingPage from './pages/testingPage';
 
 import { Toaster } from 'react-hot-toast';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -79,6 +79,7 @@ export const App = () => {
           <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
           <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
 
+          <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
 
 
           <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>

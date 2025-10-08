@@ -4,7 +4,6 @@ const clubSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
-        unique: true,
     },
     trainers: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -13,19 +12,15 @@ const clubSchema = new mongoose.Schema({
     }],
     location:{
         type: String,
-        required: true,
     },
     established:{
         type: Date,
-        required: true,
     },
     logoUrl:{
         type: String,
-        required: true,
     },
     phoneNumber:{
         type: String,
-        required: true,
     },
     email:{
         type: String,
@@ -33,8 +28,11 @@ const clubSchema = new mongoose.Schema({
     },
     adress:{
         type: String,
-        required: true,
     },
+    players: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Player',
+    }],
     teams: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team',

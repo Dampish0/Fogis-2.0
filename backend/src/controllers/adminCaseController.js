@@ -1,4 +1,4 @@
-import { AdminCase } from "../models/adminCase";
+import { AdminCase } from "../models/adminCase.js";
 
 export async function createAdminCase(req, res)
 {

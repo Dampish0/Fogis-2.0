@@ -6,8 +6,8 @@ import { Referee } from '../models/referee.js';
 export async function createReferee(req, res)
 {
     try{
-        const { name, email, persNmr, prefereedRefereeType } = req.body;
-        const referee = new Referee({ name, email, persNmr, prefereedRefereeType });
+        const { name, prefereedRefereeType } = req.body;
+        const referee = new Referee({ name, prefereedRefereeType });
         await referee.save();
         res.status(201).json(referee);
     }catch(error){

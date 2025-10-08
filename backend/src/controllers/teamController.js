@@ -7,24 +7,27 @@ import sharp from "sharp";
 export async function createTeam(req, res)
 {
     try{
-        const { name, ageGroup, clubId, players, logo, address, homeArena } = req.body;
+        const { name, clubId, ageGroup, players, logo, address, homeArena } = req.body;
 
-        // convert logo to url
-        const logosDir = path.join(process.cwd(), "public", "logos");
-        if (!fs.existsSync(logosDir)) {
-            fs.mkdirSync(logosDir, { recursive: true });
+        let logoUrl = "";
+        if(logo){
+            // convert logo to url
+            const logosDir = path.join(process.cwd(), "public", "logos");
+            if (!fs.existsSync(logosDir)) {
+                fs.mkdirSync(logosDir, { recursive: true });
+            }
+            const logoBuffer = Buffer.from(logo, "base64");
+            const logoFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.png`;
+            const logoPath = path.join(logosDir, logoFileName);
+
+            await sharp(logoBuffer)
+                .resize(512, 512, { fit: "inside", withoutEnlargement: true })
+                .toFile(logoPath);
+
+            logoUrl = `/logos/${logoFileName}`;
         }
-        const logoBuffer = Buffer.from(logo, "base64");
-        const logoFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.png`;
-        const logoPath = path.join(logosDir, logoFileName);
 
-        await sharp(logoBuffer)
-            .resize(512, 512, { fit: "inside", withoutEnlargement: true })
-            .toFile(logoPath);
-
-        const logoUrl = `/logos/${logoFileName}`;
-
-        const team = new Team({ name, ageGroup, club: clubId, players: players || [], logo: logoUrl, address, homeArena });
+        const team = new Team({ name, club: clubId, ageGroup, players: players || [], logo: logoUrl, address, homeArena });
         await team.save();
         res.status(201).json(team);
     }catch(error){
@@ -51,7 +54,7 @@ export async function getTeams(req, res)
         const teams = await Team.find(filters)
             .skip((page - 1) * limit)
             .limit(limit)
-            .populate("club players homeArena", "name logo");
+            .populate("clubId players homeArena", "name logo");
 
         const total = await Team.countDocuments(filters);
         res.status(200).json({ teams, total });
