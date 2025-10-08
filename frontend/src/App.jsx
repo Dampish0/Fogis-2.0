@@ -11,7 +11,7 @@ import LoginPage from './pages/LoginPage';
 import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
-import CompetitionPage from './pages/CompetitionPage';
+import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
 
 
 import { Toaster } from 'react-hot-toast';
