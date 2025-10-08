@@ -3,6 +3,8 @@ import NavBar from "../../components/Navbar/NavBar";
 import { Container, Typography, List, ListItemButton, ListItemText } from "@mui/material";
 import "./CompetitionPage.css";
 
+
+//Elias?
 const setMUI = (color) => ({
   "& label.Mui-focused": { color },
   "& .MuiInput-underline:after": { borderBottomColor: color },
@@ -16,7 +18,7 @@ const setMUI = (color) => ({
   },
 });
 
-// Dummy-data
+
 const seriesData = [
   { id: 1, name: "Division 1 Norra", season: "2025", teams: 14 },
   { id: 2, name: "Division 2 Södra", season: "2025", teams: 12 },
@@ -33,7 +35,6 @@ const cupsData = [
 
 const CompetitionPage = () => {
   const handleSerieClick = (item) => {
-    // Här kan du navigera till detaljsida senare, ex: navigate(`/series/${item.id}`)
     console.log("Serie klickad:", item);
   };
 
@@ -45,7 +46,6 @@ const CompetitionPage = () => {
     <div className="page">
       <NavBar />
 
-      {/* Statisk, centrerad rubrik */}
       <div className="titleBadge">
         <Typography variant="h4" className="titleText">
           Tävlingar
@@ -54,7 +54,6 @@ const CompetitionPage = () => {
 
       <Container maxWidth="lg" className="content">
         <div className="twoCol">
-          {/* Vänster – Serier */}
           <section className="left">
             <Typography variant="h5" className="sectionTitle">
               Serier
@@ -86,10 +85,8 @@ const CompetitionPage = () => {
             </List>
           </section>
 
-          {/* Mittspalt – luft */}
           <div className="mid" aria-hidden="true" />
 
-          {/* Höger – Cuper */}
           <section className="right">
             <Typography variant="h5" className="sectionTitle">
               Cuper
