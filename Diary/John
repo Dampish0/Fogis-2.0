@@ -1,0 +1,9 @@
+week 1: We started discussing our idea för the project and started sketching ideas on how the application should look like.
+
+week 2: Now we started creating our git repositiory and started to develop a plan that fits everyone for the project. We also started to design the look of the website further with all the pages and different functions that we need. To manage all this we decided to watch a 4 hour long youtube turtorial to cover all part regarding the database, react, etc.
+
+week 3: This week all group members have watched the turtorial video and started coding. We have created the database with mongodb and started to play around with react to be comfortable with the enviorment. The group also decieded to split responsibilites so that we could divide the work and work on our own.
+
+week 4: I started working on the NewsPage and HomePage part of the application, where i sat the deadline to be done on Wednesday because my group had project demonstration on the day after. I managed this deadline and got deeper understanding for css and react. Now the next part for me is the competion page.
+
+week 5: we presented the website and i started further working on the backend and creating a model/controller and route for everything. also improved loginPage to scale better on smaller laptops and smaller displays.
