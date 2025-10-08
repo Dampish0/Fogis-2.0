@@ -12,6 +12,9 @@ import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
 import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
+import CompetitionDetails from './pages/CompetitionPage/CompetitionDetails';
+
+
 
 
 import { Toaster } from 'react-hot-toast';
@@ -78,6 +81,9 @@ export const App = () => {
           <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
           <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
           <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+          <Route path='/tavlingid' element={<ProtectedRoute><CompetitionDetails/></ProtectedRoute>}/>
+
+
 
 
 

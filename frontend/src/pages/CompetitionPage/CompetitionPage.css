@@ -27,6 +27,9 @@
     padding-bottom: 40px;
     isolation: isolate; 
   }
+  .content--details {
+    padding-top: 40px;   
+  }
   
 
   .twoCol {
