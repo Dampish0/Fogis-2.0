@@ -12,6 +12,9 @@ import useRefereeStore from '../store/refereeStore.js'
 import seriesStore from '../store/seriesStore.js'
 import useAdminCaseStore from '../store/adminCaseStore.js'
 import { useEffect } from 'react'
+import { Select, MenuItem, TextField, InputLabel, FormControl, Box } from '@mui/material';
+
+
 
 const TestingPage = () => {
     const {fetchClubs, createClub, fetchClubById, updateClub, clubs} = useClubStore();
@@ -29,6 +32,38 @@ const TestingPage = () => {
     const [success, updateSuccess] = useState(null);
     const [fetchedData, setFetchedData] = useState(null);
     const [lastFetched, setLastFetched] = useState(null);
+
+
+const entityMap = {
+  club: { items: clubs, update: updateClub },
+  team: { items: teams, update: updateTeam },
+  player: { items: players, update: updatePlayer },
+  match: { items: matches, update: updateMatch },
+  arena: { items: arenas, update: updateArena },
+  referee: { items: referees, update: updateReferee },
+  adminCase: { items: adminCases, update: updateAdminCase },
+  series: { items: series, update: updateSeries },
+};
+
+const [selectedEntity, setSelectedEntity] = useState("club");
+const [selectedId, setSelectedId] = useState("");
+const [updateFields, setUpdateFields] = useState({});
+const [updateSuccessState, setUpdateSuccessState] = useState(null);
+
+const handleFieldChange = (field, value) => {
+  setUpdateFields(prev => ({ ...prev, [field]: value }));
+};
+
+const handleUpdate = async () => {
+  try {
+    await entityMap[selectedEntity].update(selectedId, updateFields);
+    setUpdateSuccessState(true);
+  } catch (error) {
+    setError(error);
+    setUpdateSuccessState(false);
+  }
+};
+
 
     useEffect(() => {
       switch (lastFetched) {
@@ -59,7 +94,6 @@ const TestingPage = () => {
       default:
         setFetchedData(null);
     }
-
     }, [clubs, teams, players, matches, arenas, referees, adminCases, series, lastFetched]);
 
     const handleCreateClub = async () => {
@@ -236,6 +270,76 @@ const TestingPage = () => {
           <pre>{JSON.stringify(fetchedData, null, 2)}</pre>
         )}
       </div>
+
+
+    {/* Update entity */}
+<Box
+  sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 2,
+    bgcolor: '#232325',
+    p: 2,
+    borderRadius: 2,
+    minWidth: 300,
+    maxHeight: '100vh',
+    width: '350px',
+  }}
+>
+  <h3 style={{ color: '#fff' }}>Update Entity</h3>
+  <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
+    <InputLabel sx={{ color: '#fff' }}>Entity</InputLabel>
+    <Select
+      value={selectedEntity}
+      onChange={e => { setSelectedEntity(e.target.value); setSelectedId(""); setUpdateFields({}); }}
+      sx={{ color: '#fff', bgcolor: '#333' }}
+    >
+      {Object.keys(entityMap).map(key => (
+        <MenuItem key={key} value={key}>{key}</MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+  <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
+    <InputLabel sx={{ color: '#fff' }}>Item</InputLabel>
+    <Select
+      value={selectedId}
+      onChange={e => { setSelectedId(e.target.value); setUpdateFields({}); }}
+      sx={{ color: '#fff', bgcolor: '#333' }}
+    >
+      <MenuItem value="">Select item</MenuItem>
+      {entityMap[selectedEntity].items?.map(item => (
+        <MenuItem key={item._id} value={item._id}>{item.name || item._id}</MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+  {/* Scrollable fields container */}
+  <Box sx={{ width: '100%', maxHeight: '300px', overflowY: 'auto', mb: 2 }}>
+    {selectedId && entityMap[selectedEntity].items?.find(i => i._id === selectedId) &&
+      Object.entries(entityMap[selectedEntity].items.find(i => i._id === selectedId)).map(([field, value]) => (
+        field !== "_id" && (
+          <TextField
+            key={field}
+            label={field}
+            variant="filled"
+            fullWidth
+            sx={{ mb: 1, input: { color: '#fff' }, label: { color: '#fff' } }}
+            value={updateFields[field] ?? value ?? ""}
+            onChange={e => handleFieldChange(field, e.target.value)}
+            InputProps={{ style: { background: '#333', color: '#fff' } }}
+          />
+        )
+      ))
+    }
+  </Box>
+  <Button onClick={handleUpdate} variant="contained" color="warning" disabled={!selectedId}>
+    Update
+  </Button>
+  {updateSuccessState === true && <div style={{ color: `#${Math.floor(Math.random()*16777215).toString(16)}` }}>Update successful!</div>}
+</Box>
+
+
+
 
     </div>
   )
