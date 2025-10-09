@@ -7,3 +7,6 @@ week 3: We start testing out react and mongodb to learn more and understand how 
 week 4: coding on the page started, i worked on authentication and the login page. We still were not sure how to split up workload on each page and component but we learned alot. I also managed to make a match-browser, a component to search for games, upcoming, past and ongoing.
 
 week 5: we presented the website and i started further working on the backend and creating a model/controller and route for everything. also improved loginPage to scale better on smaller laptops and smaller displays.
+
+week 6:
+added real match fetching for match page and improved navbar on larger screens and added a testing page to test backend actions aswell as a button to navigate to it from navbar.
