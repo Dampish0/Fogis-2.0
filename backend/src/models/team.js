@@ -13,6 +13,9 @@ const teamSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    teamColors:{
+        type: [String], // Array of color hex codes or names
+    },
     logoUrl:{
         type: String,
     },

@@ -1,8 +1,54 @@
-import { Typography } from '@mui/material';
+import { Avatar, Typography } from '@mui/material';
 import React from 'react'
 
 const LineupsCard = (props) => {
     const { homeTeam, awayTeam, homeTeamLineup, awayTeamLineup } = props;
+
+    const testDataReplacementHome = [
+        { number: 1, name: "Steven Hawking", position: "CB"},
+        { number: 2, name: "De Brúyne", position: "MV"},
+        { number: 3, name: "Mike Hawk", position: "HY "},
+    ]
+    const testDataReplacementAway = [
+        { number: 4, name: "Dixie rect", position: "FWD"},
+        { number: 5, name: "Mourinho", position: "CM"},
+        { number: 6, name: "Nikola Tesla", position: "COM"},
+        { number: 7, name: "Player 7", position: "VB"},
+    ]
+
+    const testDataUnavailableHome = [
+        { number: 8, name: "Diddy", position: "FWD"},
+        { number: 9, name: "Tom Cruise", position: "CM"},
+    ]
+
+    const testDataUnavailableAway = [
+        { number: 10, name: "King charles", position: "HB"},
+    ]
+
+    const playerCardTable = (isHomeTeam, playerNumber, playerName, position) => {
+        return (
+            <div 
+            style={{
+                width: '105%',
+                aspectRatio: '7/1',
+                backgroundColor: 'rgba(0, 0 ,0 , 0.5)',
+                marginTop: '0px',
+                marginBottom: '20px',
+                borderRadius: '20px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            }}
+            >
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px' }}>
+                    <Avatar style={{marginLeft: '-10px', borderRadius: '14px', backgroundColor: "rgba(50,50,50,0.9)" }}>
+                    <Typography variant="caption" style={{ color: 'white', }}>{playerNumber}</Typography>
+                </Avatar>
+                    <Typography variant="body1" style={{ color: 'white', fontWeight: 'bold' }}>{playerName}</Typography>
+                    <Typography variant="body2" style={{ color: 'white', fontStyle: 'italic' }}>{position}</Typography>
+               </div>
+               
+            </div>
+        );
+    }
 
     const playerCard = (isHomeTeam, playerNumber, playerName, position, coordinates) => {
         console.log("playerCard", playerName, position, coordinates);
@@ -202,8 +248,49 @@ const LineupsCard = (props) => {
         <div style={{backgroundColor: "rgb(0, 0, 0, 0.5)", marginTop: "5%", marginBottom: "5%", 
             maxWidth: "85%", marginLeft: "auto", marginRight: "auto", borderRadius: "10px", boxShadow: '0 24px 48px rgba(0,0,0,0.5)'
         }}>
-            <Typography variant="h6" style={{ textAlign: 'center', marginTop: '10px', color: 'white' }}>Ersättare</Typography>
+            <Typography variant="h6" style={{ textAlign: 'center', marginTop: '10px', color: 'white' }}>ERSÄTTARE</Typography>
         </div>
+
+        {/* 2 x ERSÄTTARE */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', width: '85%', maxWidth: '800px' }}>
+                <div style={{ width: '45%',  }}>
+                    {testDataReplacementHome.map((player, index) => (
+                        playerCardTable(true, player.number, player.name, player.position)
+                    ))}
+                </div>
+                <div style={{ width: '45%' }}>
+                    {testDataReplacementAway.map((player, index) => (
+                        playerCardTable(false, player.number, player.name, player.position)
+                    ))}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div style={{backgroundColor: "rgb(0, 0, 0, 0.5)", marginTop: "5%", marginBottom: "5%", 
+            maxWidth: "85%", marginLeft: "auto", marginRight: "auto", borderRadius: "10px", boxShadow: '0 24px 48px rgba(0,0,0,0.5)'
+        }}>
+            <Typography variant="h6" style={{ textAlign: 'center', marginTop: '10px', color: 'white' }}>OTILLGÄNGLIGA SPELARE</Typography>
+        </div>
+        {/* 2 x ERSÄTTARE */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', width: '85%', maxWidth: '800px' }}>
+                <div style={{ width: '45%' }}>
+                    {testDataUnavailableHome.map((player, index) => (
+                        playerCardTable(true, player.number, player.name, player.position)
+                    ))}
+                </div>
+                <div style={{ width: '45%' }}>
+                    {testDataUnavailableAway.map((player, index) => (
+                        playerCardTable(false, player.number, player.name, player.position)
+                    ))}
+                </div>
+            </div>
+
+        </div>
+
 
     </div>
   )
