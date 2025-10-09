@@ -21,9 +21,9 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
           </Typography>
 
           <div className="matchesPlaceholder">
-            <div className="matchRow">Lag A 2–1 Lag B • 2025-08-10</div>
-            <div className="matchRow">Lag C 0–0 Lag D • 2025-08-03</div>
-            <div className="matchRow">Lag E 1–3 Lag F • 2025-07-28</div>
+            <div className="matchRow">Lag A 2–1 Lag B • 13:00, 2025-08-10</div>
+            <div className="matchRow">Lag C 0–0 Lag D • 13:00, 2025-08-03</div>
+            <div className="matchRow">Lag E 1–3 Lag F • 13:00,      2025-07-28</div>
           </div>
 
           <div className="tableSection">
@@ -97,7 +97,7 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>
             {name ?? `#${id}`}
           </Typography>
-          
+
             <Divider className="sidebarDivider" />
 
             <List className="sidebarList" aria-label="Snabblänkar">
