@@ -93,6 +93,11 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
 
         <aside className="detailsSidebar">
           <div className="sidebarCard">
+
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>
+            {name ?? `#${id}`}
+          </Typography>
+          
             <Divider className="sidebarDivider" />
 
             <List className="sidebarList" aria-label="Snabblänkar">
