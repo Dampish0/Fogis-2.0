@@ -1,0 +1,24 @@
+Week 1:
+We started discussing, planning, and drawing out our vision of the application in eraser.io. We put forward relevant ideas that were neccessary features, roles, and structures to implement in our project.  
+
+Week 2:
+To start implementing and building our project we had to learning MERN stack basics and structures, I watched tutorials, and started to code the backend.  
+
+Week 3:
+I continued learning MERN stack and started with the frontend parts. After I and the rest of the group finished the tutorials and had learned the basics we branched by feature and started construct the frontend. 
+
+I worked on the design of "Matcher" page on the webside and coded the start of ”Match Information” component which shows the current catch inforamtion like: the teams facing eachother, the score, club logos. I also created three empty tab components that will show the teams lineup, match events, and the league table. 
+
+
+I also worked on a component that would show the upcomming, present, and future maches, but it got scrapped for a better variation. 
+
+Week 4:
+
+We had our presentation
+
+Week 5:
+We fleshed out the database with relevant information on so that we could connect our backend to our frontend. 
+
+Week 6:
+Week 7:
+Week 8:
