@@ -123,7 +123,7 @@ const handleUpdate = async () => {
 
     const handleCreateMatch = async () => {
       try {  
-        const matchData = { matchDate:  Date.now(), homeTeam: "68e6a7e2bd5bf4e083b83f0f", awayTeam: "68e6a821bd5bf4e083b83f12", location:null, arena: null, series: null, referees: null };
+        const matchData = { matchDate:  Date.now() + 1.1 * 60 * 60 * 1000, homeTeam: "68e6a7e2bd5bf4e083b83f0f", awayTeam: "68e6a821bd5bf4e083b83f12", location:null, arena: null, series: null, referees: null };
         await createMatch(matchData);
         updateSuccess(true);
       } catch(error) {

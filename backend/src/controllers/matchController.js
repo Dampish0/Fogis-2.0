@@ -47,6 +47,7 @@ Agenda.define('fetch lineups', async (job) => {
         match.awayTeamLineup = AwayLineup;
     }
 
+    match.status = "in_progress";
 
     await match.save();
 

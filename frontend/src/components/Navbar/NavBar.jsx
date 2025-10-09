@@ -50,7 +50,7 @@ const setMUI = (color) => (
   );
 
 const NavBar = (props) => {
-    const {isAuthenticated} = useAuthStore();
+    const {isAuthenticated, logout} = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -85,6 +85,14 @@ const NavBar = (props) => {
   const handleProfileClick = (e) => {
     setShowDropDownProfile(null);
   }
+
+  const adminClick = () => {
+    navigate('/admin');
+  }
+
+  const testingClick = () => {
+    navigate('/test');
+  }
     
 
   return (<>
@@ -95,7 +103,7 @@ const NavBar = (props) => {
       background: "rgba(30, 30, 30, 0.7)",
       backdropFilter: "blur(12px)", 
       WebkitBackdropFilter: "blur(12px)",
-      height: "clamp(50px, 6vh, 92px)",
+      height: "clamp(50px, 6vh, 64px)",
       maxWidth: "100vw",
       borderRadius: "20px",
       boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
@@ -110,8 +118,8 @@ const NavBar = (props) => {
         <Typography onClick={() => logoClick()} style={{cursor: "pointer", marginLeft: "10px", letterSpacing: "4px"}} variant="h5" component="div" sx={{ color: "white", padding: "16px" }}>
           FAIS
         </Typography>
-        <Button onClick={() => homeClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
-          Hem
+        <Button onClick={() => adminClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
+          admin
         </Button>
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
         <Button onClick={() => matcherClick()} sx={{fontSize: "16px", marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
@@ -121,6 +129,15 @@ const NavBar = (props) => {
         <Button onClick={() => competitionsClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
           Tävlingar
         </Button>
+        <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
+        <Button onClick={() => testingClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
+          Testing
+        </Button>
+        {/* <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />
+
+        <Button onClick={() => adminClick()} sx={{fontSize: "16px",marginLeft: "10px", color: "white", transition: "transform 200ms ease", "&:hover": {transform: 'scale(1.1)'}}}>
+          Admin
+        </Button> */}
 
         {/* mitten */}
 
@@ -186,7 +203,7 @@ const NavBar = (props) => {
       >
             <MenuItem >Profile</MenuItem>
             <MenuItem >Settings</MenuItem>
-            <MenuItem >Logout</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu> </> : <> <Button onClick={(e) => profileClick(e)} style={{color: "white", marginRight: "10px"}}>
 
           <Typography 

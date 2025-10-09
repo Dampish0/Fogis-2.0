@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import { IconButton, InputAdornment, Paper, Tab, TableBody, Tabs, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useEffect } from 'react';
 
 
   const textFieldColor = (color) => (
@@ -46,6 +47,29 @@ export const MatchBrowser = (props) => {
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);
     };
+
+    useEffect(() => {
+        setDisplayData(data.filter((match) => {
+            const matchDate = new Date(match.date);
+            const matchTime = match.time;
+            const status = match.status;
+            matchDate.setHours(matchTime.slice(0,2));
+            matchDate.setMinutes(matchTime.slice(3,5));
+            const now = new Date();
+            if (selectedTab === 0) {
+                // Upcoming matches
+                return status === "scheduled";
+            }
+            else if (selectedTab === 1) {
+                // Ongoing matches
+                return (status === "in_progress" || status === "pending_completion" || status === "delayed");
+            }
+            else if (selectedTab === 2) {
+                // Finished matches
+                return status === "completed" || status === "canceled";
+            }
+        }));
+    }, [data, selectedTab]);
 
   return (
     <div style={{...props.style,
@@ -101,7 +125,7 @@ export const MatchBrowser = (props) => {
         <TableHead>
           <TableRow>
             <TableCell style={{ color: "white" }}>LAG</TableCell>
-            <TableCell style={{ color: "white" }} align="right">Resultat</TableCell>
+            {selectedTab === 2 && <TableCell style={{ color: "white" }} align="right">Resultat</TableCell>}
             <TableCell style={{ color: "white" }} align="right">Datum</TableCell>
              {/* <TableCell style={{ color: "white" }} align="right">match id</TableCell> */}
             <TableCell style={{ color: "white" }} align="right">Se detaljer</TableCell>
@@ -111,13 +135,13 @@ export const MatchBrowser = (props) => {
           {DisplayData.map((row) => (
 
             <TableRow
-              key={row.id}
+              key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" style={{ color: "white" }}>
                 {row.name}
               </TableCell>
-                <TableCell style={{ color: "white" }} align="right">{row.result}</TableCell>
+                {selectedTab ===2 && <TableCell style={{ color: "white" }} align="right">{row.result}</TableCell>}
 
               <TableCell style={{ color: "white" }} align="right">{row.date}</TableCell>
               {/* <TableCell style={{ color: "white" }} align="right">{row.id}</TableCell> */}
