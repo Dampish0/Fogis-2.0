@@ -18,14 +18,18 @@ const playerSchema = new mongoose.Schema({
     persNmr:{
         type: String,
         required: true,
+        unique: true,
     },
     number:{
         type: Number,
-        required: true,
     },
     preferedPosition:{
         type: String,
-        enum: ['forward', 'midfielder', 'defender', 'goalkeeper'],
+        enum: [
+        'GK', 'CB', 'LB', 'RB', 'LWB', 'RWB',
+        'CDM', 'CM', 'CAM', 'LM', 'RM',
+        'LW', 'RW', 'CF', 'ST', 'SS', 'FWD'
+        ],
     },
     clubId:{
         type: mongoose.Schema.Types.ObjectId,
@@ -34,7 +38,6 @@ const playerSchema = new mongoose.Schema({
     teamId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team',
-        required: true,
     },
     
     statistics: {

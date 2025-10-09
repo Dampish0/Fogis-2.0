@@ -11,12 +11,18 @@ import Paper from '@mui/material/Paper';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import topDownPitch from '../../assets/fieldTopDown.png';
-import { Avatar, Typography } from '@mui/material';
-
+import { Avatar, CircularProgress, Icon, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 
 export const MatchDetails = (props) => {
-
+    if(props.events === null || props.players === null ) {
+        return (
+            <div className="matchdetails" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+                <CircularProgress />
+            </div>
+        );
+    }
     const [activeTab, setActiveTab] = React.useState('matchFacts');
 
     /* mockdata, ta bort senare och hämta från databas*/
@@ -41,6 +47,9 @@ export const MatchDetails = (props) => {
         <div className="matchdetails">
 
             <div className="scoreboard" >
+              <Icon>
+                <InfoIcon style={{ color: "white", position: "absolute", top: "10px", right: "10px" }}/>
+              </Icon>
                 <h3 style = {{color: "white"}}>Match Information</h3>
 
                 <div className="score">
@@ -112,7 +121,7 @@ function Tabell() {
           {rows.map((row) => (
             <TableRow 
             key={row.teamname}
-            style={{ backgroundColor: 'aliceblue', '&:last-child td, &:last-child th': { border: 0 } }}
+            style={{ backgroundColor: 'aliceblue', '&:lastChild td, &:lastChild th': { border: 0 } }}
             >
               <TableCell components="th" scope="row">
                 {row.teamname}

@@ -7,8 +7,20 @@ const seriesSchema = new mongoose.Schema({
     },
     description:{
         type: String,
-        required: true,
     },
+    gender:{
+        type: String,
+        enum: ['Male', 'Female', 'Mixed'],
+        default: 'Male',
+    },
+    ageGroup:{
+        type: String,
+    },
+    level:{
+        type: String,
+        default: 'Division 3',
+    },
+
     standings: [{
         team: {
             type: mongoose.Schema.Types.ObjectId,
@@ -50,7 +62,6 @@ const seriesSchema = new mongoose.Schema({
     teams: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team',
-        required: true,
     }],
 
     matches: [{

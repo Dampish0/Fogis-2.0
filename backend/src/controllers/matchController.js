@@ -47,6 +47,7 @@ Agenda.define('fetch lineups', async (job) => {
         match.awayTeamLineup = AwayLineup;
     }
 
+    match.status = "in_progress";
 
     await match.save();
 
@@ -58,10 +59,11 @@ export async function createMatch(req, res)
 {
     try{
         const {homeTeam, awayTeam, matchDate, location, arena, referees} = req.body;
-        if(!homeTeam || !awayTeam || !matchDate || !location || !arena || !referees){
-            throw new Error("All Fields are required.")
-        }
+        if(!homeTeam || !awayTeam || !matchDate){
+            throw new Error("Missing required fields.");
 
+            return res.status(400).json({success: false, message: "Missing required fields."});
+        }
         const newMatch = new Match({
             homeTeam,
             awayTeam,

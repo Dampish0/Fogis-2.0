@@ -7,24 +7,29 @@ export async function createClub(req, res)
 {
     try{
         const { name, trainers, location, established, logo, phoneNumber, email, adress } = req.body;
-        if(!name || !trainers || !location || !established || !logo || !phoneNumber || !email || !adress){
-            throw new Error("All Fields are required.")
+        if(!name || !trainers || !email){
+            console.error("All Fields are required.");
+            return res.status(400).json({ message: "All Fields are required." });
         }
 
         // convert logo to url
-        const logosDir = path.join(process.cwd(), "public", "logos");
-        if (!fs.existsSync(logosDir)) {
-            fs.mkdirSync(logosDir, { recursive: true });
+        let logoFileName = null;
+
+        if(logo){
+            const logosDir = path.join(process.cwd(), "public", "logos");
+            if (!fs.existsSync(logosDir)) {
+                fs.mkdirSync(logosDir, { recursive: true });
+            }
+            const logoBuffer = Buffer.from(logo, "base64");
+            logoFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.png`;
+            const logoPath = path.join(logosDir, logoFileName);
+
+            await sharp(logoBuffer)
+                .resize(512, 512, { fit: "inside", withoutEnlargement: true })
+                .toFile(logoPath);
         }
-        const logoBuffer = Buffer.from(logo, "base64");
-        const logoFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.png`;
-        const logoPath = path.join(logosDir, logoFileName);
 
-        await sharp(logoBuffer)
-            .resize(512, 512, { fit: "inside", withoutEnlargement: true })
-            .toFile(logoPath);
-
-        const logoUrl = `/logos/${logoFileName}`;
+        const logoUrl = logo ? "" : `/logos/${logoFileName}`;
 
         const club = new Club({ name, trainers, location, established, logoUrl, phoneNumber, email, adress });
         await club.save();
@@ -74,7 +79,7 @@ export async function updateClub(req, res)
         if((role !== "superadmin" && role !== "dev" && role !== "admin") && updates.trainers){
             delete updates.trainers;
         }
-        
+
         const club = await Club.findByIdAndUpdate(id, updates, { new: true });
         if (!club) {
             return res.status(404).json({ message: "Club not found" });

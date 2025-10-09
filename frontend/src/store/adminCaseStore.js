@@ -9,7 +9,7 @@ export const useAdminCaseStore = create((set, get) => ({
     loading: false,
     error: null,
 
-    fetchCases: async (params = {}) => {
+    fetchAdminCases: async (params = {}) => {
         set({ loading: true, error: null });
         try {
             const response = await axios.get(`${apiURL}/api/admincase`, {
@@ -22,7 +22,7 @@ export const useAdminCaseStore = create((set, get) => ({
         }
     },
 
-    fetchCaseById: async (id) => {
+    fetchAdminCaseById: async (id) => {
         set({ loading: true, error: null });
         try {
             const response = await axios.get(`${apiURL}/api/admincase/${id}`, { withCredentials: true });
@@ -32,7 +32,7 @@ export const useAdminCaseStore = create((set, get) => ({
         }
     },
 
-    createCase: async (caseData) => {
+    createAdminCase: async (caseData) => {
         set({ loading: true, error: null });
         try {
             const response = await axios.post(`${apiURL}/api/admincase`, caseData, { withCredentials: true });
@@ -46,7 +46,7 @@ export const useAdminCaseStore = create((set, get) => ({
         }
     },
 
-    updateCase: async (id, updates) => {
+    updateAdminCase: async (id, updates) => {
         set({ loading: true, error: null });
         try {
             const response = await axios.put(`${apiURL}/api/admincase/${id}`, updates, { withCredentials: true });
@@ -61,7 +61,7 @@ export const useAdminCaseStore = create((set, get) => ({
         }
     },
 
-    claimCase: async (id) => {
+    claimAdminCase: async (id) => {
         set({ loading: true, error: null });
         try {
             const response = await axios.post(`${apiURL}/api/admincase/${id}/claim`, {}, { withCredentials: true });

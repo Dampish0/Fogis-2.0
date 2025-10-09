@@ -6,8 +6,8 @@ import { AdminCase } from "../models/adminCase.js";
 export async function createPlayer(req, res)
 {
     try{
-        const { name, persNmr, number, preferedPosition, clubId, teamId } = req.body;
-        const player = new Player({ name, persNmr, number, preferedPosition, clubId, teamId });
+        const { name, persNmr, shirtNumber, preferedPosition, clubId, teamId } = req.body;
+        const player = new Player({ name, persNmr, number:shirtNumber, preferedPosition, clubId, teamId });
         await player.save();
 
         // Add player to club's players array
