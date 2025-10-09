@@ -1,8 +1,11 @@
 import { Avatar, Typography } from '@mui/material';
 import React from 'react'
+import { useState } from 'react';
 
 const LineupsCard = (props) => {
     const { homeTeam, awayTeam, homeTeamLineup, awayTeamLineup } = props;
+
+    const [selectedPlayer, setSelectedPlayer] = useState(null);
 
     const testDataReplacementHome = [
         { number: 1, name: "Steven Hawking", position: "CB"},
@@ -37,7 +40,7 @@ const LineupsCard = (props) => {
                 borderRadius: '20px',
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             }}
-            >
+            >   
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px' }}>
                     <Avatar style={{marginLeft: '-10px', borderRadius: '14px', backgroundColor: "rgba(50,50,50,0.9)" }}>
                     <Typography variant="caption" style={{ color: 'white', }}>{playerNumber}</Typography>
@@ -51,14 +54,33 @@ const LineupsCard = (props) => {
     }
 
     const playerCard = (isHomeTeam, playerNumber, playerName, position, coordinates) => {
-        console.log("playerCard", playerName, position, coordinates);
+        const lastName = playerName.split(" ").slice(1).join(" "    );
         return (
             <div style={{position: 'absolute', left: `${coordinates.x * 100}%`, top: `${coordinates.y * 100}%`, transform: 'translate(-50%, -50%)', textAlign: 'center', fontSize: '10px', fontWeight: 'bold', textShadow: '1px 1px 2px black',
                 justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'
-            }}>
+            
+            
+            }}
+            
+            onMouseOver={(e) => {
+                setSelectedPlayer({ name: playerName, coordinates: coordinates, position: position });
+            }}
+            
+            onMouseOut={(e) => {
+                setSelectedPlayer(null);
+            }}
+            
+            
+            >
 
-                <div style={{ color: 'white' }}>{playerName}</div>
-                <div style={{width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'rgb(0, 0, 0, 0.5)' }}>
+                <div style={{ color: 'white', textTransform: 'capitalize' }}>{lastName}</div>
+                <div style={{width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'rgb(0, 0, 0, 0.5)',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    border: isHomeTeam ? '2px solid #1E90FF' : '2px solid #FF4500',
+                    marginTop: '2px',
+
+
+                 }}>
                     <Typography style={{ color: 'white', fontSize: '12px', fontWeight: 'bold', textShadow: '1px 1px 2px black' }}>{playerNumber}</Typography>
 
                 </div>
@@ -81,7 +103,7 @@ const LineupsCard = (props) => {
         {/* soccer grass*/}
             <div style={{
                     background: 'linear-gradient(180deg, #228B22 60%, #006400 100%)',
-                    height: '110%',
+                    height: '105%',
                     aspectRatio: "4/2",
                     borderRadius: '10px',
                     position: 'relative',
@@ -225,13 +247,32 @@ const LineupsCard = (props) => {
             {
                 awayTeamLineup.map((lineup, index) => {
                         const { player, position, coordinates } = lineup;
-                        return playerCard(true, player.number, player.name, position, coordinates);
+                        return playerCard(false, player.number, player.name, position, coordinates);
                     })
             
             }
 
-            </div>
+            {selectedPlayer &&
+             ( <div style={{ position: 'absolute', pointerEvents: 'none',
+                 top: `${selectedPlayer.coordinates.y * 100}%`, left: `${selectedPlayer.coordinates.x * 100}%`, transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '12px' }}>
+                {selectedPlayer.name} - {selectedPlayer.position}
+            </div> )
+            }
 
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            
 
 
 
