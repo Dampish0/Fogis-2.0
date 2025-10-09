@@ -164,6 +164,8 @@ const NavBar = (props) => {
         </Button>
          <Menu
             id="basic-menu"
+            disableScrollLock={true}
+
             anchorEl={ShowDropDownProfile}
             open={Boolean(ShowDropDownProfile)}
             onClick={handleProfileClick}

@@ -62,12 +62,27 @@ export const MatcherPage = () => {
         match._id
     ));
 
+    const getPlayers = () => {
+        if (!match || !match.homeTeamLineup || !match.awayTeamLineup) return [];
+        const allPlayers = [
+            ...match.homeTeamLineup.map(lineup => ({
+                ...lineup.player,
+                team: match.homeTeam._id,
+            })),
+            ...match.awayTeamLineup.map(lineup => ({
+                ...lineup.player,
+                team: match.awayTeam._id,
+            }))
+        ];
+    }
+
+
     return (
         <div style={{overflow:"hidden", background: 'linear-gradient(#314158, #1c1c1c)', minHeight: "150vh" }}>
             <NavBar />
             <div>
-                <MatchDetails events={gameData.events}
-                players={gameData.players}
+                <MatchDetails events={match?.events} match={match}
+                players={getPlayers()}
                 //DisplayData={gameData}
                  />
             </div>
