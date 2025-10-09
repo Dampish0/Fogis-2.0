@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import topDownPitch from '../../assets/fieldTopDown.png';
 import { Avatar, CircularProgress, Icon, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+import LineupsCard from './LineupsCard';
 
 
 export const MatchDetails = (props) => {
@@ -27,13 +28,15 @@ export const MatchDetails = (props) => {
 
     /* mockdata, ta bort senare och hämta från databas*/
     const events = props.events || [];
-    const players = props.players || [];
+    const match = props.match || {};
+    const homeTeam = match.homeTeam;
+    const awayTeam = match.awayTeam;
 
 
     const renderTabContent = () => {
         switch (activeTab) {
             case 'lineups':
-                return <LineUpFeature players={players} />;
+                return <LineupsCard homeTeam={homeTeam} awayTeam={awayTeam} homeTeamLineup={props.homeTeamLineup} awayTeamLineup={props.awayTeamLineup} />;
             case 'matchFacts':
                 return <MatchFacts events={events} />;
             case 'table':
@@ -58,7 +61,7 @@ export const MatchDetails = (props) => {
                     <img src={TORD} alt="TORD" style={{ width: "100px", height: "100px", objectFit: "contain" }} />
                 </div>
                 <div className="teams">
-                    <p style = {{color: "white"}}>Husqvarna FF</p>  <p style = {{color: "white"}}>IK Tord</p>
+                    <p style = {{color: "white"}}>{homeTeam?.name}</p>  <p style = {{color: "white"}}>{awayTeam?.name}</p>
                 </div>
             </div>
                 <div className="tabs">

@@ -131,9 +131,21 @@ export async function getMatches(req, res)
 
 export async function getMatchById(req, res)
 {
+        // homeTeamLineup: [{
+        //     player: {
+        //         type: mongoose.Schema.Types.ObjectId,
+        //         ref: 'Player',
+        //         required: true,
+        //     },
+        //     position: { type: String }, // optional
+        //     coordinates: {
+        //         x: { type: Number, required: true },
+        //         y: { type: Number, required: true }
+        //     }
+        // }],
     try{
         const matchId = req.params.id;
-        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees');
+        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees homeTeamLineup.player awayTeamLineup.player');
         //for more efficieny in the future we should do specific populates
         // .populate('homeTeam awayTeam arena referees', 'location name imageUrl logoUrl players');
 

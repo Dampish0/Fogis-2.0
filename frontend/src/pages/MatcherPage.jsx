@@ -82,7 +82,7 @@ export const MatcherPage = () => {
             <NavBar />
             <div>
                 <MatchDetails events={match?.events} match={match}
-                players={getPlayers()}
+                homeTeamLineup={match?.homeTeamLineup} awayTeamLineup={match?.awayTeamLineup}
                 //DisplayData={gameData}
                  />
             </div>
