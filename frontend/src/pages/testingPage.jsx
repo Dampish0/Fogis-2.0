@@ -24,7 +24,7 @@ const TestingPage = () => {
     const {fetchArenas, createArena, fetchArenaById, updateArena, arenas} = useArenaStore();
     const {fetchReferees, createReferee, fetchRefereeById, updateReferee, referees} = useRefereeStore();
     const {fetchAdminCases, createAdminCase, fetchAdminCaseById, updateAdminCase, adminCases} = useAdminCaseStore();
-    const {fetchSeries, createSeries, fetchSeriesById, updateSeries, series} = seriesStore();
+    const {fetchSeries, createSeries, fetchSeriesById, updateSeries, seriesList} = seriesStore();
 
     const { user } = useAuthStore();
 
@@ -42,7 +42,7 @@ const entityMap = {
   arena: { items: arenas, update: updateArena },
   referee: { items: referees, update: updateReferee },
   adminCase: { items: adminCases, update: updateAdminCase },
-  series: { items: series, update: updateSeries },
+  series: { items: seriesList, update: updateSeries },
 };
 
 const [selectedEntity, setSelectedEntity] = useState("club");
@@ -113,12 +113,12 @@ const handleUpdate = async () => {
         setFetchedData(adminCases);
         break;
       case "series":
-        setFetchedData(series);
+        setFetchedData(seriesList);
         break;
       default:
         setFetchedData(null);
     }
-    }, [clubs, teams, players, matches, arenas, referees, adminCases, series, lastFetched]);
+    }, [clubs, teams, players, matches, arenas, referees, adminCases, seriesList, lastFetched]);
 
     const handleCreateClub = async () => {
       try {

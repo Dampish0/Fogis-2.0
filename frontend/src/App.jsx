@@ -67,6 +67,9 @@ export const App = () => {
     checkAuth();
   }, [checkAuth])
   
+  if(isCheckingAuth){
+    return <CircularProgress style={{ position: 'absolute', top: '50%', left: '50%'}}/>
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,7 +84,7 @@ export const App = () => {
             <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
 
             {
-              (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
+              ((role === "admin" || role === "superadmin" || role === "dev") && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
               ||
               (role === "trainer" && <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>)
               ||
