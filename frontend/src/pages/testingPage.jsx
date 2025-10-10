@@ -54,6 +54,30 @@ const handleFieldChange = (field, value) => {
   setUpdateFields(prev => ({ ...prev, [field]: value }));
 };
 
+const randomPositions = ["Substitute","CB", "LB", "RB", "LWB", "RWB", "CDM", "CM", "CAM", "LM", "RM", "LW", "RW", "CF", "ST", "GK"];
+const handleAddLineup = async () => {
+  try {
+    const match = matches.find(m => m._id === selectedId);
+    if (!match) throw new Error("Match not found");
+
+    const isHomeTeam = Math.random() < 0.5;
+    const lineupEntry = {
+      player: "68e6ad55285f34ee1ffeeb2f",
+      position: randomPositions[Math.floor(Math.random() * randomPositions.length)],
+      coordinates: { x: isHomeTeam ? (Math.random() / 2) : (Math.random()/2) + 0.5, 
+        y: Math.random() }
+    };
+    const updatedLineup = isHomeTeam ? [...match.homeTeamLineup, lineupEntry] : [...match.awayTeamLineup, lineupEntry];
+    await updateMatch(match._id, { [isHomeTeam ? "homeTeamLineup" : "awayTeamLineup"]: updatedLineup });
+      setUpdateSuccessState(true);
+
+  } catch (error) {
+    setError(error);
+        setUpdateSuccessState(false);
+
+  }
+};
+
 const handleUpdate = async () => {
   try {
     await entityMap[selectedEntity].update(selectedId, updateFields);
@@ -335,6 +359,11 @@ const handleUpdate = async () => {
   <Button onClick={handleUpdate} variant="contained" color="warning" disabled={!selectedId}>
     Update
   </Button>
+  {selectedEntity === "match" &&
+    <Button onClick={handleAddLineup} variant="contained" color="warning" disabled={!selectedId}>
+    Add a random player to lineup
+  </Button>
+  }
   {updateSuccessState === true && <div style={{ color: `#${Math.floor(Math.random()*16777215).toString(16)}` }}>Update successful!</div>}
 </Box>
 

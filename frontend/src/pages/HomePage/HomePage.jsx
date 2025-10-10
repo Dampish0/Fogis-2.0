@@ -11,7 +11,9 @@ import "./HomePage.css";
 import Link from '@mui/material/Link';
 import { Backdrop, Typography } from '@mui/material';
 import NewsDetail from '../../components/News/NewsDetail.jsx';
-import PageFooter from '../../components/PageFooter.jsx';
+import PageFooter from '../../components/PageFooter.jsx'; 
+
+
 
 
 export default function HomePage() {
@@ -98,8 +100,14 @@ export default function HomePage() {
 
   return (
     <div style={{
-     minHeight: "100vh", overflowX: "hidden",  }}>
+     minHeight: "100vh", overflowX: "hidden", backgroundColor: "#121212", position: "relative"}}>
+        
+        
+
+
+        
       <NavBar />
+      
       <div style={{height: 'clamp(100px, 8vh, 200px)'}}></div>
 
 
@@ -132,7 +140,7 @@ export default function HomePage() {
         <Typography variant="h6" style={{ color: "#fff" }}>SENASTE NYHETER</Typography>   
       </div>
 
-      <div className="news-root">
+      <div className="news-root" style={{zIndex:5}}>
         
         <div className="news-layout">
           <section               onClick={(e) => {
@@ -170,7 +178,7 @@ export default function HomePage() {
 
           <section aria-label="Fler nyheter" className="right-col">
             <div className="right-header">
-              <a href="/nyheter" className="right-more" aria-label="Visa alla nyheter">
+              <a style={{ color: "#ffffff" }} href="/nyheter" className="right-more" aria-label="Visa alla nyheter">
                 SE FLER NYHETER
               </a>
             </div>
@@ -209,7 +217,7 @@ export default function HomePage() {
                                 {a.dateText}
                               </time>
                             )}
-                            <h2 className="newscard__title">{a.title}</h2>
+                            <h2 className="newscard__title" style={{ color: "#ffffff" }}>{a.title}</h2>
                           </div>
                         </div>
                       </div>
@@ -241,7 +249,10 @@ export default function HomePage() {
       <div style={{ color: "#000000", textAlign: "center", margin:"0 auto", marginBottom: "400px" }}>
         <Typography variant="h3">Här är en tabell med top 5 lagen i serien.</Typography>
       </div>
+      
       <PageFooter />
+
     </div>
   );
 }
+
