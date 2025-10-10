@@ -71,29 +71,30 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
         <div>
+          <Routes>
+            <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
+            <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+            <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
+            <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
+            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
+            <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
+            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+
+            {
+              (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
+              ||
+              (role === "trainer" && <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>)
+              ||
+              (role === "referee" && <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>)
+            }
+
+            <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
+
+
+            <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
+           </Routes>
           {isCheckingAuth && <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>}
-         <Routes>
-          <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
-          <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
-          <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
-          <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
-          <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
-          <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
-          <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
 
-          {
-            (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
-            ||
-            (role === "trainer" && <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>)
-            ||
-            (role === "referee" && <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>)
-          }
-
-          <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
-
-
-          <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
-          </Routes>
         <Toaster/>
       </div>
     </ThemeProvider>

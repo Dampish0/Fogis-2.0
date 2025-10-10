@@ -11,23 +11,10 @@ import "./HomePage.css";
 import Link from '@mui/material/Link';
 import { Backdrop, Typography } from '@mui/material';
 import NewsDetail from '../../components/News/NewsDetail.jsx';
-import PageFooter from '../../components/PageFooter.jsx';
-import LightRays from './lightray.jsx';
+import PageFooter from '../../components/PageFooter.jsx'; 
 
-{/* <div style={{ width: '100%', height: '600px', position: 'relative' }}>
-  <LightRays
-    raysOrigin="top-center"
-    raysColor="#00ffff"
-    raysSpeed={1.5}
-    lightSpread={0.8}
-    rayLength={1.2}
-    followMouse={true}
-    mouseInfluence={0.1}
-    noiseAmount={0.1}
-    distortion={0.05}
-    className="custom-rays"
-  />
-</div> */}
+
+
 
 export default function HomePage() {
 
@@ -114,18 +101,11 @@ export default function HomePage() {
   return (
     <div style={{
      minHeight: "100vh", overflowX: "hidden", backgroundColor: "#121212", position: "relative"}}>
-              <LightRays
-    raysOrigin="top-center"
-    raysColor="#FFFFFF"
-    raysSpeed={2}
-    lightSpread={0.5}
-    rayLength={3}
-    followMouse={false}
-    mouseInfluence={0}
-    noiseAmount={0}
-    distortion={0}
-    className="custom-rays"
-  />
+        
+        
+
+
+        
       <NavBar />
       
       <div style={{height: 'clamp(100px, 8vh, 200px)'}}></div>
