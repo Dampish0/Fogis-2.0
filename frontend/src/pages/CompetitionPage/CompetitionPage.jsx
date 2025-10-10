@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import NavBar from "../../components/Navbar/NavBar";
-import { Container, Typography, List, ListItemButton, ListItemText } from "@mui/material";
-import CompetitionDetails from "./CompetitionDetails"; 
+import {
+  Container, Typography, List, ListItemButton, ListItemText,
+  CircularProgress, Alert
+} from "@mui/material";
+import CompetitionDetails from "./CompetitionDetails";
 import "./CompetitionPage.css";
-
-const seriesData = [
-  { id: 1, name: "Division 1 Norra" },
-  { id: 2, name: "Division 2 Södra" },
-  { id: 3, name: "Division 3 Västra" },
-  { id: 4, name: "Division 4 Östra" },
-];
+import useSeriesStore from "../../store/seriesStore.js";
 
 const cupsData = [
   { id: "c1", name: "Svenska Cupen" },
@@ -19,32 +16,26 @@ const cupsData = [
 ];
 
 const CompetitionPage = () => {
-
   const [selection, setSelection] = useState(null);
 
+  const {
+    fetchSeries,
+    seriesList,
+    loading: seriesLoading,
+    error: seriesError,
+  } = useSeriesStore();
+
+  useEffect(() => {
+    fetchSeries();
+  }, [fetchSeries]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const type = params.get("type");
     const id   = params.get("id");
     const name = params.get("name");
-    if (type && id) {
-      setSelection({ type, id, name });
-    }
+    if (type && id) setSelection({ type, id, name });
   }, []);
-
-  const openSeries = (item) => {
-    const sel = { type: "series", id: String(item.id), name: item.name };
-    setSelection(sel);
-    window.history.pushState(sel, "", `/tavlingdetail?type=series&id=${item.id}&name=${encodeURIComponent(item.name)}`);
-  };
-
-  const openCup = (item) => {
-    const sel = { type: "cup", id: String(item.id), name: item.name };
-    setSelection(sel);
-    window.history.pushState(sel, "", `/tavlingdetail?type=cup&id=${item.id}&name=${encodeURIComponent(item.name)}`);
-  };
-
 
   useEffect(() => {
     const onPop = () => {
@@ -62,33 +53,45 @@ const CompetitionPage = () => {
     window.history.pushState({}, "", "/tavlingar");
   };
 
- 
+  const getSerieName = (s) => s?.name ?? s?.title ?? s?.serieName ?? "Okänd serie";
+  const series = useMemo(() => (Array.isArray(seriesList) ? seriesList : []), [seriesList]);
 
-if (selection) {
-  return (
-    <div className="page">
-      <NavBar />
-      <Container maxWidth="lg" className="content content--details">
-        <CompetitionDetails
-          type={selection.type}
-          id={selection.id}
-          name={selection.name}
-          onBack={handleBack}
-        />
-      </Container>
-    </div>
-  );
-}
+  const openSeries = (item) => {
+    const id = String(item._id ?? item.id);
+    const name = getSerieName(item);
+    const sel = { type: "series", id, name };
+    setSelection(sel);
+    window.history.pushState(sel, "", `/tavlingdetail?type=series&id=${id}&name=${encodeURIComponent(name)}`);
+  };
 
- 
+  const openCup = (item) => {
+    const sel = { type: "cup", id: String(item.id), name: item.name };
+    setSelection(sel);
+    window.history.pushState(sel, "", `/tavlingdetail?type=cup&id=${item.id}&name=${encodeURIComponent(item.name)}`);
+  };
+
+  if (selection) {
+    return (
+      <div className="page">
+        <NavBar />
+        <Container maxWidth="lg" className="content content--details">
+          <CompetitionDetails
+            type={selection.type}
+            id={selection.id}
+            name={selection.name}
+            onBack={handleBack}
+          />
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <NavBar />
 
       <div className="titleBadge">
-        <Typography variant="h4" className="titleText">
-          Tävlingar
-        </Typography>
+        <Typography variant="h4" className="titleText">Tävlingar</Typography>
       </div>
 
       <Container maxWidth="lg" className="content">
@@ -96,22 +99,44 @@ if (selection) {
           <section className="left">
             <Typography variant="h5" className="sectionTitle">Serier</Typography>
 
-            <List className="list" aria-label="Lista över serier">
-              {seriesData.map((s, idx) => (
-                <li key={s.id} className="listRow">
-                  <ListItemButton
-                    className="listItem"
-                    onClick={() => openSeries(s)}
-                    disableRipple disableTouchRipple disableFocusRipple
-                  >
-                    <ListItemText primary={<span className="rowTitle">{s.name}</span>} />
-                  </ListItemButton>
-                  {idx !== seriesData.length - 1 && <div className="rowDivider" />}
-                </li>
-              ))}
-            </List>
+            {seriesLoading && (
+              <div style={{ padding: 8 }}>
+                <CircularProgress size={24} /> Laddar serier…
+              </div>
+            )}
+
+            {seriesError && (
+              <Alert severity="error" sx={{ mb: 1 }}>
+                Kunde inte hämta serier: {String(seriesError)}
+              </Alert>
+            )}
+
+            {!seriesLoading && !seriesError && (
+              <List className="list" aria-label="Lista över serier">
+                {series.length === 0 ? (
+                  <li className="listRow" style={{ opacity: 0.8, padding: "8px 0" }}>
+                    Inga serier hittades.
+                  </li>
+                ) : (
+                  series.map((s, idx) => (
+                    <li key={s._id ?? s.id ?? idx} className="listRow">
+                      <ListItemButton
+                        className="listItem"
+                        onClick={() => openSeries(s)}
+                        disableRipple
+                        disableTouchRipple
+                        disableFocusRipple
+                      >
+                        <ListItemText primary={<span className="rowTitle">{getSerieName(s)}</span>} />
+                      </ListItemButton>
+                      {idx !== series.length - 1 && <div className="rowDivider" />}
+                    </li>
+                  ))
+                )}
+              </List>
+            )}
           </section>
-        
+
           <div className="mid" aria-hidden="true" />
 
           <section className="right">
@@ -123,7 +148,9 @@ if (selection) {
                   <ListItemButton
                     className="listItem"
                     onClick={() => openCup(c)}
-                    disableRipple disableTouchRipple disableFocusRipple
+                    disableRipple
+                    disableTouchRipple
+                    disableFocusRipple
                   >
                     <ListItemText primary={<span className="rowTitle">{c.name}</span>} />
                   </ListItemButton>
