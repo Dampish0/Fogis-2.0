@@ -13,4 +13,4 @@ added real match fetching for match page and improved navbar on larger screens a
 
 Completed Lineup tab in the Match page, And it looks very beautiful, also added fetching for the positions of all players and placed them correctly in the field. Also slightly restructured the MatchDetails component which holds the lineup tab.
 
-designed and implemented the admin page.
+designed and implemented the admin page. Restructured routes in frontend app.jsx.

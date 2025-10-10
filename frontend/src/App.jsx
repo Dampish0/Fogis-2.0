@@ -1,27 +1,18 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router';
-import HomePage from './pages/HomePage/HomePage';
-import CreatePage from './pages/CreatePage';
-import DetailPage from './pages/detailpage';
 import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
 import '@fontsource/roboto/500.css';
-import MatcherPage from './pages/MatcherPage';
-import LoginPage from './pages/LoginPage';
 import Backdrop from '@mui/material/Backdrop';
-import NewPasswordPage from './pages/newPasswordPage';
-import NewsPage from './pages/NewsPage/NewsPage';
-import CompetitionPage from './pages/CompetitionPage';
-import TestingPage from './pages/testingPage';
-import  AdminTrainerPage  from './pages/admin/AdminTrainerPage';
-import  AdminRefereePage  from './pages/admin/AdminRefereePage';
-import  AdminPage  from './pages/admin/AdminPage';
 
 
 import { Toaster } from 'react-hot-toast';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import useAuthStore from './store/authStore';
+import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refereeRoutes, trainerRoutes
+
+ } from './routes';
 
 
 const theme = createTheme({
@@ -30,39 +21,10 @@ const theme = createTheme({
   },
 });
 
-const ProtectedRoute = ({children}) => {
-  // temporay dev test code
-  //return children;
-  // --------------------
-  const {isAuthenticated, isCheckingAuth} = useAuthStore();
-
-  if(isCheckingAuth){
-    return <CircularProgress/>
-  }
-
-  if(!isAuthenticated){
-    return <Navigate to="/login" replace/>
-  }
-
-  return children;
-}
-
-const RedirectAuthenticated = ({children}) => {
-  // temporay dev test code
-  //return children;
-  // --------------------
-  const {isAuthenticated} = useAuthStore();
-  if(isAuthenticated){
-    return <Navigate to="/" replace/>
-  }
-
-  return children;
-}
-
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-  const role = user?.role || "guest";
+  const role = "dev" // user?.role || "guest";
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
@@ -71,27 +33,21 @@ export const App = () => {
     return <CircularProgress style={{ position: 'absolute', top: '50%', left: '50%'}}/>
   }
 
+
+
   return (
     <ThemeProvider theme={theme}>
         <div>
           <Routes>
-            <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
-            <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
-            <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
-            <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
-            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
-            <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
-            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+            {standardRoutes()}
 
             {
-              ((role === "admin" || role === "superadmin" || role === "dev") && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
+              ((role === "admin" || role === "superadmin" || role === "dev") && adminRoutes(role)) 
               ||
-              (role === "trainer" && <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>)
+              (role === "trainer" && trainerRoutes(role))
               ||
-              (role === "referee" && <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>)
+              (role === "referee" && refereeRoutes(role))
             }
-
-            <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
 
 
             <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>

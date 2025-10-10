@@ -1,0 +1,94 @@
+import { Navigate, Route, Routes, useNavigate } from 'react-router';
+import AdminPage from './pages/admin/AdminPage';
+import AdminRefereePage from './pages/admin/AdminRefereePage';
+import AdminTrainerPage from './pages/admin/AdminTrainerPage';
+import useAuthStore from './store/authStore';
+import MatcherPage from './pages/MatcherPage';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage/HomePage';
+import CreatePage from './pages/CreatePage';
+import DetailPage from './pages/detailpage';
+import NewPasswordPage from './pages/newPasswordPage';
+import NewsPage from './pages/NewsPage/NewsPage';
+import CompetitionPage from './pages/CompetitionPage';
+import TestingPage from './pages/testingPage';
+
+
+export const ProtectedRoute = ({children}) => {
+  // temporay dev test code
+  //return children;
+  // --------------------
+  const {isAuthenticated, isCheckingAuth} = useAuthStore();
+
+  if(isCheckingAuth){
+    return <CircularProgress/>
+  }
+
+  if(!isAuthenticated){
+    return <Navigate to="/login" replace/>
+  }
+
+  return children;
+}
+
+export const RedirectAuthenticated = ({children}) => {
+  // temporay dev test code
+  //return children;
+  // --------------------
+  const {isAuthenticated} = useAuthStore();
+  if(isAuthenticated){
+    return <Navigate to="/" replace/>
+  }
+
+  return children;
+}
+
+export const adminRoutes = (role) => {
+  return (
+    <>
+    <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
+    
+    
+    <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/referee' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/team' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/player' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/competition' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    </>
+  );
+}
+
+export const refereeRoutes = (role) => {
+  return (
+    <>
+    <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/match' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>
+    </>
+  );
+}
+
+export const trainerRoutes = (role) => {
+  return (
+    <>
+    <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/team' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/player' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    </>
+  );
+}
+
+export const standardRoutes = () => {
+    return (
+      <>
+        <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
+            <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+            <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
+            <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
+            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
+            <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
+            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>        
+    </>
+    );
+}
