@@ -11,7 +11,8 @@ import LoginPage from './pages/LoginPage';
 import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
-import CompetitionPage from './pages/CompetitionPage';
+import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
+import CompetitionDetails from './pages/CompetitionPage/CompetitionDetails';
 import TestingPage from './pages/testingPage';
 import  AdminTrainerPage  from './pages/admin/AdminTrainerPage';
 import  AdminRefereePage  from './pages/admin/AdminRefereePage';
@@ -71,6 +72,7 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
         <div>
+
           <Routes>
             <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
             <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
@@ -79,6 +81,7 @@ export const App = () => {
             <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
             <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
             <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+          <Route path='/tavlingar/:id' element={<ProtectedRoute><CompetitionDetails/></ProtectedRoute>}/>
 
             {
               (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
@@ -94,6 +97,7 @@ export const App = () => {
             <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
            </Routes>
           {isCheckingAuth && <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>}
+
 
         <Toaster/>
       </div>

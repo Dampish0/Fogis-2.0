@@ -239,7 +239,7 @@ export default function NewsPage() {
             </a>
           </section>
 
-          {/* Höger: 3 kort */}
+       
           <section aria-label="Fler nyheter" className="right1-col">
             <ul className="right-list">
               {rightSide.map((a) => (
