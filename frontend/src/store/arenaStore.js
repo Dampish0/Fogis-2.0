@@ -14,7 +14,7 @@ export const useArenaStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const { page = 1, limit = 10, ...filters } = params;
-            const response = await axios.get(`${apiURL}/api/arenas`, {
+            const response = await axios.get(`${apiURL}/api/arena`, {
                 params: { page, limit, ...filters },
                 withCredentials: true,
             });
@@ -54,7 +54,7 @@ export const useArenaStore = create((set, get) => ({
     createArena: async (arenaData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/arenas`, arenaData, {
+            const response = await axios.post(`${apiURL}/api/arena`, arenaData, {
                 withCredentials: true,
             });
             set((state) => ({

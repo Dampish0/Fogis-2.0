@@ -11,23 +11,32 @@ import Paper from '@mui/material/Paper';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import topDownPitch from '../../assets/fieldTopDown.png';
-import { Avatar, Typography } from '@mui/material';
-
+import { Avatar, CircularProgress, Icon, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import LineupsCard from './LineupsCard';
 
 
 export const MatchDetails = (props) => {
-
+    if(props.events === null || props.players === null ) {
+        return (
+            <div className="matchdetails" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+                <CircularProgress />
+            </div>
+        );
+    }
     const [activeTab, setActiveTab] = React.useState('matchFacts');
 
     /* mockdata, ta bort senare och hämta från databas*/
     const events = props.events || [];
-    const players = props.players || [];
+    const match = props.match || {};
+    const homeTeam = match.homeTeam;
+    const awayTeam = match.awayTeam;
 
 
     const renderTabContent = () => {
         switch (activeTab) {
             case 'lineups':
-                return <LineUpFeature players={players} />;
+                return <LineupsCard homeTeam={homeTeam} awayTeam={awayTeam} homeTeamLineup={props.homeTeamLineup} awayTeamLineup={props.awayTeamLineup} />;
             case 'matchFacts':
                 return <MatchFacts events={events} />;
             case 'table':
@@ -41,6 +50,9 @@ export const MatchDetails = (props) => {
         <div className="matchdetails">
 
             <div className="scoreboard" >
+              <Icon>
+                <InfoIcon style={{ color: "white", position: "absolute", top: "10px", right: "10px" }}/>
+              </Icon>
                 <h3 style = {{color: "white"}}>Match Information</h3>
 
                 <div className="score">
@@ -49,7 +61,7 @@ export const MatchDetails = (props) => {
                     <img src={TORD} alt="TORD" style={{ width: "100px", height: "100px", objectFit: "contain" }} />
                 </div>
                 <div className="teams">
-                    <p style = {{color: "white"}}>Husqvarna FF</p>  <p style = {{color: "white"}}>IK Tord</p>
+                    <p style = {{color: "white"}}>{homeTeam?.name}</p>  <p style = {{color: "white"}}>{awayTeam?.name}</p>
                 </div>
             </div>
                 <div className="tabs">
@@ -112,7 +124,7 @@ function Tabell() {
           {rows.map((row) => (
             <TableRow 
             key={row.teamname}
-            style={{ backgroundColor: 'aliceblue', '&:last-child td, &:last-child th': { border: 0 } }}
+            style={{ backgroundColor: 'aliceblue', '&:lastChild td, &:lastChild th': { border: 0 } }}
             >
               <TableCell components="th" scope="row">
                 {row.teamname}

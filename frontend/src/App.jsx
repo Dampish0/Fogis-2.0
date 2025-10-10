@@ -13,14 +13,17 @@ import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
 import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
 import CompetitionDetails from './pages/CompetitionPage/CompetitionDetails';
-
-
+import TestingPage from './pages/testingPage';
+import  AdminTrainerPage  from './pages/admin/AdminTrainerPage';
+import  AdminRefereePage  from './pages/admin/AdminRefereePage';
+import  AdminPage  from './pages/admin/AdminPage';
 
 
 import { Toaster } from 'react-hot-toast';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import useAuthStore from './store/authStore';
+
 
 const theme = createTheme({
   typography: {
@@ -30,7 +33,7 @@ const theme = createTheme({
 
 const ProtectedRoute = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated, isCheckingAuth} = useAuthStore();
 
@@ -47,7 +50,7 @@ const ProtectedRoute = ({children}) => {
 
 const RedirectAuthenticated = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated} = useAuthStore();
   if(isAuthenticated){
@@ -60,35 +63,42 @@ const RedirectAuthenticated = ({children}) => {
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-
+  const role = user?.role || "guest";
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
   
-  if(isCheckingAuth){
-    return <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>
-
-  }
 
   return (
     <ThemeProvider theme={theme}>
         <div>
-         <Routes>
-          <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
-          <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
-          <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
-          <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
-          <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
-          <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
-          <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
-          <Route path='/tavlingid' element={<ProtectedRoute><CompetitionDetails/></ProtectedRoute>}/>
+
+          <Routes>
+            <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
+            <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+            <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
+            <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
+            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
+            <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
+            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+          <Route path='/tavlingar/:id' element={<ProtectedRoute><CompetitionDetails/></ProtectedRoute>}/>
+
+            {
+              (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
+              ||
+              (role === "trainer" && <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>)
+              ||
+              (role === "referee" && <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>)
+            }
+
+            <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
 
 
+            <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
+           </Routes>
+          {isCheckingAuth && <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>}
 
 
-
-          <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
-          </Routes>
         <Toaster/>
       </div>
     </ThemeProvider>

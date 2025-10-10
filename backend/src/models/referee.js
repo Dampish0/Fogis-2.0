@@ -5,26 +5,21 @@ const refereeSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-
-    name:{
-        type: String,
-        required: true,
-    },
-    persNmr:{
-        type: String,
-        required: true,
-    },
     PreferedRefereeType:{
         type: String,
-        enum: ['main', 'assistant', 'line', 'fourth'],
+        enum: ['main', 'assistant', 'line', 'var', 'other'],
     },
-
     history: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Match',
         default: []
     }],
 
+
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 }, {timestamps: true})
 
 export const Referee = mongoose.model('Referee', refereeSchema);

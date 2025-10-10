@@ -47,6 +47,7 @@ Agenda.define('fetch lineups', async (job) => {
         match.awayTeamLineup = AwayLineup;
     }
 
+    match.status = "in_progress";
 
     await match.save();
 
@@ -58,10 +59,11 @@ export async function createMatch(req, res)
 {
     try{
         const {homeTeam, awayTeam, matchDate, location, arena, referees} = req.body;
-        if(!homeTeam || !awayTeam || !matchDate || !location || !arena || !referees){
-            throw new Error("All Fields are required.")
-        }
+        if(!homeTeam || !awayTeam || !matchDate){
+            throw new Error("Missing required fields.");
 
+            return res.status(400).json({success: false, message: "Missing required fields."});
+        }
         const newMatch = new Match({
             homeTeam,
             awayTeam,
@@ -129,9 +131,21 @@ export async function getMatches(req, res)
 
 export async function getMatchById(req, res)
 {
+        // homeTeamLineup: [{
+        //     player: {
+        //         type: mongoose.Schema.Types.ObjectId,
+        //         ref: 'Player',
+        //         required: true,
+        //     },
+        //     position: { type: String }, // optional
+        //     coordinates: {
+        //         x: { type: Number, required: true },
+        //         y: { type: Number, required: true }
+        //     }
+        // }],
     try{
         const matchId = req.params.id;
-        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees');
+        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees homeTeamLineup.player awayTeamLineup.player');
         //for more efficieny in the future we should do specific populates
         // .populate('homeTeam awayTeam arena referees', 'location name imageUrl logoUrl players');
 

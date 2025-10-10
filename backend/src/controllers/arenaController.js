@@ -4,9 +4,9 @@ import { Team } from "../models/team.js";
 export async function createArena(req, res)
 {
     try {
-        const { name, location, capacity } = req.body;
+        const { name, location, capacity, address, indoor } = req.body;
 
-        const arena = new Arena({ name, location, capacity });
+        const arena = new Arena({ name, location, capacity, address, indoor });
         await arena.save();
 
         res.status(201).json(arena);

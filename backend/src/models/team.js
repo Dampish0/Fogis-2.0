@@ -4,16 +4,17 @@ const teamSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
-        unique: true,
     },
     clubId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Club',
-        required: true,
     },
     ageGroup:{
         type: String,
         required: true,
+    },
+    teamColors:{
+        type: [String], // Array of color hex codes or names
     },
     logoUrl:{
         type: String,
@@ -25,7 +26,6 @@ const teamSchema = new mongoose.Schema({
     homeArena:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Arena',
-        required: true,
     },
     players:[{
         type: mongoose.Schema.Types.ObjectId,

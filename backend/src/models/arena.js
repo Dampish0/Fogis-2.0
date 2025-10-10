@@ -5,17 +5,15 @@ const arenaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    adress:{
+    address:{
         type: String,
         required: true,
     },
     capacity:{
         type: Number,
-        required: true,
     },
     indoor:{
         type: Boolean,
-        required: true,
     },
     imageUrl:{
         type: String,

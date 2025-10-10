@@ -9,6 +9,7 @@ import teamRoutes from "./routes/teamRoutes.js";
 import playerRoutes from "./routes/playerRoutes.js";
 import arenaRoutes from "./routes/arenaRoutes.js";
 import seriesRoutes from "./routes/seriesRoutes.js";
+import adminCaseRoutes from "./routes/adminCaseRoutes.js";
 
 import {connectDB} from "./config/db.js";
 import dotenv from "dotenv";
@@ -39,14 +40,15 @@ app.use((req, res, next) => {
 })
 
 //app.use("/api/notes", notesRoutes)
-app.use("/api/matches", matchRoutes)
+app.use("/api/match", matchRoutes)
 app.use("/api/auth", authRoutes)
-app.use("/api/referees", refereeRoutes)
+app.use("/api/referee", refereeRoutes)
 app.use("/api/clubs", clubRoutes)
-app.use("/api/teams", teamRoutes)
+app.use("/api/team", teamRoutes)
 app.use("/api/players", playerRoutes)
-app.use("/api/arenas", arenaRoutes)
+app.use("/api/arena", arenaRoutes)
 app.use("/api/series", seriesRoutes)
+app.use("/api/admincase", adminCaseRoutes)
 
 
 
