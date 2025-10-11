@@ -51,6 +51,10 @@ export async function getTeams(req, res)
             filters.clubId = clubId;
         }
 
+        if (filters.name) {
+            filters.name = { $regex: `^${filters.name}`, $options: "i" };
+        }
+
         const teams = await Team.find(filters)
             .skip((page - 1) * limit)
             .limit(limit)

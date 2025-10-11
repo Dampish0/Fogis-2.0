@@ -9,6 +9,7 @@ import teamHantering from '../../assets/teamHantering.jpg'
 import refereeHantering from '../../assets/refHantering.jpg'
 import tavlingHantering from '../../assets/tavlingHantering.jpg'
 import reportHantering from '../../assets/reportHantering.jpg'
+import arenaHantering from '../../assets/arenaHantering.jpg'
 
 import PageFooter from '../../components/PageFooter.jsx'
 import { Link } from 'react-router'
@@ -175,7 +176,7 @@ const AdminPage = (props) => {
                 style={{ marginRight: "1vw",
                         borderRadius: '30px', width: '14.5vw', height: '20vh'
               
-                  ,backgroundImage: `url(${playerHantering})`,
+                  ,backgroundImage: `url(${arenaHantering})`,
               }}>
                   <div style={{marginLeft: "5%", marginBottom: "100%", display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'end', height: '95%'}}>
                     <Typography variant='h8' style={{color: 'white', paddingTop: '2vh'}}>Lägg till eller ändra arenor.</Typography>
@@ -189,7 +190,7 @@ const AdminPage = (props) => {
                 <div className='Card'
                 style={{
                         borderRadius: '30px', width: '14.5vw', height: '20vh'
-                                ,backgroundImage: `url(${clubHantering})`,
+                                ,backgroundImage: `url(${playerHantering})`,
                 }}>
                   <div style={{marginLeft: "5%", marginBottom: "100%", display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'end', height: '95%'}}>
                     <Typography variant='h8' style={{color: 'white', paddingTop: '2vh'}}>Lägg till eller ändra användare data.</Typography>

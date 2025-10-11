@@ -19,7 +19,7 @@ export const useAuthStore = create((set) => ({
         } catch (error) {
             set({error: error.response?.data?.message || "Misslyckades att registrerar", loading: false});
             throw error;
-        }
+        } 
     },
 
     login: async (email, password) => {

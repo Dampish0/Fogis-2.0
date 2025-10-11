@@ -24,13 +24,13 @@ const theme = createTheme({
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-  const role = "dev" // user?.role || "guest";
+  const role = "admin" // user?.role || "guest";
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
   
   if(isCheckingAuth){
-    return <CircularProgress style={{ position: 'absolute', top: '50%', left: '50%'}}/>
+    return <Backdrop sx={{zIndex:4}} open={isCheckingAuth}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>
   }
 
 
@@ -52,7 +52,6 @@ export const App = () => {
 
             <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
            </Routes>
-          {isCheckingAuth && <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>}
 
         <Toaster/>
       </div>

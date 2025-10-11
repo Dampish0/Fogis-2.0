@@ -66,6 +66,7 @@ export const MatchBrowser = (props) => {
   return (
     <div style={{...props.style,
         width: "clamp(720px, 46vw, 1200px)",
+        //maxHeight: "1600px",
         backgroundColor: "rgba(30, 30, 30, 0.7)",
         backdropFilter: "blur(12px)", 
         WebkitBackdropFilter: "blur(12px)",

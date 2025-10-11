@@ -16,7 +16,7 @@ export const useTeamStore = create((set) => ({
     fetchTeams: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/team`, { params });
+            const response = await axios.get(`${apiURL}/api/team`,  { params: params } );
             set({
                 teams: response.data.teams,
                 total: response.data.total,

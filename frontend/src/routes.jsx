@@ -12,11 +12,15 @@ import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
 import CompetitionPage from './pages/CompetitionPage';
 import TestingPage from './pages/testingPage';
+import PlayerEditPage from './pages/admin/dataEditingPages/playerEdit';
+import TeamEditPage from './pages/admin/dataEditingPages/teamEdit';
+import MatchEditPage from './pages/admin/dataEditingPages/matchEdit';
+import CompetitionEditPage from './pages/admin/dataEditingPages/competitionEdit';
 
 
 export const ProtectedRoute = ({children}) => {
   // temporay dev test code
-  //return children;
+  return children;
   // --------------------
   const {isAuthenticated, isCheckingAuth} = useAuthStore();
 
@@ -33,7 +37,7 @@ export const ProtectedRoute = ({children}) => {
 
 export const RedirectAuthenticated = ({children}) => {
   // temporay dev test code
-  //return children;
+  return children;
   // --------------------
   const {isAuthenticated} = useAuthStore();
   if(isAuthenticated){
@@ -50,11 +54,12 @@ export const adminRoutes = (role) => {
     
     
     <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/referee' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/team' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/player' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/match' element={<ProtectedRoute><MatchEditPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/referee' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/team' element={<ProtectedRoute><TeamEditPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/player' element={<ProtectedRoute><PlayerEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/competition' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/competition' element={<ProtectedRoute><CompetitionEditPage role={role}/></ProtectedRoute>}/>
     </>
   );
 }
