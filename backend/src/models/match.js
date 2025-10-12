@@ -16,9 +16,6 @@ const matchSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    location: {
-        type: String,
-    },
     //arena object
     arena: {
         type: mongoose.Schema.Types.ObjectId,

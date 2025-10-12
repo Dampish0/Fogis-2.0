@@ -16,8 +16,39 @@ import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refe
 
 
 const theme = createTheme({
+    components: {
+    // ...existing code...
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+        },
+        input: { color: 'white' },
+        notchedOutline: { borderColor: 'white' },
+      },
+    },
+    // Add this for MUI X pickers
+    MuiPickersTextField: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+          '& .MuiInputLabel-root': { color: 'white' },
+          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
+          '& .MuiSvgIcon-root': { color: 'white' },
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'white',
+          },
+        },
+      },
+    }, 
+  },
   typography: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto', 
   },
 });
 

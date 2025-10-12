@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
 //soccer
 const refereeSchema = new mongoose.Schema({
+    name:{
+        type: String,
+        required: true,
+    },
+    dateOfBirth:{
+        type: Date,
+        required: true,
+    },
     suspended:{
         type: Boolean,
         default: false,

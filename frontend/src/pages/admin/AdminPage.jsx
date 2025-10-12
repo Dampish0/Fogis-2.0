@@ -41,7 +41,7 @@ const AdminPage = (props) => {
 
               <Link to="/admin/player" style={{ textDecoration: 'none' }}><div  className='Card'
                 style={{ marginRight: "1vw",
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
               
                   ,backgroundImage: `url(${playerHantering})`,
               }}>
@@ -53,7 +53,7 @@ const AdminPage = (props) => {
                 </div></Link>
                 <Link to="/admin/club" style={{ textDecoration: 'none' }}><div className='Card'
                 style={{
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
                                 ,backgroundImage: `url(${clubHantering})`,
                 }}>
                   <div style={{marginLeft: "5%", marginBottom: "100%", display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'end', height: '95%'}}>
@@ -65,7 +65,7 @@ const AdminPage = (props) => {
 
               <Link to="/admin/match" style={{ textDecoration: 'none' }}><div className='Card'
                 style={{
-                        borderRadius: '30px', width: '30vw', height: '40vh'
+                         width: '30vw', height: '40vh'
                 
                     ,backgroundImage: `url(${matchHantering})`,
                 }}>
@@ -81,7 +81,7 @@ const AdminPage = (props) => {
                 <Link to="/admin/referee" style={{ textDecoration: 'none' }}>
                     <div className='Card'
                       style={{ marginRight: "1vw",
-                              borderRadius: '30px', width: '14.5vw', height: '20vh'
+                               width: '14.5vw', height: '20vh'
                       
                         , backgroundImage: `url(${reportHantering})`,
                       }}>
@@ -98,7 +98,7 @@ const AdminPage = (props) => {
 
                 <div className='Card'
                 style={{
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
                   , backgroundImage: `url(${teamHantering})`,
 
                 }}>
@@ -124,7 +124,7 @@ const AdminPage = (props) => {
 
                 <div className='Card'
                 style={{
-                        borderRadius: '30px', width: '30vw', height: '40vh'
+                         width: '30vw', height: '40vh'
                   , backgroundImage: `url(${tavlingHantering})`,
                 }}>
                   <div style={{marginLeft: "5%", marginBottom: "100%", display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'end', height: '95%'}}>
@@ -139,7 +139,7 @@ const AdminPage = (props) => {
 
                 <div className='Card'
                 style={{ marginRight: "1vw",
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
                 
                   , backgroundImage: `url(${refereeHantering})`,
                 }}>
@@ -154,7 +154,7 @@ const AdminPage = (props) => {
                 <Link to="/admin/team" style={{ textDecoration: 'none' }}>
                 <div className='Card'
                 style={{
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
                   , backgroundImage: `url(${teamHantering})`,
 
                 }}>
@@ -174,7 +174,7 @@ const AdminPage = (props) => {
               <Link to="/admin/player" style={{ textDecoration: 'none' }}>
               <div className='Card'
                 style={{ marginRight: "1vw",
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
               
                   ,backgroundImage: `url(${arenaHantering})`,
               }}>
@@ -189,7 +189,7 @@ const AdminPage = (props) => {
 
                 <div className='Card'
                 style={{
-                        borderRadius: '30px', width: '14.5vw', height: '20vh'
+                         width: '14.5vw', height: '20vh'
                                 ,backgroundImage: `url(${playerHantering})`,
                 }}>
                   <div style={{marginLeft: "5%", marginBottom: "100%", display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'end', height: '95%'}}>
