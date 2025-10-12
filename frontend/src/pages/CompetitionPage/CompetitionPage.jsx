@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/Navbar/NavBar";
 import { Container, Typography, List, ListItemButton, ListItemText } from "@mui/material";
+import AnimatedContent  from '../../components/AnimatedContent'
 import CompetitionDetails from "./CompetitionDetails"; 
 import "./CompetitionPage.css";
+import "./GlassyButton.css"
 
 const seriesData = [
   { id: 1, name: "Division 1 Norra" },
@@ -84,53 +86,57 @@ if (selection) {
   return (
     <div className="page">
       <NavBar />
-
-      <div className="titleBadge">
-        <Typography variant="h4" className="titleText">
-          Tävlingar
-        </Typography>
+      
+      <div className="banner">
+        <div className="banner-left"></div>
+        <div className="banner-right">
+          <AnimatedContent>
+          <h1 className="banner-title">Tävlingar</h1>
+          </AnimatedContent>
+      </div> 
       </div>
 
       <Container maxWidth="lg" className="content">
         <div className="twoCol">
           <section className="left">
             <Typography variant="h5" className="sectionTitle">Serier</Typography>
-
+            <AnimatedContent>
             <List className="list" aria-label="Lista över serier">
               {seriesData.map((s, idx) => (
                 <li key={s.id} className="listRow">
-                  <ListItemButton
-                    className="listItem"
-                    onClick={() => openSeries(s)}
-                    disableRipple disableTouchRipple disableFocusRipple
-                  >
-                    <ListItemText primary={<span className="rowTitle">{s.name}</span>} />
-                  </ListItemButton>
+                  <div className ="button-wrap">
+                    <div className="button-shadow"></div>
+                    <button className ="glassy-btn" onClick={() => openSeries(s)}>
+                      <span>{s.name}</span>
+                    </button>
+                  </div>
                   {idx !== seriesData.length - 1 && <div className="rowDivider" />}
                 </li>
               ))}
             </List>
+            </AnimatedContent>
           </section>
         
           <div className="mid" aria-hidden="true" />
 
           <section className="right">
             <Typography variant="h5" className="sectionTitle">Cuper</Typography>
-
+            <AnimatedContent>
             <List className="list" aria-label="Lista över cuper">
               {cupsData.map((c, idx) => (
                 <li key={c.id} className="listRow">
-                  <ListItemButton
-                    className="listItem"
-                    onClick={() => openCup(c)}
-                    disableRipple disableTouchRipple disableFocusRipple
-                  >
-                    <ListItemText primary={<span className="rowTitle">{c.name}</span>} />
-                  </ListItemButton>
+                  <div className ="button-wrap">
+                    <div className="button-shadow"></div>
+                    <button className ="glassy-btn" onClick={() => openSeries(c)}>
+                      <span>{c.name}</span>
+                    </button>
+                  </div>
                   {idx !== cupsData.length - 1 && <div className="rowDivider" />}
                 </li>
               ))}
             </List>
+            </AnimatedContent>
+            
           </section>
         </div>
       </Container>
