@@ -13,7 +13,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import useMatchStore from '../store/matchStore.js'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import landscape from '../assets/landscape.png'
 
 
 export const MatcherPage = () => {
@@ -79,7 +78,7 @@ export const MatcherPage = () => {
 
 
     return (
-        <div style={{overflow:"hidden", backgroundImage: `url(${landscape})`, backgroundSize: "cover" }}>
+        <div style={{overflow:"hidden", backgroundColor:'white'}}>
             <NavBar />
             <div>
                 <MatchDetails events={match?.events} match={match}
