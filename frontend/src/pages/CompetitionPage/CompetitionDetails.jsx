@@ -1,31 +1,58 @@
 import React, { useEffect, useMemo } from "react";
-import {Box, Typography, List, ListItemButton, ListItemText, Divider, Button, Alert, CircularProgress,} from "@mui/material";
+import {
+  Box,
+  Typography,
+  List,
+  ListItemButton,
+  ListItemText,
+  Divider,
+  Button,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import "./CompetitionDetails.css";
 import useSeriesStore from "../../store/seriesStore.js";
 
 export default function CompetitionDetails({ type, id, name, onBack }) {
-  const {
-    fetchSeriesById,
-    selectedSeries,
-    loading,
-    error,
-  } = useSeriesStore();
+  const { fetchSeriesById, selectedSeries, loading, error } = useSeriesStore();
 
-  
+
   useEffect(() => {
     if (type === "series" && id) {
       fetchSeriesById(id);
     }
   }, [type, id, fetchSeriesById]);
 
-  
-  const getSerieName = (s) => s?.name ?? s?.title ?? s?.serieName ?? name ?? `#${id}`;
 
+  const getSerieName = (s) => s?.name ?? s?.title ?? s?.serieName ?? name ?? `#${id}`;
 
   const displayName = useMemo(() => {
     if (type === "series" && selectedSeries) return getSerieName(selectedSeries);
     return name ?? `#${id}`;
   }, [type, selectedSeries, name, id]);
+
+
+  const formatDateTime = (iso) => {
+    if (!iso) return "";
+    const d = new Date(iso);
+    const date = d.toISOString().slice(0, 10); 
+    const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    return `${time}, ${date}`;
+  };
+
+ 
+  const sortedTable = useMemo(() => {
+    const t = selectedSeries?.table ?? [];
+    return t
+      .slice()
+      .sort((a, b) => {
+        const p = (b.points ?? 0) - (a.points ?? 0);
+        if (p !== 0) return p;
+        const bDiff = (b.goalsFor ?? 0) - (b.goalsAgainst ?? 0);
+        const aDiff = (a.goalsFor ?? 0) - (a.goalsAgainst ?? 0);
+        return bDiff - aDiff;
+      });
+  }, [selectedSeries]);
 
   const handleSideClick = (key) => {
     console.log("Sidomeny klick:", key);
@@ -47,7 +74,11 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
                   <Typography variant="body2">Laddar serie…</Typography>
                 </Box>
               )}
-              {error && <Alert severity="error">Kunde inte hämta serie: {String(error)}</Alert>}
+              {error && (
+                <Alert severity="error">
+                  Kunde inte hämta serie: {String(error)}
+                </Alert>
+              )}
             </Box>
           )}
 
@@ -55,11 +86,22 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
             Senaste matcherna
           </Typography>
           <div className="matchesPlaceholder">
-            <div className="matchRow">Lag A 2–1 Lag B • 13:00, 2025-08-10</div>
-            <div className="matchRow">Lag C 0–0 Lag D • 13:00, 2025-08-03</div>
-            <div className="matchRow">Lag E 1–3 Lag F • 13:00, 2025-07-28</div>
+            {selectedSeries?.matches?.length ? (
+              selectedSeries.matches
+                .slice() 
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3) 
+                .map((m, i) => (
+                  <div key={`${m.homeTeam}-${m.awayTeam}-${i}`} className="matchRow">
+                    {m.homeTeam} {m.homeGoals ?? "-"}–{m.awayGoals ?? "-"} {m.awayTeam} • {formatDateTime(m.date)}
+                  </div>
+                ))
+            ) : (
+              <div className="matchRow">Inga matcher ännu.</div>
+            )}
           </div>
 
+         
           <div className="tableSection">
             <Typography variant="h6" className="tableTitle">
               Tabell
@@ -81,22 +123,42 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td><td>Lag A</td><td>10</td><td>7</td><td>2</td><td>1</td><td>20</td><td>9</td><td>+11</td><td>23</td>
-                  </tr>
-                  <tr>
-                    <td>2</td><td>Lag B</td><td>10</td><td>6</td><td>3</td><td>1</td><td>18</td><td>10</td><td>+8</td><td>21</td>
-                  </tr>
-                  <tr>
-                    <td>3</td><td>Lag C</td><td>10</td><td>6</td><td>1</td><td>3</td><td>15</td><td>11</td><td>+4</td><td>19</td>
-                  </tr>
+                  {sortedTable?.length ? (
+                    sortedTable.map((t, idx) => {
+                      const gf = t.goalsFor ?? 0;
+                      const ga = t.goalsAgainst ?? 0;
+                      const diff = gf - ga;
+                      return (
+                        <tr key={`${t.name}-${idx}`}>
+                          <td>{idx + 1}</td>
+                          <td>{t.name}</td>
+                          <td>{t.played ?? 0}</td>
+                          <td>{t.wins ?? 0}</td>
+                          <td>{t.draws ?? 0}</td>
+                          <td>{t.losses ?? 0}</td>
+                          <td>{gf}</td>
+                          <td>{ga}</td>
+                          <td>{diff > 0 ? `+${diff}` : diff}</td>
+                          <td>{t.points ?? 0}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan={10} style={{ textAlign: "center" }}>
+                        Ingen tabell tillgänglig.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
 
           <Box sx={{ mt: 3 }}>
-            <Button variant="outlined" onClick={onBack}>⟵ Tillbaka</Button>
+            <Button variant="outlined" onClick={onBack}>
+              ⟵ Tillbaka
+            </Button>
           </Box>
         </div>
 
