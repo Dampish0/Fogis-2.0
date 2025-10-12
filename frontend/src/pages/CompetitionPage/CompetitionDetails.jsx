@@ -181,11 +181,6 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
                   <ListItemText primary="Spelarstatistik" />
                 </ListItemButton>
               </li>
-              <li>
-                <ListItemButton className="sidebarItem" onClick={() => console.log("team-stats")}>
-                  <ListItemText primary="Lagstatistik" />
-                </ListItemButton>
-              </li>
             </List>
           </div>
         </aside>
