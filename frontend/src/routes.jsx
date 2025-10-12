@@ -87,7 +87,7 @@ export const trainerRoutes = (role) => {
 export const standardRoutes = () => {
     return (
       <>
-        <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
+            <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
             <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
             <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
             <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>

@@ -43,7 +43,7 @@ const AdminRefereePage = (props) => {
                 }}>
                   <div style={{marginLeft: "5%", marginBottom: "100%", display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'end', height: '95%'}}>
                     <Typography variant='h8' style={{color: 'white', paddingTop: '2vh'}}>Lägg till eller ändra match data.</Typography>
-                    <Typography variant='h4' style={{color: 'white'}}>Hantera match</Typography>
+                    <Typography variant='h4' style={{color: 'white'}}>Hantera matchrapporter</Typography>
                   </div>
 
                 </div>
