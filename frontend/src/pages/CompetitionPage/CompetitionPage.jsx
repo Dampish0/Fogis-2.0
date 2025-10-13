@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import NavBar from "../../components/Navbar/NavBar";
-import {
-  Container, Typography, List, ListItemButton, ListItemText,
-  CircularProgress, Alert
-} from "@mui/material";
-import CompetitionDetails from "./CompetitionDetails";
+import { Container, Typography, List, CircularProgress, Alert } from "@mui/material";
+import AnimatedContent  from '../../components/AnimatedContent';
+import CompetitionDetails from "./CompetitionDetails"; 
 import "./CompetitionPage.css";
-import useSeriesStore from "../../store/seriesStore.js";
+import "./GlassyButton.css";
+import useSeriesStore from "../../store/seriesStore.js"
 
 const cupsData = [
   { id: "c1", name: "Svenska Cupen" },
@@ -17,11 +16,11 @@ const cupsData = [
 
 const CompetitionPage = () => {
   const [selection, setSelection] = useState(null);
-
+  
   const {
-    fetchSeries,
+    fetchSeries, 
     seriesList,
-    loading: seriesLoading,
+    loading : seriesLoading,
     error: seriesError,
   } = useSeriesStore();
 
@@ -34,7 +33,9 @@ const CompetitionPage = () => {
     const type = params.get("type");
     const id   = params.get("id");
     const name = params.get("name");
-    if (type && id) setSelection({ type, id, name });
+    if (type && id) {
+      setSelection({ type, id, name });
+    }
   }, []);
 
   useEffect(() => {
@@ -59,9 +60,9 @@ const CompetitionPage = () => {
   const openSeries = (item) => {
     const id = String(item._id ?? item.id);
     const name = getSerieName(item);
-    const sel = { type: "series", id, name };
+    const sel = { type: "series", id, name};
     setSelection(sel);
-    window.history.pushState(sel, "", `/tavlingdetail?type=series&id=${id}&name=${encodeURIComponent(name)}`);
+    window.history.pushState(sel, "", `/tavlingdetail?type=series&id=${id}&name=${encodeURIComponent(name)}`)
   };
 
   const openCup = (item) => {
@@ -69,7 +70,7 @@ const CompetitionPage = () => {
     setSelection(sel);
     window.history.pushState(sel, "", `/tavlingdetail?type=cup&id=${item.id}&name=${encodeURIComponent(item.name)}`);
   };
-
+ 
   if (selection) {
     return (
       <div className="page">
@@ -89,9 +90,15 @@ const CompetitionPage = () => {
   return (
     <div className="page">
       <NavBar />
-
-      <div className="titleBadge">
-        <Typography variant="h4" className="titleText">Tävlingar</Typography>
+      
+      <div className="banner">
+        <div className="banner-left"></div>
+        <div className="banner-right">
+          <AnimatedContent>
+            <h1 className="banner-title">Tävlingar</h1>
+          </AnimatedContent>
+          
+        </div> 
       </div>
 
       <Container maxWidth="lg" className="content">
@@ -112,52 +119,49 @@ const CompetitionPage = () => {
             )}
 
             {!seriesLoading && !seriesError && (
-              <List className="list" aria-label="Lista över serier">
-                {series.length === 0 ? (
-                  <li className="listRow" style={{ opacity: 0.8, padding: "8px 0" }}>
-                    Inga serier hittades.
-                  </li>
-                ) : (
-                  series.map((s, idx) => (
-                    <li key={s._id ?? s.id ?? idx} className="listRow">
-                      <ListItemButton
-                        className="listItem"
-                        onClick={() => openSeries(s)}
-                        disableRipple
-                        disableTouchRipple
-                        disableFocusRipple
-                      >
-                        <ListItemText primary={<span className="rowTitle">{getSerieName(s)}</span>} />
-                      </ListItemButton>
-                      {idx !== series.length - 1 && <div className="rowDivider" />}
+              <AnimatedContent>
+                <List className="list" aria-label="Lista över serier">
+                  {series.length === 0 ? (
+                    <li className="listRow" style={{ opacity: 0.8, padding: "8px 0" }}>
+                      Inga serier hittades.
                     </li>
-                  ))
-                )}
-              </List>
+                  ) : (
+                    series.map((s, idx) => (
+                      <li key={s._id ?? s.id ?? idx} className="listRow">
+                        <div className="button-wrap">
+                          <div className="button-shadow"></div>
+                          <button className="glassy-btn" onClick={() => openSeries(s)}>
+                            <span>{getSerieName(s)}</span>
+                          </button>
+                        </div>
+                        {idx !== series.length - 1 && <div className="rowDivider" />}
+                      </li>
+                    ))
+                  )}
+                </List>
+              </AnimatedContent>
             )}
           </section>
-
+        
           <div className="mid" aria-hidden="true" />
 
           <section className="right">
             <Typography variant="h5" className="sectionTitle">Cuper</Typography>
-
-            <List className="list" aria-label="Lista över cuper">
-              {cupsData.map((c, idx) => (
-                <li key={c.id} className="listRow">
-                  <ListItemButton
-                    className="listItem"
-                    onClick={() => openCup(c)}
-                    disableRipple
-                    disableTouchRipple
-                    disableFocusRipple
-                  >
-                    <ListItemText primary={<span className="rowTitle">{c.name}</span>} />
-                  </ListItemButton>
-                  {idx !== cupsData.length - 1 && <div className="rowDivider" />}
-                </li>
-              ))}
-            </List>
+            <AnimatedContent>
+              <List className="list" aria-label="Lista över cuper">
+                {cupsData.map((c, idx) => (
+                  <li key={c.id} className="listRow">
+                    <div className="button-wrap">
+                      <div className="button-shadow"></div>
+                      <button className="glassy-btn" onClick={() => openCup(c)}>
+                        <span>{c.name}</span>
+                      </button>
+                    </div>
+                    {idx !== cupsData.length - 1 && <div className="rowDivider" />}
+                  </li>
+                ))}
+              </List>
+            </AnimatedContent>
           </section>
         </div>
       </Container>
