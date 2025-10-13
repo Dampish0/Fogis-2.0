@@ -145,7 +145,7 @@ export async function getMatchById(req, res)
         // }],
     try{
         const matchId = req.params.id;
-        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees homeTeamLineup.player awayTeamLineup.player');
+        const match = await Match.findById(matchId).populate('homeTeam awayTeam arena referees homeTeamLineup.player awayTeamLineup.player referees.referee');
         //for more efficieny in the future we should do specific populates
         // .populate('homeTeam awayTeam arena referees', 'location name imageUrl logoUrl players');
 

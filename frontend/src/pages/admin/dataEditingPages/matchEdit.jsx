@@ -148,9 +148,17 @@ const MatchEditPage = (props) => {
         }
     };
 
+    const handleTeamSelected2 = (isHome, event, value) => {
+        if (isHome) {
+            setHomeTeam(value);
+            console.log(value);
+        } else {
+            setAwayTeam(value);
+        }
+    };
+
     useEffect(() => {
         const teamOptionsCopy = [];
-        console.log(teams); 
         teams.map((team, index) => {
             const data = {label: `${team.name}`, id: team._id, key: index};
             teamOptionsCopy.push(data);
@@ -160,7 +168,6 @@ const MatchEditPage = (props) => {
 
     useEffect(() => {
         const seriesOptionsCopy = [];
-        console.log(seriesList);
         seriesList.map((serie, index) => {
             const data = {label: `${serie.name} (${serie.level})`, id: serie._id, key: index};
             seriesOptionsCopy.push(data);
@@ -170,7 +177,6 @@ const MatchEditPage = (props) => {
 
     useEffect(() => {
         const arenaOptionsCopy = [];
-        console.log(arenas);
         arenas.map((arena, index) => {
             const data = {label: `${arena.name}`, id: arena._id, key: index};
             arenaOptionsCopy.push(data);
@@ -180,7 +186,6 @@ const MatchEditPage = (props) => {
 
     useEffect(() => {
         const refereeOptionsCopy = [];
-        console.log(referees);
         referees.map((referee, index) => {
             const data = {label: `${referee.name} (${referee.PreferedRefereeType})`, refDOB: referee.dateOfBirth, preferedRefereeType: referee.PreferedRefereeType, DOB: new Date(referee.dateOfBirth).toLocaleDateString(), id: referee._id, key: index};
             refereeOptionsCopy.push(data);
@@ -329,7 +334,7 @@ const MatchEditPage = (props) => {
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={teamOptions}
                     sx={{ width: "80%" }} 
-                    onInputChange={(e, value) => HandleTeamSelected(true, e)}
+                    onInputChange={(e, value) => handleTeamSelected2(true, e, value)}
                     loading={loading}
                     
                         renderOption={(props, option) => (
@@ -344,7 +349,7 @@ const MatchEditPage = (props) => {
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={teamOptions}
                     sx={{ width: "80%", marginTop: '2vh', marginBottom: '2vh' }} 
-                    onInputChange={(e, value) => HandleTeamSelected(false, e)}
+                    onInputChange={(e, value) => handleTeamSelected2(false, e, value)}
                     loading={loading}
                     
                         renderOption={(props, option) => (
@@ -375,7 +380,7 @@ const MatchEditPage = (props) => {
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={arenaOptions}
                     sx={{ width: "80%", marginTop: '2vh', marginBottom: '2vh' }} 
-                    onInputChange={(e, value) => setSelectedArena(arenaOptions[e.target.value])}
+                    onInputChange={(e, value) => setSelectedArena(value )}
                     loading={loading}
                     renderOption={(props, option) => (
                         <li {...props} key={option.key}>
@@ -389,8 +394,9 @@ const MatchEditPage = (props) => {
                     value={selectedReferee}
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={refereeOptions}
+                    
                     sx={{ width: "80%", marginBottom: '2vh' }} 
-                    onInputChange={(e, value, v) => setSelectedReferee(refereeOptions[e.target.value])}
+                    onInputChange={(e, value, v) => setSelectedReferee(value)}
                     loading={loading}
                     
                         renderOption={(props, option) => (
@@ -402,19 +408,19 @@ const MatchEditPage = (props) => {
                     />
 
                     <Autocomplete
-                    value={selectedReferee}
+                    value={selectedSeries}
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
-                    options={refereeOptions}
+                    options={seriesOptions}
                     sx={{ width: "80%", marginBottom: '2vh' }} 
-                    onInputChange={(e, value) => setSelectedReferee(refereeOptions[e.target.value])}
+                    onInputChange={(e, value) => setSelectedSeries(value)}
                     loading={loading}
                     
                         renderOption={(props, option) => (
                         <li {...props} key={option.key}>
-                            {option.label} <span style={{ marginLeft: 'auto', color: '#ccc', fontSize: '0.9em' }}>{new Date(option.refDOB).toLocaleDateString()}</span>
+                            {option.label} (<span style={{ marginLeft: 'auto', color: '#ccc', fontSize: '0.9em' }}>{new Date(option.startDate).toLocaleDateString()}</span>)
                         </li>
                     )}
-                    renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchReferees)} label="Välj domare" />}
+                    renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchReferees)} label="Välj serie" />}
                     />
 
                 <Button variant='contained' onClick={() => handleUpdateMatch()} style={{backgroundColor: colors.green[700]}}>{matchloading && <CircularProgress size={24} />}{!matchloading && "Uppdatera Match"}</Button>
