@@ -24,8 +24,6 @@ const AdminRefereePage = (props) => {
     }}>
 
     <Navbar/>
-
-
       <div
       style={{display: 'flex', marginTop: '74px', justifyContent: 'center', flexDirection: 'row',
   
@@ -83,25 +81,16 @@ const AdminRefereePage = (props) => {
             </div>
   
 
-
-
-
-
           </div>
 
     
     
       </div>
    
-   
-   
               <div style={{height: '10vh'}}>
 
               </div>
    
-   
-
-
               <PageFooter />
     </div>
   )

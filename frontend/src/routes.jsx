@@ -16,7 +16,8 @@ import PlayerEditPage from './pages/admin/dataEditingPages/playerEdit';
 import TeamEditPage from './pages/admin/dataEditingPages/teamEdit';
 import MatchEditPage from './pages/admin/dataEditingPages/matchEdit';
 import CompetitionEditPage from './pages/admin/dataEditingPages/competitionEdit';
-
+import RefereeAccountPage from './pages/admin/dataEditingPages/RefereeAccountPage';
+import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchReport';
 
 export const ProtectedRoute = ({children}) => {
   // temporay dev test code
@@ -68,7 +69,8 @@ export const refereeRoutes = (role) => {
   return (
     <>
     <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/match' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/match' element={<ProtectedRoute><RefereeMatchReport role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/referee' element={<ProtectedRoute><RefereeAccountPage role={role}/></ProtectedRoute>}/>
     </>
   );
 }
@@ -79,7 +81,7 @@ export const trainerRoutes = (role) => {
     <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/team' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/player' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/player' element={<ProtectedRoute><refereeMatchReport role={role}/></ProtectedRoute>}/>
     </>
   );
 }
