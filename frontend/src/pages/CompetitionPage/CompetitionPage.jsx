@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import NavBar from "../../components/Navbar/NavBar";
-import { Container, Typography, List, ListItemButton, ListItemText } from "@mui/material";
-import AnimatedContent  from '../../components/AnimatedContent'
+import { Container, Typography, List, CircularProgress, Alert } from "@mui/material";
+import AnimatedContent  from '../../components/AnimatedContent';
 import CompetitionDetails from "./CompetitionDetails"; 
 import "./CompetitionPage.css";
-import "./GlassyButton.css"
-
-const seriesData = [
-  { id: 1, name: "Division 1 Norra" },
-  { id: 2, name: "Division 2 Södra" },
-  { id: 3, name: "Division 3 Västra" },
-  { id: 4, name: "Division 4 Östra" },
-];
+import "./GlassyButton.css";
+import useSeriesStore from "../../store/seriesStore.js"
 
 const cupsData = [
   { id: "c1", name: "Svenska Cupen" },
@@ -21,9 +15,18 @@ const cupsData = [
 ];
 
 const CompetitionPage = () => {
-
   const [selection, setSelection] = useState(null);
+  
+  const {
+    fetchSeries, 
+    seriesList,
+    loading : seriesLoading,
+    error: seriesError,
+  } = useSeriesStore();
 
+  useEffect(() => {
+    fetchSeries();
+  }, [fetchSeries]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -34,19 +37,6 @@ const CompetitionPage = () => {
       setSelection({ type, id, name });
     }
   }, []);
-
-  const openSeries = (item) => {
-    const sel = { type: "series", id: String(item.id), name: item.name };
-    setSelection(sel);
-    window.history.pushState(sel, "", `/tavlingdetail?type=series&id=${item.id}&name=${encodeURIComponent(item.name)}`);
-  };
-
-  const openCup = (item) => {
-    const sel = { type: "cup", id: String(item.id), name: item.name };
-    setSelection(sel);
-    window.history.pushState(sel, "", `/tavlingdetail?type=cup&id=${item.id}&name=${encodeURIComponent(item.name)}`);
-  };
-
 
   useEffect(() => {
     const onPop = () => {
@@ -64,25 +54,39 @@ const CompetitionPage = () => {
     window.history.pushState({}, "", "/tavlingar");
   };
 
- 
+  const getSerieName = (s) => s?.name ?? s?.title ?? s?.serieName ?? "Okänd serie";
+  const series = useMemo(() => (Array.isArray(seriesList) ? seriesList : []), [seriesList]);
 
-if (selection) {
-  return (
-    <div className="page">
-      <NavBar />
-      <Container maxWidth="lg" className="content content--details">
-        <CompetitionDetails
-          type={selection.type}
-          id={selection.id}
-          name={selection.name}
-          onBack={handleBack}
-        />
-      </Container>
-    </div>
-  );
-}
+  const openSeries = (item) => {
+    const id = String(item._id ?? item.id);
+    const name = getSerieName(item);
+    const sel = { type: "series", id, name};
+    setSelection(sel);
+    window.history.pushState(sel, "", `/tavlingdetail?type=series&id=${id}&name=${encodeURIComponent(name)}`)
+  };
 
+  const openCup = (item) => {
+    const sel = { type: "cup", id: String(item.id), name: item.name };
+    setSelection(sel);
+    window.history.pushState(sel, "", `/tavlingdetail?type=cup&id=${item.id}&name=${encodeURIComponent(item.name)}`);
+  };
  
+  if (selection) {
+    return (
+      <div className="page">
+        <NavBar />
+        <Container maxWidth="lg" className="content content--details">
+          <CompetitionDetails
+            type={selection.type}
+            id={selection.id}
+            name={selection.name}
+            onBack={handleBack}
+          />
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <NavBar />
@@ -91,30 +95,52 @@ if (selection) {
         <div className="banner-left"></div>
         <div className="banner-right">
           <AnimatedContent>
-          <h1 className="banner-title">Tävlingar</h1>
+            <h1 className="banner-title">Tävlingar</h1>
           </AnimatedContent>
-      </div> 
+          
+        </div> 
       </div>
 
       <Container maxWidth="lg" className="content">
         <div className="twoCol">
           <section className="left">
             <Typography variant="h5" className="sectionTitle">Serier</Typography>
-            <AnimatedContent>
-            <List className="list" aria-label="Lista över serier">
-              {seriesData.map((s, idx) => (
-                <li key={s.id} className="listRow">
-                  <div className ="button-wrap">
-                    <div className="button-shadow"></div>
-                    <button className ="glassy-btn" onClick={() => openSeries(s)}>
-                      <span>{s.name}</span>
-                    </button>
-                  </div>
-                  {idx !== seriesData.length - 1 && <div className="rowDivider" />}
-                </li>
-              ))}
-            </List>
-            </AnimatedContent>
+
+            {seriesLoading && (
+              <div style={{ padding: 8 }}>
+                <CircularProgress size={24} /> Laddar serier…
+              </div>
+            )}
+
+            {seriesError && (
+              <Alert severity="error" sx={{ mb: 1 }}>
+                Kunde inte hämta serier: {String(seriesError)}
+              </Alert>
+            )}
+
+            {!seriesLoading && !seriesError && (
+              <AnimatedContent>
+                <List className="list" aria-label="Lista över serier">
+                  {series.length === 0 ? (
+                    <li className="listRow" style={{ opacity: 0.8, padding: "8px 0" }}>
+                      Inga serier hittades.
+                    </li>
+                  ) : (
+                    series.map((s, idx) => (
+                      <li key={s._id ?? s.id ?? idx} className="listRow">
+                        <div className="button-wrap">
+                          <div className="button-shadow"></div>
+                          <button className="glassy-btn" onClick={() => openSeries(s)}>
+                            <span>{getSerieName(s)}</span>
+                          </button>
+                        </div>
+                        {idx !== series.length - 1 && <div className="rowDivider" />}
+                      </li>
+                    ))
+                  )}
+                </List>
+              </AnimatedContent>
+            )}
           </section>
         
           <div className="mid" aria-hidden="true" />
@@ -122,21 +148,20 @@ if (selection) {
           <section className="right">
             <Typography variant="h5" className="sectionTitle">Cuper</Typography>
             <AnimatedContent>
-            <List className="list" aria-label="Lista över cuper">
-              {cupsData.map((c, idx) => (
-                <li key={c.id} className="listRow">
-                  <div className ="button-wrap">
-                    <div className="button-shadow"></div>
-                    <button className ="glassy-btn" onClick={() => openSeries(c)}>
-                      <span>{c.name}</span>
-                    </button>
-                  </div>
-                  {idx !== cupsData.length - 1 && <div className="rowDivider" />}
-                </li>
-              ))}
-            </List>
+              <List className="list" aria-label="Lista över cuper">
+                {cupsData.map((c, idx) => (
+                  <li key={c.id} className="listRow">
+                    <div className="button-wrap">
+                      <div className="button-shadow"></div>
+                      <button className="glassy-btn" onClick={() => openCup(c)}>
+                        <span>{c.name}</span>
+                      </button>
+                    </div>
+                    {idx !== cupsData.length - 1 && <div className="rowDivider" />}
+                  </li>
+                ))}
+              </List>
             </AnimatedContent>
-            
           </section>
         </div>
       </Container>

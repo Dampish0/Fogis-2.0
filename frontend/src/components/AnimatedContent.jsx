@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -16,25 +16,39 @@ const AnimatedContent = ({
   scale = 0.3,
   threshold = 0.1,
   delay = 0.2,
-  onComplete
+  onComplete,
+  // valfria förbättringar
+  once = true,
+  rootMargin = '0px 0px -10% 0px',
+  scroller = null, // sätt till en scrollcontainer (Element/selector) om du inte scrollar på window
 }) => {
   const ref = useRef(null);
+  const tweenRef = useRef(null); // spara vår tween/trigger
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // ev. scroller-element
+    let scrollerEl = scroller;
+    if (typeof scroller === 'string') {
+      scrollerEl = document.querySelector(scroller);
+    }
 
     const axis = direction === 'horizontal' ? 'x' : 'y';
     const offset = reverse ? -distance : distance;
     const startPct = (1 - threshold) * 100;
 
+    // initial state
     gsap.set(el, {
       [axis]: offset,
       scale,
-      opacity: animateOpacity ? initialOpacity : 1
+      opacity: animateOpacity ? initialOpacity : 1,
+      willChange: 'transform, opacity',
     });
 
-    gsap.to(el, {
+    // skapa tween + ScrollTrigger för endast detta element
+    const tween = gsap.to(el, {
       [axis]: 0,
       scale: 1,
       opacity: 1,
@@ -46,14 +60,35 @@ const AnimatedContent = ({
         trigger: el,
         start: `top ${startPct}%`,
         toggleActions: 'play none none none',
-        once: true
-      }
+        once,
+        invalidateOnRefresh: true,
+        // scroller används bara om det finns
+        ...(scrollerEl ? { scroller: scrollerEl } : {}),
+        // Gör trigger lite mer tolerant om layout hoppar
+        // markers: true, // (debugga vid behov)
+      },
     });
 
+    tweenRef.current = tween;
+
+    // Vänta till nästa frame innan refresh så alla instanser hinner mounta
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    // cleanup: döda bara VÅR tween/trigger, inte alla globalt
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      if (tweenRef.current) {
+        const st = tweenRef.current.scrollTrigger;
+        st && st.kill();
+        tweenRef.current.kill();
+        tweenRef.current = null;
+      }
       gsap.killTweensOf(el);
     };
+    // Viktigt: om du vill återskapa animationen vid prop-ändringar kan du ha props i deps;
+    // men håll den här listan kort för att undvika onödig recreate.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     distance,
     direction,
@@ -65,7 +100,10 @@ const AnimatedContent = ({
     scale,
     threshold,
     delay,
-    onComplete
+    onComplete,
+    once,
+    rootMargin,
+    scroller,
   ]);
 
   return <div ref={ref}>{children}</div>;
