@@ -3,6 +3,7 @@ import useClubStore from "../../../store/clubstore";
 import Navbar from "../../../components/navbar/Navbar";
 
 const PAGE_SIZE = 10;
+const API_URL = "http://localhost:5001";
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
@@ -12,6 +13,17 @@ function fileToBase64(file) {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+function formatTrainers(trainers) {
+  if (!Array.isArray(trainers) || trainers.length === 0) return "-";
+  const names = trainers
+    .map((t) => {
+      if (typeof t === "string") return t.slice(0, 6) + "…";
+      return t?.name || t?.email || (t?._id ? t._id.slice(0, 6) + "…" : "");
+    })
+    .filter(Boolean);
+  return names.length ? names.join(", ") : "-";
 }
 
 export default function TeamEditPage() {
@@ -27,7 +39,10 @@ export default function TeamEditPage() {
   } = useClubStore();
 
   const [page, setPage] = useState(1);
+
+
   const [filters, setFilters] = useState({ name: "", location: "", email: "" });
+
   const [form, setForm] = useState({
     _id: null,
     name: "",
@@ -140,215 +155,240 @@ export default function TeamEditPage() {
     <div style={{ minHeight: "100vh", backgroundColor: "#FFFFFF" }}>
       <Navbar />
       <div style={{ padding: 16, marginTop: 30 }}>
-      <h1 style={{ textAlign: "center", margin: 0, marginBottom: 16 }}>Hantera klubb</h1>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h1 style={{ textAlign: "center", margin: 0, marginBottom: 16 }}>
+            Hantera klubb
+          </h1>
 
-
-        <div style={{ marginBottom: 12 }}>
-          {error && (
-            <div style={{ color: "red", marginBottom: 8 }}>
-              Fel: {error} <button onClick={clearError}>x</button>
+          <fieldset style={{ marginBottom: 16 }}>
+            <legend>Filter</legend>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <input
+                placeholder="Namn"
+                value={filters.name}
+                onChange={(e) => {
+                  setFilters((f) => ({ ...f, name: e.target.value }));
+                  setPage(1);
+                }}
+              />
+              <input
+                placeholder="Ort"
+                value={filters.location}
+                onChange={(e) => {
+                  setFilters((f) => ({ ...f, location: e.target.value }));
+                  setPage(1);
+                }}
+              />
+              <input
+                placeholder="Email"
+                value={filters.email}
+                onChange={(e) => {
+                  setFilters((f) => ({ ...f, email: e.target.value }));
+                  setPage(1);
+                }}
+              />
+              <button onClick={() => setPage(1)}>Sök</button>
+              <button
+                onClick={() => {
+                  const empty = { name: "", location: "", email: "" };
+                  setFilters(empty);
+                  setPage(1);
+                }}
+              >
+                Nollställ
+              </button>
             </div>
-          )}
-          {loading && <div style={{ marginBottom: 8 }}>Laddar...</div>}
-        </div>
-
-        <fieldset style={{ marginBottom: 16 }}>
-          <legend>Filter</legend>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <input
-              placeholder="Namn"
-              value={filters.name}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, name: e.target.value }))
-              }
-            />
-            <input
-              placeholder="Ort"
-              value={filters.location}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, location: e.target.value }))
-              }
-            />
-            <input
-              placeholder="Email"
-              value={filters.email}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, email: e.target.value }))
-              }
-            />
-            <button onClick={() => setPage(1)}>Sök</button>
-            <button
-              onClick={() => {
-                setFilters({ name: "", location: "", email: "" });
-                setPage(1);
-              }}
-            >
-              Nollställ
-            </button>
-          </div>
-        </fieldset>
-
-        <form
-          onSubmit={form._id ? handleUpdate : handleCreate}
-          style={{ marginBottom: 24 }}
-        >
-          <fieldset
-            style={{
-              display: "grid",
-              gap: 8,
-              gridTemplateColumns: "repeat(2, minmax(220px, 1fr))",
-            }}
-          >
-            <legend>{form._id ? "Uppdatera klubb" : "Skapa ny klubb"}</legend>
-
-            <label>
-              Namn*
-              <input
-                required
-                value={form.name}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, name: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Tränare (komma-separerade id/namn)
-              <input
-                value={form.trainers}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, trainers: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Ort
-              <input
-                value={form.location}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, location: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Grundad (år/datum)
-              <input
-                value={form.established}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, established: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Telefon
-              <input
-                value={form.phoneNumber}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, phoneNumber: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Email*
-              <input
-                type="email"
-                required
-                value={form.email}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, email: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Adress
-              <input
-                value={form.adress}
-                onChange={(e) =>
-                  setForm((s) => ({ ...s, adress: e.target.value }))
-                }
-              />
-            </label>
-
-            <label>
-              Logotyp (PNG/JPG)
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setForm((s) => ({
-                    ...s,
-                    logoFile: e.target.files?.[0] || null,
-                  }))
-                }
-              />
-            </label>
           </fieldset>
 
-          <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
-            <button type="submit" disabled={loading}>
-              {form._id ? "Spara ändringar" : "Skapa klubb"}
-            </button>
-            {form._id && (
-              <button type="button" onClick={resetForm}>
-                Avbryt
-              </button>
-            )}
-          </div>
-        </form>
-
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ textAlign: "left" }}>
-              <th>ID</th>
-              <th>Namn</th>
-              <th>Ort</th>
-              <th>Email</th>
-              <th>Telefon</th>
-              <th>Grundad</th>
-              <th>Adress</th>
-              <th>Åtgärder</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clubs.map((c) => (
-              <tr key={c._id} style={{ borderTop: "1px solid #eee" }}>
-                <td>{c._id}</td>
-                <td>{c.name}</td>
-                <td>{c.location || "-"}</td>
-                <td>{c.email || "-"}</td>
-                <td>{c.phoneNumber || "-"}</td>
-                <td>{c.established || "-"}</td>
-                <td>{c.adress || "-"}</td>
-                <td style={{ display: "flex", gap: 8 }}>
-                  <button onClick={() => selectForEdit(c)}>Redigera</button>
-                  <button onClick={() => handleDelete(c._id)}>Ta bort</button>
-                </td>
-              </tr>
-            ))}
-            {clubs.length === 0 && !loading && (
-              <tr>
-                <td colSpan={8} style={{ padding: 12 }}>
-                  Inga klubbar hittades.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-
-        <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-          <button
-            disabled={page <= 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          <form
+            onSubmit={form._id ? handleUpdate : handleCreate}
+            style={{ marginBottom: 24 }}
           >
-            Föregående
-          </button>
-          <span>Sida {page}</span>
-          <button onClick={() => setPage((p) => p + 1)}>Nästa</button>
+            <fieldset
+              style={{
+                display: "grid",
+                gap: 8,
+                gridTemplateColumns: "repeat(2, minmax(220px, 1fr))",
+              }}
+            >
+              <legend>{form._id ? "Uppdatera klubb" : "Skapa ny klubb"}</legend>
+
+              <label>
+                Namn*
+                <input
+                  required
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, name: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Tränare (komma-separerade id/namn)
+                <input
+                  value={form.trainers}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, trainers: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Ort
+                <input
+                  value={form.location}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, location: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Grundad (år/datum)
+                <input
+                  value={form.established}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, established: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Telefon
+                <input
+                  value={form.phoneNumber}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, phoneNumber: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Email*
+                <input
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, email: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Adress
+                <input
+                  value={form.adress}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, adress: e.target.value }))
+                  }
+                />
+              </label>
+
+              <label>
+                Logotyp (PNG/JPG)
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) =>
+                    setForm((s) => ({
+                      ...s,
+                      logoFile: e.target.files?.[0] || null,
+                    }))
+                  }
+                />
+              </label>
+            </fieldset>
+
+            <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+              <button type="submit" disabled={loading}>
+                {form._id ? "Spara ändringar" : "Skapa klubb"}
+              </button>
+              {form._id && (
+                <button type="button" onClick={resetForm}>
+                  Avbryt
+                </button>
+              )}
+            </div>
+          </form>
+
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ textAlign: "left" }}>
+                <th>Logga</th>
+                <th>ID</th>
+                <th>Namn</th>
+                <th>Tränare</th>
+                <th>Ort</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Grundad</th>
+                <th>Adress</th>
+                <th>Åtgärder</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clubs.map((c) => (
+                <tr key={c._id} style={{ borderTop: "1px solid #eee", verticalAlign: "middle" }}>
+                  <td style={{ width: 60 }}>
+                    {c.logoUrl ? (
+                      <img
+                        src={c.logoUrl.startsWith("http") ? c.logoUrl : `${API_URL}${c.logoUrl}`}
+                        alt={`${c.name} logga`}
+                        style={{ width: 40, height: 40, objectFit: "contain" }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          display: "grid",
+                          placeItems: "center",
+                          border: "1px solid #ddd",
+                          borderRadius: 8,
+                          fontSize: 10,
+                          color: "#888",
+                        }}
+                      >
+                        Ingen
+                      </div>
+                    )}
+                  </td>
+                  <td>{c._id}</td>
+                  <td>{c.name}</td>
+                  <td>{formatTrainers(c.trainers)}</td>
+                  <td>{c.location || "-"}</td>
+                  <td>{c.email || "-"}</td>
+                  <td>{c.phoneNumber || "-"}</td>
+                  <td>{c.established || "-"}</td>
+                  <td>{c.adress || "-"}</td>
+                  <td style={{ display: "flex", gap: 8 }}>
+                    <button onClick={() => selectForEdit(c)}>Redigera</button>
+                    <button onClick={() => handleDelete(c._id)}>Ta bort</button>
+                  </td>
+                </tr>
+              ))}
+              {clubs.length === 0 && !loading && (
+                <tr>
+                  <td colSpan={10} style={{ padding: 12 }}>
+                    Inga klubbar hittades.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <button
+              disabled={page <= 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+            >
+              Föregående
+            </button>
+            <span>Sida {page}</span>
+            <button onClick={() => setPage((p) => p + 1)}>Nästa</button>
+          </div>
         </div>
       </div>
     </div>

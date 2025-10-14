@@ -3,47 +3,29 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 
-// Hjälpare: spara base64-logga till /public/logos och returnera URL
 async function saveLogoAndGetUrl(base64) {
   if (!base64) return null;
-
   const logosDir = path.join(process.cwd(), "public", "logos");
   if (!fs.existsSync(logosDir)) {
     fs.mkdirSync(logosDir, { recursive: true });
   }
-
   const logoBuffer = Buffer.from(base64, "base64");
   const logoFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.png`;
   const logoPath = path.join(logosDir, logoFileName);
-
   await sharp(logoBuffer)
     .resize(512, 512, { fit: "inside", withoutEnlargement: true })
     .toFile(logoPath);
-
   return `/logos/${logoFileName}`;
 }
 
 export async function createClub(req, res) {
   try {
     const { name, trainers, location, established, logo, phoneNumber, email, adress } = req.body;
-
     if (!name || !trainers || !email) {
       return res.status(400).json({ message: "All Fields are required." });
     }
-
     const logoUrl = logo ? await saveLogoAndGetUrl(logo) : null;
-
-    const club = new Club({
-      name,
-      trainers,
-      location,
-      established,
-      logoUrl,
-      phoneNumber,
-      email,
-      adress,
-    });
-
+    const club = new Club({ name, trainers, location, established, logoUrl, phoneNumber, email, adress });
     await club.save();
     res.status(201).json(club);
   } catch (error) {
@@ -73,7 +55,8 @@ export async function getClubs(req, res) {
 
     const clubs = await Club.find(query)
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .populate("trainers", "name email"); // <— så klienten kan visa tränarnamn
 
     res.status(200).json(clubs);
   } catch (error) {
@@ -85,15 +68,11 @@ export async function getClubs(req, res) {
 export async function getClubById(req, res) {
   try {
     const { id } = req.params;
-
     const club = await Club.findById(id)
       .populate("trainers", "-password -resetToken -resetTokenExpiry")
       .populate("teams")
       .populate("players");
-
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
+    if (!club) return res.status(404).json({ message: "Club not found" });
     res.status(200).json(club);
   } catch (error) {
     console.error("Error fetching club:", error);
@@ -105,15 +84,12 @@ export async function updateClub(req, res) {
   try {
     const { id } = req.params;
     const updates = { ...req.body };
-
-    // Hämta roll från auth-middleware (justera om din middleware sätter req.reqUser)
     const role = req.user?.role || req.reqUser?.role;
 
     if ((role !== "superadmin" && role !== "dev" && role !== "admin") && "trainers" in updates) {
       delete updates.trainers;
     }
 
-    // Om ny logga skickas som base64, spara och sätt logoUrl
     if (updates.logo) {
       const logoUrl = await saveLogoAndGetUrl(updates.logo);
       updates.logoUrl = logoUrl;
@@ -121,9 +97,7 @@ export async function updateClub(req, res) {
     }
 
     const club = await Club.findByIdAndUpdate(id, updates, { new: true });
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
+    if (!club) return res.status(404).json({ message: "Club not found" });
     res.status(200).json(club);
   } catch (error) {
     console.error("Error updating club:", error);
@@ -134,11 +108,8 @@ export async function updateClub(req, res) {
 export async function deleteClub(req, res) {
   try {
     const { id } = req.params;
-
     const club = await Club.findByIdAndDelete(id);
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
+    if (!club) return res.status(404).json({ message: "Club not found" });
     res.status(204).send();
   } catch (error) {
     console.error("Error deleting club:", error);
