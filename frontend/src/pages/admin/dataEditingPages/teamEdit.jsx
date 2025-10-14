@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import useClubStore from "../../../store/clubstore";
+import useClubStore from "../../../store/clubStore.js";
 import Navbar from "../../../components/navbar/Navbar";
 
 const PAGE_SIZE = 10;
