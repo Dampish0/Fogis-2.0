@@ -49,7 +49,7 @@ const AdminTrainerPage = (props) => {
                   </div>
                 
                 </div></Link>
-                <Link to="/admin/team" style={{ textDecoration: 'none' }}><div className='Card'
+                <Link to="/admin/club" style={{ textDecoration: 'none' }}><div className='Card'
                 style={{
                         borderRadius: '30px', width: '14.5vw', height: '20vh'
                                 ,backgroundImage: `url(${clubHantering})`,

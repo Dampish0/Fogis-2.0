@@ -65,7 +65,7 @@ export const useClubStore = create((set, get) => ({
     updateClub: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.patch(`${apiURL}/api/clubs/${id}`, updates, {
+            const response = await axios.put(`${apiURL}/api/clubs/${id}`, updates, {
                 withCredentials: true,
               });
             set((state) => ({

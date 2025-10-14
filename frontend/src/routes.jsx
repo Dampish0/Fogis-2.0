@@ -18,6 +18,7 @@ import MatchEditPage from './pages/admin/dataEditingPages/matchEdit';
 import CompetitionEditPage from './pages/admin/dataEditingPages/competitionEdit';
 import RefereeAccountPage from './pages/admin/dataEditingPages/RefereeAccountPage';
 import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchReport';
+import ClubEditPage from './pages/admin/dataEditingPages/clubEdit';
 
 
 export const ProtectedRoute = ({children}) => {
@@ -60,7 +61,7 @@ export const adminRoutes = (role) => {
     <Route path='/admin/referee' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/team' element={<ProtectedRoute><TeamEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/player' element={<ProtectedRoute><PlayerEditPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/club' element={<ProtectedRoute><ClubEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/competition' element={<ProtectedRoute><CompetitionEditPage role={role}/></ProtectedRoute>}/>
     
     </>
@@ -82,7 +83,7 @@ export const trainerRoutes = (role) => {
     <>
     <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/team' element={<ProtectedRoute><TeamEditPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/club' element={<ProtectedRoute><ClubEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/player' element={<ProtectedRoute><refereeMatchReport role={role}/></ProtectedRoute>}/>
     </>
   );
