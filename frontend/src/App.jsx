@@ -55,7 +55,7 @@ const theme = createTheme({
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-  const role = "referee" // user?.role || "guest";
+  const role = "admin" // user?.role || "guest";
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
