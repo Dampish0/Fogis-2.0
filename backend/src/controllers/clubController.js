@@ -56,7 +56,7 @@ export async function getClubs(req, res) {
     const clubs = await Club.find(query)
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate("trainers", "name email"); // <— så klienten kan visa tränarnamn
+      .populate("trainers", "name email"); 
 
     res.status(200).json(clubs);
   } catch (error) {
