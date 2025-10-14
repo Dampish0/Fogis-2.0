@@ -12,13 +12,19 @@ I worked on the design of "Matcher" page on the webside and coded the start of �
 
 I also worked on a component that would show the upcomming, present, and future maches, but it got scrapped for a better variation. 
 
-Week 4:
+Week 4: I continued to develop the ”Match Information” component, and added the prototype for the league table that will be implemented when the database is complete
 
-We had our presentation
+We had our presentation this week as well
 
 Week 5:
-We fleshed out the database with relevant information on so that we could connect our backend to our frontend. 
+We started to flesh out the database with relevant information. We started to  connect our backend and frontend. Testing were done to see that the attributes and roles worked correctly and as intended, some features and attrtibutes were removed for efficiency and to remove redundancy. 
+
 
 Week 6:
+I worked on the referee admin page. Here the referee should be able to see the matches that were assigned to him and he should be able to register and submit events and his referee report.
+Match events that the referee had to register were: goals, assists, yellow and red card, and substitutions. The referee also had to submit his registred events and report so that the admins could see it and take action on for ex. suspensions if needed. 
+
+Our idea is that once the referee submits his report it would go through the notification system to the admins and them further action can be taken if needed.  
+
 Week 7:
 Week 8:

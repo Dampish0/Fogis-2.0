@@ -67,7 +67,7 @@ export const useClubStore = create((set, get) => ({
         try {
             const response = await axios.put(`${apiURL}/api/clubs/${id}`, updates, {
                 withCredentials: true,
-            });
+              });
             set((state) => ({
                 clubs: state.clubs.map((club) =>
                     club._id === id ? response.data : club
