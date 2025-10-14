@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react';
 
 const LineupsCard = (props) => {
-    const { homeTeam, awayTeam, homeTeamLineup, awayTeamLineup } = props;
+    const { homeTeam = [], awayTeam = [], homeTeamLineup = [], oneTeam=false, awayTeamLineup = [], ignoreExtras = false } = props;
 
     const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -93,7 +93,9 @@ const LineupsCard = (props) => {
         );
     }
 
-
+    const specificWidthStyle = {
+        width: oneTeam ? 'clamp(300px, 40vw, 1200px)' : 'clamp(300px, 40vw, 1000px)',
+    };
 
   return (
     <div>
@@ -103,7 +105,8 @@ const LineupsCard = (props) => {
         {/* soccer grass*/}
             <div style={{
                     background: 'linear-gradient(180deg, #228B22 60%, #006400 100%)',
-                    height: '105%',
+                    ...specificWidthStyle,
+                    // height: '120%',
                     aspectRatio: "4/2",
                     borderRadius: '10px',
                     position: 'relative',
@@ -239,12 +242,13 @@ const LineupsCard = (props) => {
 
 
             {
-                homeTeamLineup.map((lineup, index) => {
+            homeTeamLineup.map((lineup, index) => {
                     const { player, position, coordinates } = lineup;
                     return playerCard(true, player.number, player.name, position, coordinates);
                 })
             }
-            {
+
+            {!oneTeam &&
                 awayTeamLineup.map((lineup, index) => {
                         const { player, position, coordinates } = lineup;
                         return playerCard(false, player.number, player.name, position, coordinates);
@@ -252,7 +256,7 @@ const LineupsCard = (props) => {
             
             }
 
-            {selectedPlayer &&
+            { selectedPlayer &&
              ( <div style={{ position: 'absolute', pointerEvents: 'none',
                  top: `${selectedPlayer.coordinates.y * 100}%`, left: `${selectedPlayer.coordinates.x * 100}%`, transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '12px' }}>
                 {selectedPlayer.name} - {selectedPlayer.position}
@@ -285,7 +289,7 @@ const LineupsCard = (props) => {
 
 
         </div>
-
+        {!ignoreExtras && <>
         <div style={{backgroundColor: "rgb(0, 0, 0, 0.5)", marginTop: "5%", marginBottom: "5%", 
             maxWidth: "85%", marginLeft: "auto", marginRight: "auto", borderRadius: "10px", boxShadow: '0 24px 48px rgba(0,0,0,0.5)'
         }}>
@@ -332,7 +336,7 @@ const LineupsCard = (props) => {
 
         </div>
 
-
+        </>}
     </div>
   )
 }

@@ -16,6 +16,7 @@ import PlayerEditPage from './pages/admin/dataEditingPages/playerEdit';
 import TeamEditPage from './pages/admin/dataEditingPages/teamEdit';
 import MatchEditPage from './pages/admin/dataEditingPages/matchEdit';
 import CompetitionEditPage from './pages/admin/dataEditingPages/competitionEdit';
+import { LineUpEditPage } from './pages/admin/dataEditingPages/LineUpEditPage';
 
 
 export const ProtectedRoute = ({children}) => {
@@ -60,6 +61,8 @@ export const adminRoutes = (role) => {
     <Route path='/admin/player' element={<ProtectedRoute><PlayerEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/competition' element={<ProtectedRoute><CompetitionEditPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/team/edit/lineup/:teamId' element={<ProtectedRoute><LineUpEditPage/></ProtectedRoute>}/>
+
     </>
   );
 }
@@ -77,9 +80,11 @@ export const trainerRoutes = (role) => {
   return (
     <>
     <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
-    <Route path='/admin/team' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/team' element={<ProtectedRoute><TeamEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/club' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/player' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>
+    <Route path='/admin/team/edit/lineup' element={<ProtectedRoute><LineUpEditPage/></ProtectedRoute>}/>
+    
     </>
   );
 }
