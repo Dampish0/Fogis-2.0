@@ -21,8 +21,7 @@ const NotificationPage = (props) => {
 
     const handleNotificationClick = (notification) => {
         notification.read = true;
-        markNotificationsAsRead([notification._id]);
-        console.log(`Notification marked as read: ${notification._id}`);
+        markNotificationsAsRead([notification._id]); 
         setSelectedNotification(notification);
     }
 
