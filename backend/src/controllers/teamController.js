@@ -51,6 +51,10 @@ export async function getTeams(req, res)
             filters.clubId = clubId;
         }
 
+        if (filters.name) {
+            filters.name = { $regex: `^${filters.name}`, $options: "i" };
+        }
+
         const teams = await Team.find(filters)
             .skip((page - 1) * limit)
             .limit(limit)
@@ -68,17 +72,16 @@ export async function getTeamById(req, res)
 {
     try{
         const { id } = req.params;
-        const requester = req.reqUser.clubId;
+        const requester = req.reqUser;
         const role = requester.role;
 
-        const team = await Team.findById(id).populate("club players homeArena", "name logo");
+        const team = await Team.findById(id).populate("lineup.player clubId players homeArena");
 
         if (!team) {
             return res.status(404).json({ message: "Team not found" });
         }
 
-        // only allow access for club members and above
-        if (role !== "trainer") {
+        if (role === "trainer") {
             const club = await Club.findById(team.clubId);
             const isMember = club && club.trainers.includes(requester._id);
             if (!isMember) {
@@ -101,7 +104,7 @@ export async function updateTeam(req, res)
         const role = req.reqUser.role;
 
         // only allow updates for club members and above
-        if (role !== "trainer") {
+        if (role !== "trainer" && role !== "admin" && role !== "superadmin" && role !== "dev") {
             const team = await Team.findById(id);
             const club = await Club.findById(team.clubId);
             const isMember = club && club.trainers.includes(req.reqUser._id);
@@ -110,7 +113,7 @@ export async function updateTeam(req, res)
             }
         }
 
-        const team = await Team.findByIdAndUpdate(id, updates, { new: true });
+        const team = await Team.findByIdAndUpdate(id, updates, { new: true }).populate("lineup.player clubId players homeArena");
         if (!team) {
             return res.status(404).json({ message: "Team not found" });
         }

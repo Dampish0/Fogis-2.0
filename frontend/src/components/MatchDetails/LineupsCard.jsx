@@ -3,20 +3,20 @@ import React from 'react'
 import { useState } from 'react';
 
 const LineupsCard = (props) => {
-    const { homeTeam, awayTeam, homeTeamLineup, awayTeamLineup } = props;
+    const { homeTeam = [], awayTeam = [], homeTeamLineup = [], oneTeam=false, awayTeamLineup = [], ignoreExtras = false } = props;
 
     const [selectedPlayer, setSelectedPlayer] = useState(null);
 
     const testDataReplacementHome = [
         { number: 1, name: "Steven Hawking", position: "CB"},
         { number: 2, name: "De Brúyne", position: "MV"},
-        { number: 3, name: "Mike Hawk", position: "HY "},
+        { number: 3, name: "Mikeu Lawk", position: "HY "},
     ]
     const testDataReplacementAway = [
         { number: 4, name: "Dixie rect", position: "FWD"},
         { number: 5, name: "Mourinho", position: "CM"},
         { number: 6, name: "Nikola Tesla", position: "COM"},
-        { number: 7, name: "Player 7", position: "VB"},
+        { number: 7, name: "Dembélé", position: "VB"},
     ]
 
     const testDataUnavailableHome = [
@@ -31,6 +31,7 @@ const LineupsCard = (props) => {
     const playerCardTable = (isHomeTeam, playerNumber, playerName, position) => {
         return (
             <div 
+            key={playerName + playerNumber + Math.random()*5050501}
             style={{
                 width: '105%',
                 aspectRatio: '7/1',
@@ -54,9 +55,9 @@ const LineupsCard = (props) => {
     }
 
     const playerCard = (isHomeTeam, playerNumber, playerName, position, coordinates) => {
-        const lastName = playerName.split(" ").slice(1).join(" "    );
+        const lastName = playerName.split(" ").slice(1).join(" ");
         return (
-            <div style={{position: 'absolute', left: `${coordinates.x * 100}%`, top: `${coordinates.y * 100}%`, transform: 'translate(-50%, -50%)', textAlign: 'center', fontSize: '10px', fontWeight: 'bold', textShadow: '1px 1px 2px black',
+            <div key={playerName + playerNumber + Math.random()*5050501} style={{position: 'absolute', left: `${coordinates.x * 100}%`, top: `${coordinates.y * 100}%`, transform: 'translate(-50%, -50%)', textAlign: 'center', fontSize: '10px', fontWeight: 'bold', textShadow: '1px 1px 2px black',
                 justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'
             
             
@@ -93,7 +94,9 @@ const LineupsCard = (props) => {
         );
     }
 
-
+    const specificWidthStyle = {
+        width: oneTeam ? 'clamp(300px, 40vw, 1200px)' : 'clamp(300px, 40vw, 1000px)',
+    };
 
   return (
     <div>
@@ -103,7 +106,8 @@ const LineupsCard = (props) => {
         {/* soccer grass*/}
             <div style={{
                     background: 'linear-gradient(180deg, #228B22 60%, #006400 100%)',
-                    height: '105%',
+                    ...specificWidthStyle,
+                    // height: '120%',
                     aspectRatio: "4/2",
                     borderRadius: '10px',
                     position: 'relative',
@@ -239,12 +243,13 @@ const LineupsCard = (props) => {
 
 
             {
-                homeTeamLineup.map((lineup, index) => {
+            homeTeamLineup.map((lineup, index) => {
                     const { player, position, coordinates } = lineup;
                     return playerCard(true, player.number, player.name, position, coordinates);
                 })
             }
-            {
+
+            {!oneTeam &&
                 awayTeamLineup.map((lineup, index) => {
                         const { player, position, coordinates } = lineup;
                         return playerCard(false, player.number, player.name, position, coordinates);
@@ -252,7 +257,7 @@ const LineupsCard = (props) => {
             
             }
 
-            {selectedPlayer &&
+            { selectedPlayer &&
              ( <div style={{ position: 'absolute', pointerEvents: 'none',
                  top: `${selectedPlayer.coordinates.y * 100}%`, left: `${selectedPlayer.coordinates.x * 100}%`, transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '12px' }}>
                 {selectedPlayer.name} - {selectedPlayer.position}
@@ -285,7 +290,7 @@ const LineupsCard = (props) => {
 
 
         </div>
-
+        {!ignoreExtras && <>
         <div style={{backgroundColor: "rgb(0, 0, 0, 0.5)", marginTop: "5%", marginBottom: "5%", 
             maxWidth: "85%", marginLeft: "auto", marginRight: "auto", borderRadius: "10px", boxShadow: '0 24px 48px rgba(0,0,0,0.5)'
         }}>
@@ -332,7 +337,7 @@ const LineupsCard = (props) => {
 
         </div>
 
-
+        </>}
     </div>
   )
 }

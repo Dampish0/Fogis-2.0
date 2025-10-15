@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const matchSchema = new mongoose.Schema({
     status: {
         type: String,
-        enum: ['scheduled', 'in_progress', 'pending_completion', 'completed', 'delayed', 'canceled', 'Other'],
+        enum: ['scheduled', 'in_progress', 'pending_completion', 'completed', 'delayed', 'canceled', 'draw', 'walkover', 'Other'],
         default: 'scheduled',
     },
     winner: {
@@ -15,9 +15,6 @@ const matchSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true,
-    },
-    location: {
-        type: String,
     },
     //arena object
     arena: {

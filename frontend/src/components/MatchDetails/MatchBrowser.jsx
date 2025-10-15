@@ -66,6 +66,7 @@ export const MatchBrowser = (props) => {
   return (
     <div style={{...props.style,
         width: "clamp(720px, 46vw, 1200px)",
+        //maxHeight: "1600px",
         backgroundColor: "rgba(30, 30, 30, 0.7)",
         backdropFilter: "blur(12px)", 
         WebkitBackdropFilter: "blur(12px)",
@@ -148,13 +149,15 @@ export const MatchBrowser = (props) => {
                       matchDate.getMonth() === now.getMonth() &&
                       matchDate.getFullYear() === now.getFullYear();
 
+                    const pad = (n) => n.toString().padStart(2, '0');
                     const timeStr = matchDate
-                      .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                      .toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Stockholm' });
+                    const dateStr = `${matchDate.getFullYear()}-${pad(matchDate.getMonth() + 1)}-${pad(matchDate.getDate())}`;
 
                     if (isToday) {
                       return `Idag ${timeStr}`;
                     } else {
-                      return `${matchDate.toLocaleDateString()} ${timeStr}`;
+                      return `${dateStr} ${timeStr}`;
                     }
                   })()}
                 </TableCell>

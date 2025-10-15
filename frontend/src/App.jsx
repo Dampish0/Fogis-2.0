@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router';
-import HomePage from './pages/HomePage/HomePage';
-import CreatePage from './pages/CreatePage';
-import DetailPage from './pages/detailpage';
 import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
 import '@fontsource/roboto/500.css';
-import MatcherPage from './pages/MatcherPage';
-import LoginPage from './pages/LoginPage';
 import Backdrop from '@mui/material/Backdrop';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
@@ -23,51 +18,85 @@ import { Toaster } from 'react-hot-toast';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import useAuthStore from './store/authStore';
+import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refereeRoutes, trainerRoutes
+
+ } from './routes';
+import NavBar from './components/navbar/Navbar';
+import { useState } from 'react';
 
 
 const theme = createTheme({
+    components: {
+    // ...existing code...
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+        },
+        input: { color: 'white' },
+        notchedOutline: { borderColor: 'white' },
+      },
+    },
+    // Add this for MUI X pickers
+    MuiPickersTextField: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+          '& .MuiInputLabel-root': { color: 'white' },
+          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
+          '& .MuiSvgIcon-root': { color: 'white' },
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'white',
+          },
+        },
+      },
+    }, 
+  },
   typography: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto', 
   },
 });
-
-const ProtectedRoute = ({children}) => {
-  // temporay dev test code
-  //return children;
-  // --------------------
-  const {isAuthenticated, isCheckingAuth} = useAuthStore();
-
-  if(isCheckingAuth){
-    return <CircularProgress/>
-  }
-
-  if(!isAuthenticated){
-    return <Navigate to="/login" replace/>
-  }
-
-  return children;
-}
-
-const RedirectAuthenticated = ({children}) => {
-  // temporay dev test code
-  //return children;
-  // --------------------
-  const {isAuthenticated} = useAuthStore();
-  if(isAuthenticated){
-    return <Navigate to="/" replace/>
-  }
-
-  return children;
-}
 
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-  const role = user?.role || "guest";
+  const role = "admin" // user?.role || "guest";
+
+  // timeout to check auth after a period to get latest notiser and check if user still logged in
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      checkAuth();
+      console.log("Checking auth...");
+    }, 60 * 1000); // 1 minut
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [checkAuth]);
+
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
-  
+   
+
+  const [showBackdrop, setShowBackdrop] = useState(false);
+
+  useEffect(() => {
+    let timeoutId;
+    if (isCheckingAuth) {
+      timeoutId = setTimeout(() => setShowBackdrop(true), 300);
+    } else {
+      setShowBackdrop(false);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [isCheckingAuth]);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,25 +110,24 @@ export const App = () => {
             <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
             <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
             <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
-          <Route path='/tavlingar/:id' element={<ProtectedRoute><CompetitionDetails/></ProtectedRoute>}/>
 
             {
               (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
               ||
-              (role === "trainer" && <Route path='/admin' element={<ProtectedRoute><AdminTrainerPage role={role}/></ProtectedRoute>}/>)
+              (role === "trainer" && trainerRoutes(role))
               ||
-              (role === "referee" && <Route path='/admin' element={<ProtectedRoute><AdminRefereePage role={role}/></ProtectedRoute>}/>)
+              (role === "referee" && refereeRoutes(role))
             }
-
-            <Route path='/test' element={<ProtectedRoute><TestingPage/></ProtectedRoute>}/>
 
 
             <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
            </Routes>
-          {isCheckingAuth && <Backdrop sx={{zIndex:4}} open={isCheckingAuth} onClick={() => setForgotPass(false)}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>}
 
 
         <Toaster/>
+          <Backdrop sx={{zIndex:4}} open={showBackdrop}>
+          <CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/>
+        </Backdrop>
       </div>
     </ThemeProvider>
   )

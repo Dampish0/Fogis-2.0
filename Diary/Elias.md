@@ -12,3 +12,5 @@ week 6:
 added real match fetching for match page and improved navbar on larger screens and added a testing page to test backend actions aswell as a button to navigate to it from navbar.
 
 Completed Lineup tab in the Match page, And it looks very beautiful, also added fetching for the positions of all players and placed them correctly in the field. Also slightly restructured the MatchDetails component which holds the lineup tab.
+
+designed and implemented the admin page. Restructured routes in frontend app.jsx.

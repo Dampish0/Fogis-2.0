@@ -9,7 +9,7 @@ export const useMatchStore = create((set) => ({
     match: null,
     totalPages: 1,
     currentPage: 1,
-    loading: false,
+    matchloading: false,
     error: null,
 
     fetchMatches: async (params = {}) => {

@@ -21,6 +21,9 @@ export async function getReferees(req, res)
 {
     const { page = 1, limit = 10, ...filters } = req.query;
     try{
+        if (filters.name) {
+            filters.name = { $regex: `^${filters.name}`, $options: "i" };
+        }
         const referees = await Referee.find(filters).select("-history").skip((page - 1) * limit).limit(limit);
         res.status(200).json(referees);
     }catch(error){

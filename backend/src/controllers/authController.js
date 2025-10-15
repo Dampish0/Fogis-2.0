@@ -226,3 +226,67 @@ export async function verifyRole(req, res)
         res.status(400).json({success: false, message:"error in verifyRole.", err: error.message});
     }
 }
+
+export const sendNotification = async (req, res) => {
+    try {
+        const { title, message, group, clubId, userId } = req.body;
+        console.log("Notification request received:", { title, message, group, clubId, userId });
+
+        if (!title || !message || !group) {
+            return res.status(400).json({ success: false, message: "Title, message, and group are required." });
+        }
+        if (group === "club" && !clubId) {
+            return res.status(400).json({ success: false, message: "Club ID is required for group 'club'." });
+        }
+        if (group === "individual" && !userId) {
+            return res.status(400).json({ success: false, message: "User ID is required for group 'individual'." });
+        }
+        
+        let usersToNotify = [];
+        if (group === "all") {
+            usersToNotify = await User.find({});
+        } else if (group === "club") {
+            usersToNotify = await User.find({ clubId: clubId });
+        } else if (group === "admin") {
+            usersToNotify = await User.find({ role: { $in: ["admin", "superadmin", "dev"] } });
+        }
+        else if (group === "individual") {
+            const user = await User.findById(userId);
+            if (user) {
+                usersToNotify.push(user);
+            }
+        } else {
+            return res.status(400).json({ success: false, message: "Invalid group specified." });
+        }
+ 
+        for (const user of usersToNotify) {
+            user.notifications.push({ title, message });
+            await user.save();
+        }
+
+        res.status(200).json({ success: true, message: "Notifications sent successfully." });
+    } catch (error) {
+        console.log("Error in sendNotification: ", error.message);
+        res.status(400).json({ success: false, message: "error in sendNotification.", err: error.message });
+    }
+};
+
+export const readNotification = async (req, res) => {
+    try {
+        const { notificationIds } = req.body;
+        if (!notificationIds || !Array.isArray(notificationIds)) {
+            return res.status(400).json({ success: false, message: "Notification IDs are required." });
+        }
+        const user = await User.findById(req.userId);
+        if (!user) {
+            return res.status(400).json({ success: false, message: "Invalid user." });
+        }
+        const notificationsToMark = user.notifications.filter(n => notificationIds.includes(n._id.toString()));
+        notificationsToMark.forEach(n => n.read = true);
+        await user.save();
+        res.status(200).json({ success: true, message: "Notifications marked as read." });
+    } catch (error) {
+        console.log("Error in readNotification: ", error.message);
+        res.status(400).json({ success: false, message: "error in readNotification.", err: error.message });
+    }  
+};

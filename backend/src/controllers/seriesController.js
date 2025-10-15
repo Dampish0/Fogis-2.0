@@ -1,4 +1,4 @@
-import {Series} from "../models/Series.js";
+import {Series} from "../models/series.js";
 import { Team } from "../models/team.js";
 import { Match } from "../models/match.js";
 
@@ -17,8 +17,12 @@ export async function createSeries(req, res)
 
 export async function getSeries(req, res)
 {
-    const { page = 1, limit = 10, ...filters } = req.query;
+    const { page = 1, limit = 40, ...filters } = req.query;
     try{
+        if (filters.name) {
+            filters.name = { $regex: `^${filters.name}`, $options: "i" };
+        }
+
         const series = await Series.find(filters).skip((page - 1) * limit).limit(limit).populate('teams', 'name');
         res.status(200).json(series);
     }catch(error){

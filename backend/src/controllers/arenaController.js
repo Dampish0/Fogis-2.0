@@ -21,6 +21,9 @@ export async function getArenas(req, res)
     const { page = 1, limit = 10, ...filters } = req.query;
 
     try {
+        if (filters.name) {
+            filters.name = { $regex: `^${filters.name}`, $options: "i" };
+        }
         const arenas = await Arena.find(filters)
             .skip((page - 1) * limit)
             .limit(limit)

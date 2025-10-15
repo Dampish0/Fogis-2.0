@@ -11,7 +11,7 @@ import { useAuthStore } from '../store/authStore.js';
 import { NavLink, useNavigate } from 'react-router';
 import SendIcon from '@mui/icons-material/Send';
 import toast from 'react-hot-toast';
-import NavBar from '../components/Navbar/NavBar.jsx';
+import NavBar from '../components/navbar/Navbar.jsx';
 
 
 export const LoginPage = () => {

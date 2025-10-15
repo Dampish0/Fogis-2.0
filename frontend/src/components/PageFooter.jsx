@@ -3,14 +3,16 @@ import { Typography, Link, Box } from '@mui/material'
 
 const PageFooter = () => {
   return (
+    <div style={{
+    position: 'absolute',
+    left: 0,
+    bottom: "1.5vh",
+    width: '100%',
+    zIndex: 10, 
+  }} >
     <Box
         component="footer"
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        style={{
-          position: 'relative',
-          bottom: 20,
-          zIndex: 200,
-        }}
       >
         <Box style={{
           backgroundColor: 'rgba(0,0,0,0.7)',
@@ -36,6 +38,7 @@ const PageFooter = () => {
         </Typography> 
         </Box>
     </Box>
+    </div>
   )
 }
 
