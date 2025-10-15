@@ -13,14 +13,18 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import SettingIcon from '@mui/icons-material/Settings';
-import { Divider } from '@mui/material';
+import { Divider, Icon } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import eif from '../../assets/hff.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavLink, useNavigate } from 'react-router';
 import useAuthStore from '../../store/authStore';
 import Badge from '@mui/material/Badge';
-
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import { useRef } from 'react';
 
 
 const setMUI = (color) => (
@@ -55,6 +59,31 @@ const setMUI = (color) => (
 const NavBar = (props) => {
     const {isAuthenticated, logout, user} = useAuthStore();
   const notificationCount = user?.notifications?.filter(n => !n.read).length;
+  const prevNotificationCountRef = useRef(notificationCount);
+
+
+  
+
+  useEffect(() => {
+    if(notificationCount > prevNotificationCountRef.current) {
+        toast((t) => (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Icon sx={{ mr: 1, mb: 0.5 }}><NotificationImportantIcon /></Icon>
+                <Typography variant="body1" sx={{ color: "black", mr: 1, mb: 0 }}>
+                  Ny notifikation!
+                </Typography>
+                <Button
+                  style={{ marginLeft: "6px", marginRight: "-4px" }}
+                  variant="contained"
+                  onClick={() => toast.dismiss(t.id)}
+                >
+                  Rensa
+                </Button>
+            </Box>
+            ), { duration: 4000, position: 'top-right', style: { background: 'white', color: 'black', borderRadius: '8px', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)' } }); 
+    }
+    prevNotificationCountRef.current = notificationCount;
+  }, [notificationCount]);
 
   const navigate = useNavigate();
 

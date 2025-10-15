@@ -14,6 +14,7 @@ import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refe
 
  } from './routes';
 import NavBar from './components/navbar/Navbar';
+import { useState } from 'react';
 
 
 const theme = createTheme({
@@ -57,14 +58,36 @@ const theme = createTheme({
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
   const role = "admin" // user?.role || "guest";
+
+  // timeout to check auth after a period to get latest notiser and check if user still logged in
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      checkAuth();
+      console.log("Checking auth...");
+    }, 10 * 1000); // 1 minut
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [checkAuth]);
+
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
-  
-  if(isCheckingAuth){
-    return <Backdrop sx={{zIndex:4}} open={isCheckingAuth}><CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/></Backdrop>
-  }
+   
 
+  const [showBackdrop, setShowBackdrop] = useState(false);
+
+  useEffect(() => {
+    let timeoutId;
+    if (isCheckingAuth) {
+      timeoutId = setTimeout(() => setShowBackdrop(true), 300); // 300ms delay
+    } else {
+      setShowBackdrop(false);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [isCheckingAuth]);
 
 
   return (
@@ -86,6 +109,9 @@ export const App = () => {
            </Routes>
 
         <Toaster/>
+          <Backdrop sx={{zIndex:4}} open={showBackdrop}>
+          <CircularProgress style={{ color: 'red', position: 'absolute', top: '50%', left: '50%'}}/>
+        </Backdrop>
       </div>
     </ThemeProvider>
   )
