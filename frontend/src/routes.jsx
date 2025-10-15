@@ -21,6 +21,7 @@ import RefereeAccountPage from './pages/admin/dataEditingPages/RefereeAccountPag
 import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchReport';
 import ClubEditPage from './pages/admin/dataEditingPages/clubEdit';
 import UserEditPage from './pages/admin/dataEditingPages/userEdit';
+import NotificationPage from './pages/NotificationPage';
 
 export const ProtectedRoute = ({children}) => {
   // temporay dev test code
@@ -93,7 +94,7 @@ export const trainerRoutes = (role) => {
   );
 }
 
-export const standardRoutes = () => {
+export const standardRoutes = (user) => {
     return (
       <>
             <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
@@ -102,7 +103,8 @@ export const standardRoutes = () => {
             <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
             <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
             <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
-            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>        
+            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+            <Route path='/notifications' element={<ProtectedRoute><NotificationPage user={user}/></ProtectedRoute>}/>       
     </>
     );
 }

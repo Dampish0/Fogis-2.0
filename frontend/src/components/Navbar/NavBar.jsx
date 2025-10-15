@@ -19,6 +19,9 @@ import eif from '../../assets/hff.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavLink, useNavigate } from 'react-router';
 import useAuthStore from '../../store/authStore';
+import Badge from '@mui/material/Badge';
+
+
 
 const setMUI = (color) => (
     {
@@ -51,6 +54,7 @@ const setMUI = (color) => (
 
 const NavBar = (props) => {
     const {isAuthenticated, logout} = useAuthStore();
+const notificationCount = 3;
 
   const navigate = useNavigate();
 
@@ -76,6 +80,8 @@ const NavBar = (props) => {
 
   const notificationsClick = () => {
     //dropdown meny
+    // temporärt utan dropdown, istället en hel sida, orkar inte fixa detta nu
+    navigate('/notifications');
   }
 
   const profileClick = (e) => {
@@ -145,7 +151,9 @@ const NavBar = (props) => {
         {/* HÖGRA SIDAN */}
         <IconButton onClick={() => notificationsClick()} size="large"
          sx={{alignSelf: "right", color: "white", marginLeft: "auto" }}>
-          <NotificationsIcon />
+            <Badge badgeContent={notificationCount} color="error">
+              <NotificationsIcon />
+          </Badge>
         </IconButton>
 
         <Divider orientation="vertical" flexItem sx={{alignSelf: "center", height: "50%", bgcolor: "rgb(255, 255, 255, 0.5)", mx: 2 }} />

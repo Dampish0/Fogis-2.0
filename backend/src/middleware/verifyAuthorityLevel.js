@@ -6,6 +6,7 @@ export function getAuthRoleMiddleware(allowedRoles) {
         try {
             const userId = req.userId; // Assume req.userId is set by previous auth middleware
             if (!userId) {
+                console.error("User ID not found", req.userId);
                 return res.status(401).json({ message: "Unauthorized" });
             }
             const user = await User.findById(userId);
@@ -15,7 +16,7 @@ export function getAuthRoleMiddleware(allowedRoles) {
             if (!allowedRoles.includes(user.role)) {
                 return res.status(403).json({ message: "Forbidden, you don't have permission." });
             }
-
+            
             req.reqUser = user;
             
             next();

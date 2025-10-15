@@ -13,6 +13,7 @@ import useAuthStore from './store/authStore';
 import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refereeRoutes, trainerRoutes
 
  } from './routes';
+import NavBar from './components/navbar/Navbar';
 
 
 const theme = createTheme({
@@ -69,8 +70,9 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
         <div>
+          <NavBar/>
           <Routes>
-            {standardRoutes()}
+            {standardRoutes(user)}
 
             {
               ((role === "admin" || role === "superadmin" || role === "dev") && adminRoutes(role)) 
