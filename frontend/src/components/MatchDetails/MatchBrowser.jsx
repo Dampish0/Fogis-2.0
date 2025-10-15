@@ -149,13 +149,15 @@ export const MatchBrowser = (props) => {
                       matchDate.getMonth() === now.getMonth() &&
                       matchDate.getFullYear() === now.getFullYear();
 
+                    const pad = (n) => n.toString().padStart(2, '0');
                     const timeStr = matchDate
-                      .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                      .toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Stockholm' });
+                    const dateStr = `${matchDate.getFullYear()}-${pad(matchDate.getMonth() + 1)}-${pad(matchDate.getDate())}`;
 
                     if (isToday) {
                       return `Idag ${timeStr}`;
                     } else {
-                      return `${matchDate.toLocaleDateString()} ${timeStr}`;
+                      return `${dateStr} ${timeStr}`;
                     }
                   })()}
                 </TableCell>

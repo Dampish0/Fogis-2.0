@@ -10,13 +10,13 @@ const LineupsCard = (props) => {
     const testDataReplacementHome = [
         { number: 1, name: "Steven Hawking", position: "CB"},
         { number: 2, name: "De Brúyne", position: "MV"},
-        { number: 3, name: "Mike Hawk", position: "HY "},
+        { number: 3, name: "Mikeu Lawk", position: "HY "},
     ]
     const testDataReplacementAway = [
         { number: 4, name: "Dixie rect", position: "FWD"},
         { number: 5, name: "Mourinho", position: "CM"},
         { number: 6, name: "Nikola Tesla", position: "COM"},
-        { number: 7, name: "Player 7", position: "VB"},
+        { number: 7, name: "Dembélé", position: "VB"},
     ]
 
     const testDataUnavailableHome = [
@@ -31,6 +31,7 @@ const LineupsCard = (props) => {
     const playerCardTable = (isHomeTeam, playerNumber, playerName, position) => {
         return (
             <div 
+            key={playerName + playerNumber + Math.random()*5050501}
             style={{
                 width: '105%',
                 aspectRatio: '7/1',
@@ -54,9 +55,9 @@ const LineupsCard = (props) => {
     }
 
     const playerCard = (isHomeTeam, playerNumber, playerName, position, coordinates) => {
-        const lastName = playerName.split(" ").slice(1).join(" "    );
+        const lastName = playerName.split(" ").slice(1).join(" ");
         return (
-            <div style={{position: 'absolute', left: `${coordinates.x * 100}%`, top: `${coordinates.y * 100}%`, transform: 'translate(-50%, -50%)', textAlign: 'center', fontSize: '10px', fontWeight: 'bold', textShadow: '1px 1px 2px black',
+            <div key={playerName + playerNumber + Math.random()*5050501} style={{position: 'absolute', left: `${coordinates.x * 100}%`, top: `${coordinates.y * 100}%`, transform: 'translate(-50%, -50%)', textAlign: 'center', fontSize: '10px', fontWeight: 'bold', textShadow: '1px 1px 2px black',
                 justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'
             
             
