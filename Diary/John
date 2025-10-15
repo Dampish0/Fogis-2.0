@@ -7,3 +7,5 @@ week 3: This week all group members have watched the turtorial video and started
 week 4: I started working on the NewsPage and HomePage part of the application, where i sat the deadline to be done on Wednesday because my group had project demonstration on the day after. I managed this deadline and got deeper understanding for css and react. Now the next part for me is the competion page.
 
 week 5: I have worked with the CompetitionPage with both the design and the database. I started first by using some dummy data to visualize how the design would look and change some components after that. For next week the whole group will work togehter to finalize the project.
+
+week 6: For this week i have worked with the admin Club-edit part of the application where the user can edit and create clubs. I also added a serachbar so the user can search for a specific club when the list get bigger with time. I have also connected this to the database and it works as planned. I also fixed some bugs with the CompetitionDetails page.

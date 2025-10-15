@@ -44,11 +44,12 @@ export default function CompetitionDetails({ type, id, name, onBack }) {
   }, [type, id, fetchSeriesById]);
 
   const displayName =
-    selectedSeries?.name ??
-    selectedSeries?.title ??
-    selectedSeries?.serieName ??
-    name ??
-    `#${id}`;
+  type === "series"
+    ? (selectedSeries?.name ??
+       selectedSeries?.title ??
+       selectedSeries?.serieName ??
+       name ?? `#${id}`)
+    : (name ?? `#${id}`);
 
   const formatDateTime = (iso) => {
     if (!iso) return "";
