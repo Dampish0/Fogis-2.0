@@ -78,7 +78,7 @@ export const MatcherPage = () => {
 
 
     return (
-        <div style={{overflow:"hidden", background: 'linear-gradient(#314158, #1c1c1c)', minHeight: "300vh" }}>
+        <div style={{overflow:"hidden", backgroundColor:'white'}}>
             <NavBar />
             <div>
                 <MatchDetails events={match?.events} match={match}

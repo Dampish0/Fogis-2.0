@@ -4,6 +4,14 @@ import toast from "react-hot-toast";
 import Button from '@mui/material/Button';
 import '@fontsource/roboto/500.css';
 import Backdrop from '@mui/material/Backdrop';
+import NewPasswordPage from './pages/newPasswordPage';
+import NewsPage from './pages/NewsPage/NewsPage';
+import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
+import CompetitionDetails from './pages/CompetitionPage/CompetitionDetails';
+import TestingPage from './pages/testingPage';
+import  AdminTrainerPage  from './pages/admin/AdminTrainerPage';
+import  AdminRefereePage  from './pages/admin/AdminRefereePage';
+import  AdminPage  from './pages/admin/AdminPage';
 
 
 import { Toaster } from 'react-hot-toast';
@@ -93,11 +101,18 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
         <div>
+
           <Routes>
-            {standardRoutes(user)}
+            <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
+            <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+            <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
+            <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
+            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
+            <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
+            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
 
             {
-              ((role === "admin" || role === "superadmin" || role === "dev") && adminRoutes(role)) 
+              (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
               ||
               (role === "trainer" && trainerRoutes(role))
               ||
@@ -107,6 +122,7 @@ export const App = () => {
 
             <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
            </Routes>
+
 
         <Toaster/>
           <Backdrop sx={{zIndex:4}} open={showBackdrop}>
