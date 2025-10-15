@@ -78,7 +78,7 @@ export const MatcherPage = () => {
 
 
     return (
-        <div style={{overflow:"hidden", backgroundColor:'white'}}>
+        <div style={{overflow:"hidden", backgroundColor:'white', minHeight:"100vh"}}>
             <NavBar />
             <div>
                 <MatchDetails events={match?.events} match={match}
