@@ -20,7 +20,7 @@ import { LineUpEditPage } from './pages/admin/dataEditingPages/LineUpEditPage';
 import RefereeAccountPage from './pages/admin/dataEditingPages/RefereeAccountPage';
 import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchReport';
 import ClubEditPage from './pages/admin/dataEditingPages/clubEdit';
-
+import UserEditPage from './pages/admin/dataEditingPages/userEdit';
 
 export const ProtectedRoute = ({children}) => {
   // temporay dev test code
@@ -65,7 +65,7 @@ export const adminRoutes = (role) => {
     <Route path='/admin/club' element={<ProtectedRoute><ClubEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/competition' element={<ProtectedRoute><CompetitionEditPage role={role}/></ProtectedRoute>}/>
     <Route path='/admin/team/edit/lineup/:teamId' element={<ProtectedRoute><LineUpEditPage/></ProtectedRoute>}/>
-
+    <Route path='/admin/users' element={<ProtectedRoute><UserEditPage role={role}/></ProtectedRoute>}/>
     </>
   );
 }

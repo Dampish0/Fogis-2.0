@@ -72,17 +72,16 @@ export async function getTeamById(req, res)
 {
     try{
         const { id } = req.params;
-        const requester = req.reqUser.clubId;
+        const requester = req.reqUser;
         const role = requester.role;
 
-        const team = await Team.findById(id).populate("club players homeArena", "name logo");
+        const team = await Team.findById(id).populate("clubId players homeArena", "name logo");
 
         if (!team) {
             return res.status(404).json({ message: "Team not found" });
         }
 
-        // only allow access for club members and above
-        if (role !== "trainer") {
+        if (role === "trainer") {
             const club = await Club.findById(team.clubId);
             const isMember = club && club.trainers.includes(requester._id);
             if (!isMember) {

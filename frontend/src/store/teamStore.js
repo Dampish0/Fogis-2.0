@@ -50,7 +50,7 @@ export const useTeamStore = create((set) => ({
         set({ loading: true, error: null });
         try {
             const response = await axios.post(`${apiURL}/api/team`, teamData);
-            set({ loading: false, error: null });
+            set({ loading: false, error: null, team: response.data });
             return response.data;
         } catch (error) {
             set({

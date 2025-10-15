@@ -4,11 +4,13 @@ import TableRow from '@mui/material/TableRow';
 import TableHead from '@mui/material/TableHead';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
-import { IconButton, InputAdornment, Paper, Tab, TableBody, Tabs, TextField } from '@mui/material';
+import { Button, IconButton, InputAdornment, Modal, Paper, Tab, TableBody, Tabs, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
 import { use } from 'react';
+import toast from 'react-hot-toast';
+import { useRef } from 'react';
 
 
   const textFieldColor = (color) => (
@@ -42,13 +44,35 @@ import { use } from 'react';
 
 export const TeamBrowser = (props) => {
   const data = props.DisplayData || [];
+    const newPlayerFunc = props.createFunc || (() => {});
+      const teamNameRef = useRef();
+
+
   const [DisplayData, setDisplayData] = React.useState(data);
     const [searchTerm, setSearchTerm] = React.useState("");
+    const [createTeamModalOpen, setCreateTeamModalOpen] = React.useState(false);
 
     useEffect(() => {
         setDisplayData(data.filter((team) => team.name.toLowerCase().includes(searchTerm.toLowerCase()) || team.id.toString() === searchTerm));
     },[data]);
 
+
+    const handleCreateTeam = () => {
+      setCreateTeamModalOpen(true);
+    }
+
+    const submitCreateTeam = async (data) => { 
+      
+      
+      
+
+
+
+
+      await newPlayerFunc(data);
+      setCreateTeamModalOpen(false);
+      
+    }
 
   return (
     <div style={{...props.style,
@@ -61,6 +85,22 @@ export const TeamBrowser = (props) => {
         padding: "20px",
         boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)",
     }}>
+
+    <Modal  open={createTeamModalOpen} onClose={() => setCreateTeamModalOpen(false)}>
+      <div style={{  position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'rgba(30, 30, 30, 0.9)', boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)"
+        ,  padding: "20px", backgroundColor: "rgba(0,0,0, 0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRadius: "8px" }}>
+        <Typography sx={{color: "white"}} variant="h6">Skapa nytt lag</Typography>
+        <TextField         inputRef={teamNameRef} label="Lag namn" fullWidth variant="outlined" margin="normal" sx={{...textFieldColor("white")}} />
+        <Button onClick={() => submitCreateTeam({name: teamNameRef.current.value})} variant='contained' color='primary' style={{ marginTop: "20px" }}>
+          Skapa
+        </Button>
+      </div>
+    </Modal>
 
       <TextField onChange={(e) => {
         setSearchTerm(e.target.value);
@@ -128,6 +168,11 @@ export const TeamBrowser = (props) => {
         </TableBody>
       </Table>
     </TableContainer>
+    <Button onClick={handleCreateTeam} variant='contained' color='primary' size='large' style={{fontSize:"20px", borderRadius:"12px", boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', marginTop: "20px", width: "100%"}}>
+      Skapa nytt lag
+    </Button>
+
+
     </div>
   )
 }

@@ -4,11 +4,12 @@ import TableRow from '@mui/material/TableRow';
 import TableHead from '@mui/material/TableHead';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
-import { IconButton, InputAdornment, Paper, Tab, TableBody, Tabs, TextField } from '@mui/material';
+import { Button, IconButton, InputAdornment, Paper, Tab, TableBody, Tabs, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
 import { use } from 'react';
+import { useDrag } from 'react-dnd';
 
 
   const textFieldColor = (color) => (
@@ -47,8 +48,30 @@ export const PlayerBrowser = (props) => {
 
     useEffect(() => {
         setDisplayData(data.filter((team) => team.name.toLowerCase().includes(searchTerm.toLowerCase()) || team.id.toString() === searchTerm));
-    },[data]);
+    },[data, searchTerm]);
 
+
+  const DraggableRow = ({ row }) => {
+    const [{ isDragging }, drag] = useDrag(() => ({
+      type: 'PLAYER',
+      item: { player: row },
+      collect: monitor => ({
+        isDragging: monitor.isDragging()
+      })
+    }), [row]);
+    return (
+      <TableRow
+        ref={drag}
+        key={row._id || row.id}
+        style={{ opacity: isDragging ? 0.4 : 1, cursor: 'grab' }}
+        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      >
+        <TableCell component="th" scope="row" style={{ color: "white" }}>{row.name}</TableCell>
+        <TableCell style={{ color: "white" }} align="right">{row.preferedPosition}</TableCell>
+        <TableCell style={{ color: "white" }} align="right">{row.number}</TableCell>
+      </TableRow>
+    );
+  };
 
   return (
     <div style={{...props.style,
@@ -107,23 +130,8 @@ export const PlayerBrowser = (props) => {
           </TableRow>
         </TableHead>
         <TableBody style={{backgroundColor: "#1d293d"}}>
-          {DisplayData.map((row) => (
-
-            <TableRow
-              key={row._id || row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                <TableCell component="th" scope="row" style={{ color: "white" }}>   
-                {row.name}
-                </TableCell>
-                <TableCell style={{ color: "white" }} align="right">
-                    {row.preferedPosition}
-                </TableCell>
-                <TableCell style={{ color: "white" }} align="right">
-                    {row.number}
-                </TableCell>
-
-            </TableRow>
+          {DisplayData.map(row => (
+            <DraggableRow row={row} key={row._id || row.id} />
           ))}
         </TableBody>
       </Table>

@@ -185,7 +185,7 @@ const AdminPage = (props) => {
                 
                 </div>
                 </Link>
-                <Link to="/admin/club" style={{ textDecoration: 'none' }}>
+                <Link to="/admin/users" style={{ textDecoration: 'none' }}>
 
                 <div className='Card'
                 style={{
