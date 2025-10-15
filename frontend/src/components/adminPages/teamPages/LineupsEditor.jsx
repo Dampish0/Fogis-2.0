@@ -39,7 +39,7 @@ const LineupsEditor = (props) => {
     }
 
     const playerCard = (isHomeTeam, playerNumber, playerName, position, coordinates) => {
-        const lastName = playerName.split(" ").slice(1).join(" "    );
+        const lastName = (playerName || "").split(" ").slice(1).join(" "    );
         return (
             <div style={{position: 'absolute', left: `${coordinates.x * 100}%`, top: `${coordinates.y * 100}%`, transform: 'translate(-50%, -50%)', textAlign: 'center', fontSize: '10px', fontWeight: 'bold', textShadow: '1px 1px 2px black',
                 justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'
@@ -174,7 +174,7 @@ const LineupsEditor = (props) => {
 
             
         }), [player, onAddOrMovePlayer, onRemovePlayer]);
-        const lastName = playerName.split(" ").slice(1).join(" ");
+        const lastName = (playerName || "").split(" ").slice(1).join(" ");
         const ringColor = isHomeTeam ? '#1E90FF' : '#FF4500';
         const borderStyle = coordinates.gk ? `3px solid ${ringColor}` : `2px solid ${ringColor}`;
         return (
@@ -222,7 +222,7 @@ const LineupsEditor = (props) => {
  
     const GhostPlayerToken = ({ player, coordinates, existing }) => {
         if (!player || !coordinates) return null;
-        const lastName = player.name.split(" ").slice(1).join(" ");
+        const lastName = (player?.name || "").split(" ").slice(1).join(" ");
         const ringColor = '#1E90FF';
         const borderStyle = coordinates.gk ? `3px solid ${ringColor}` : `2px solid ${ringColor}`;
         return (
@@ -318,7 +318,7 @@ const LineupsEditor = (props) => {
                     ></div>
                     {[...Array(5)].map((_, i) => (
                         <div
-                            key={i}
+                            key={i+100000}
                             style={{
                                 position: 'absolute',
                                 top: `${i * 20}%`,
@@ -424,7 +424,7 @@ const LineupsEditor = (props) => {
                         const { player, position, coordinates } = lineup;
                         return (
                             <DraggablePlayerToken
-                            key={(player._id || player.id)}
+                            key={(player._id || player.id || index)}
                             isHomeTeam={true}
                             playerNumber={player.number}
                             playerName={player.name}

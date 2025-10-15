@@ -9,8 +9,8 @@ import { TeamDetailsCard } from '../../../components/adminPages/teamPages/teamDe
 import useAuthStore from '../../../store/authStore';
 import toast from 'react-hot-toast';
 
-const createData = (name, player=[], id, details) => {
-    return { name, player, id, details };
+const createData = (name, player=[], id, plCount, details) => {
+    return { name, player, id, plCount, details };
 }
 
 const TeamEditPage = () => {
@@ -33,7 +33,7 @@ const TeamEditPage = () => {
       const detail = (<IconButton onClick={() => handleClick(index, team._id)}>
             <ArrowForwardIcon style={{ color: "white" }}/>
         </IconButton>);
-      teamData.push(createData(team.name, team.players, team._id, detail));
+      teamData.push(createData(team.name, team.players, team._id, team.players.length, detail));
     });
     setData(teamData);
   }, [teams]);

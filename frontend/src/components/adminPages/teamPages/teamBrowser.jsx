@@ -156,9 +156,7 @@ export const TeamBrowser = (props) => {
                 {row.name}
               </TableCell>
                 <TableCell style={{ color: "white" }} align="right">
-                  {(() => {
-                    return row.players ? row.players.length : 0; 
-                  })()}
+                  { row.plCount ? row.plCount : 0}
                 </TableCell>
 
               {/* <TableCell style={{ color: "white" }} align="right">{row.id}</TableCell> */}

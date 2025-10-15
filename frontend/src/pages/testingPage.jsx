@@ -160,7 +160,7 @@ const handleUpdate = async () => {
     const handleCreatePlayer = async () => {
       try { 
 
-        const playerData = { name: "test player", persNmr: "20020202-" + Math.floor(Math.random() * 10000).toString().padStart(4, "0"), shirtNumber: "5", preferedPosition: "FWD", team: "68e6a7e2bd5bf4e083b83f0f", clubId: "68e6addc914e9ac1dae612a0" };
+        const playerData = { name: "LeGoat James", persNmr: "20020202-" + Math.floor(Math.random() * 10000).toString().padStart(4, "0"), shirtNumber: Math.floor(Math.random() * 13), preferedPosition: "FWD", teamId: "68efc237dcb2196c57a788ab", clubId: "68e6addc914e9ac1dae612a0" };
         await createPlayer(playerData);
         updateSuccess(true);
       } catch(error) {

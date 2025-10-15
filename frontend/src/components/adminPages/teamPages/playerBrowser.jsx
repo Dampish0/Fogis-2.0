@@ -47,7 +47,10 @@ export const PlayerBrowser = (props) => {
     const [searchTerm, setSearchTerm] = React.useState("");
 
     useEffect(() => {
-        setDisplayData(data.filter((team) => team.name.toLowerCase().includes(searchTerm.toLowerCase()) || team.id.toString() === searchTerm));
+        setDisplayData(data.filter((player) =>
+            (player.name && player.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            player.id?.toString() === searchTerm
+        ));
     },[data, searchTerm]);
 
 

@@ -8,13 +8,14 @@ import { Button, Typography } from '@mui/material';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 export const LineUpEditPage = () => {
     const teamId = window.location.pathname.split('/').pop();
-    const { team, fetchTeamById } = useTeamStore();
-    const [players, setPlayers] = React.useState([]);
-    const [fetchedTeam, setFetchedTeam] = React.useState(false);
-    const [lineup, setLineup] = React.useState([]); // placed players on pitch
+    const { team, fetchTeamById, updateTeam } = useTeamStore();
+    const [players, setPlayers] = useState([]);
+    const [fetchedTeam, setFetchedTeam] = useState(false);
+    const [lineup, setLineup] = useState([]);
     const playerList = [
         { name: "Christiano Ronaldo", preferedPosition: "Forward", number: 9, id: "1" },
         { name: "Diego Maradona", preferedPosition: "Forward", number: 9, id: "5" },
@@ -25,6 +26,8 @@ export const LineUpEditPage = () => {
     const MAX_PLAYERS = 11;
     const GK_ZONE_WIDTH = 0.15;
 
+    
+
     useEffect(() => {
         if (teamId) {
             fetchTeamById(teamId);
@@ -32,10 +35,12 @@ export const LineUpEditPage = () => {
     }, [teamId, fetchTeamById]);
 
     useEffect(() => {
-        setPlayers(team?.players || playerList);
-        setLineup(team?.lineup || []);
-        setFetchedTeam(team);
-
+        if (team && team.players) {
+            setPlayers(team.players.length ? team.players : playerList);
+            setLineup(team.lineup || []);
+            setFetchedTeam(team);
+            console.log("all players:", team.players);
+        }
     }, [team]);
 
     const handleAddOrMovePlayer = (player, coordinates) => {
@@ -78,10 +83,12 @@ export const LineUpEditPage = () => {
 
     const saveChanges = async () => {
         try {
-            console.log("Saving lineup:", lineup);
+            await updateTeam(teamId, { lineup });
+            setLineup(lineup);
             toast.success("Laguppställning sparad!");
         }
         catch (error) {
+            toast.error("Misslyckades spara laguppställning.");
         }
     };
 
@@ -90,7 +97,7 @@ export const LineUpEditPage = () => {
         <NavBar/>
         <DndProvider backend={HTML5Backend}>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-start'}}>
-        <PlayerBrowser DisplayData={players} style={{marginTop: '10vh'  }}/>
+        {team && <PlayerBrowser DisplayData={players} style={{marginTop: '10vh'  }}/>}
             <div style={{marginTop: '10vh',
                 marginLeft: '2vw',
                 backgroundColor: "rgba(30, 30, 30, 0.7)",
@@ -115,7 +122,7 @@ export const LineUpEditPage = () => {
                        </div> 
                         <Button onClick={() => saveChanges()} variant='contained' color='success' size='large' style={{fontSize:"20px", borderRadius:"12px", boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position:"absolute", top:"20px", right:"20px", zIndex: 11}}>Spara</Button>
                        
-                <LineupsEditor
+                {team && <LineupsEditor
                     homeTeam={team}
                     awayTeam={null}
                     homeTeamLineup={lineup}
@@ -124,7 +131,7 @@ export const LineUpEditPage = () => {
                     ignoreExtras={true}
                     onAddOrMovePlayer={handleAddOrMovePlayer}
                     onRemovePlayer={handleRemovePlayer}
-                />
+                />}
             </div>
         </div>
         </DndProvider>

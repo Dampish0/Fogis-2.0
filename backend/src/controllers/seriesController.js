@@ -19,6 +19,10 @@ export async function getSeries(req, res)
 {
     const { page = 1, limit = 40, ...filters } = req.query;
     try{
+        if (filters.name) {
+            filters.name = { $regex: `^${filters.name}`, $options: "i" };
+        }
+
         const series = await Series.find(filters).skip((page - 1) * limit).limit(limit).populate('teams', 'name');
         res.status(200).json(series);
     }catch(error){

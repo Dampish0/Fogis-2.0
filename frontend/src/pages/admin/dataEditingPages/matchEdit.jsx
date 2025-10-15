@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, colors, IconButton, Tab, Tabs, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, colors, IconButton, Tab, Tabs, TextField, Typography } from '@mui/material';
 import React, { use } from 'react'
 import { useState } from 'react';
 import NavBar from '../../../components/navbar/Navbar';
@@ -72,6 +72,10 @@ const MatchEditPage = (props) => {
     const [selectedReferee, setSelectedReferee] = useState(null);
     const [selectedSeries, setSelectedSeries] = useState(null);
 
+    useEffect(() => {
+        fetchTeams({ limit: 5 });
+    }, [fetchTeams]);
+
     const handleClickArrow = async (selectedNum, id) => {
         await fetchMatchById(id);
     }
@@ -110,6 +114,7 @@ const MatchEditPage = (props) => {
     const handleCreateMatch = async () => {
         if(!homeTeam || !awayTeam || !matchDate || !selectedArena || !selectedReferee){
             toast.error("Vänligen fyll i alla obligatoriska fält (hemma lag, borta lag, match datum, arena, domare)");
+            console.error("Missing fields:", {homeTeam, awayTeam, matchDate, selectedArena, selectedReferee});
             return;
         } 
         try {
@@ -135,15 +140,20 @@ const MatchEditPage = (props) => {
             clearTimeout(debounce);
         }
         setDebounce(setTimeout(async () => {
-            await func({  name: event.target.value, limit: 3 });
+            if(event.target.value.trim() === ""){
+                await func({ limit: 5 });
+            } else {
+                await func({  name: event.target.value, limit: 3 });
+            }
         }, 1000));
     };
 
     const HandleTeamSelected = (isHome, event) => {
-        if (isHome) {
+        if (isHome === true) {
             setHomeTeam(teamOptions[event.target.value]);
             console.log(teamOptions[event.target.value]);
         } else {
+            console.log("chosne", teamOptions[event.target.value]);
             setAwayTeam(teamOptions[event.target.value]);
         }
     };
@@ -229,6 +239,12 @@ const MatchEditPage = (props) => {
             }}>
                 <Typography style={{textAlign: 'center', top: '2vh', position: 'absolute'}} variant='h4'>Skapa ny match</Typography>
                 <Autocomplete
+                    loadingText={
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2 }}>
+                            <CircularProgress size={24} sx={{ mr: 2 }} />
+                            Laddar serier...
+                        </Box>
+    }
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={teamOptions}
                     sx={{ width: "80%" }} 
@@ -243,6 +259,12 @@ const MatchEditPage = (props) => {
                     renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchTeams)} label="Hemma lag" />}
                     />
                 <Autocomplete
+                        loadingText={
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2 }}>
+                            <CircularProgress size={24} sx={{ mr: 2 }} />
+                            Laddar serier...
+                        </Box>
+                    }
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={teamOptions}
                     sx={{ width: "80%", marginTop: '2vh', marginBottom: '2vh' }} 
@@ -273,6 +295,12 @@ const MatchEditPage = (props) => {
                  </LocalizationProvider>
 
                     <Autocomplete
+                        loadingText={
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2 }}>
+            <CircularProgress size={24} sx={{ mr: 2 }} />
+            Laddar serier...
+        </Box>
+    }
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={arenaOptions}
                     sx={{ width: "80%", marginTop: '2vh', marginBottom: '2vh' }} 
@@ -287,6 +315,12 @@ const MatchEditPage = (props) => {
                     />
                 
                     <Autocomplete
+                        loadingText={
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2 }}>
+            <CircularProgress size={24} sx={{ mr: 2 }} />
+            Laddar serier...
+        </Box>
+    }
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={refereeOptions}
                     sx={{ width: "80%", marginBottom: '2vh' }} 
@@ -302,6 +336,12 @@ const MatchEditPage = (props) => {
                     />
 
                     <Autocomplete
+                        loadingText={
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2 }}>
+            <CircularProgress size={24} sx={{ mr: 2 }} />
+            Laddar serier...
+        </Box>
+    }
                     disablePortal isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={seriesOptions}
                     sx={{ width: "80%", marginBottom: '2vh' }} 
@@ -313,7 +353,7 @@ const MatchEditPage = (props) => {
                             {option.label}
                         </li>
                     )}
-                    renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchReferees)} label="Välj serie" />}
+                    renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchSeries)} label="Välj serie" />}
                     />
 
                 <Button variant='contained' onClick={() => handleCreateMatch()} style={{backgroundColor: colors.green[700]}}>{matchloading && <CircularProgress size={24} />}{!matchloading && "Skapa Match"}</Button>
@@ -420,7 +460,7 @@ const MatchEditPage = (props) => {
                             {option.label} (<span style={{ marginLeft: 'auto', color: '#ccc', fontSize: '0.9em' }}>{new Date(option.startDate).toLocaleDateString()}</span>)
                         </li>
                     )}
-                    renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchReferees)} label="Välj serie" />}
+                    renderInput={(params) => <TextField {...params} sx={textFieldColor('white')} onChange={(e) => handleTeamSearchChange(e, fetchSeries)} label="Välj serie" />}
                     />
 
                 <Button variant='contained' onClick={() => handleUpdateMatch()} style={{backgroundColor: colors.green[700]}}>{matchloading && <CircularProgress size={24} />}{!matchloading && "Uppdatera Match"}</Button>
