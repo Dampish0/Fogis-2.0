@@ -1,6 +1,6 @@
 import React from 'react'
 import NavBar from '../../../components/navbar/Navbar'
-import { Box, Button, Tab, Tabs, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, Tab, Tabs, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { useState } from 'react';
 import useAuthStore from '../../../store/authStore';
 import toast from 'react-hot-toast';
@@ -35,15 +35,26 @@ import { useEffect } from 'react';
              }
   );
 
-const userEditPage = () => {
-    const { sendNotification, error: Aerr, loading: Aloading } = useAuthStore();
+const userEditPage = (props) => {
+    const { sendNotification, error: Aerr, loading: Aloading, register: createUser } = useAuthStore();
     const [tabIndex, setTabIndex] = useState(0);
     const [selectedNotificationGroup, setSelectedNotificationGroup] = useState('all');
     const [notififyAttempted, setNotifyAttempted] = useState(false);
+    const { user, role, error } = useAuthStore();
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+    }, [error]);
 
     const tabChange = (e , n) => {
         setTabIndex(n);
     }
+
+    const emailRef = React.useRef();
+    const userNameRef = React.useRef();
+    const authRoleRef = React.useRef();
 
     const titleRef = React.useRef();
     const messageRef = React.useRef();
@@ -99,6 +110,15 @@ const userEditPage = () => {
            }
     }, [Aerr, Aloading]);
 
+    const handleCreateUser = async () => {
+        try{
+            await createUser(userNameRef.current.value, emailRef.current.value, authRoleRef.current?.value || "trainer");
+            toast.success("Lyckades.");
+        } catch (error) {
+            toast.error("Ett fel inträffade: " + error.message);
+        }
+    }
+
   return (
     <div style={{overflow: "hidden", minHeight: "100vh"}}>
         <NavBar/>
@@ -131,9 +151,13 @@ const userEditPage = () => {
            <Box sx={{ ...textFieldColor("white"), width: "20vw", justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column"  }}>
                 {tabIndex === 0 && (
                     <>
-                        <TextField label="Användarnamn" variant="outlined" margin="normal" fullWidth />
-                        <TextField label="E-post" variant="outlined" margin="normal" fullWidth />
-                        <Button size='large' variant='contained' color='primary' style={{fontSize:"20px", marginTop: "20px", position:"absolute", bottom:"3vh" }}>
+                        <TextField inputRef={userNameRef} label="Användarnamn" variant="outlined" margin="normal" fullWidth />
+                        <TextField inputRef={emailRef} label="E-post" variant="outlined" margin="normal" fullWidth />
+                        <Autocomplete inputRef={authRoleRef} style={{width:"500px"}}
+                            options={["admin", "tränare", "domare", role == "dev" || role == "superadmin" ? "superadmin" : null].filter(Boolean)}
+                            renderInput={(params) => <TextField {...params} label="Roll" variant="outlined" margin="normal" fullWidth />}
+                        />
+                        <Button onClick={handleCreateUser} size='large' variant='contained' color='primary' style={{fontSize:"20px", marginTop: "20px", position:"absolute", bottom:"3vh" }}>
                             Skapa
                         </Button>
                     </>

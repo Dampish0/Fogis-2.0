@@ -11,10 +11,10 @@ export const useAuthStore = create((set) => ({
     loading: false,
     isCheckingAuth: true,
 
-    register: async (name, email, password) => {
+    register: async (name, email, authRole) => {
         set({loading: true, error: null});
         try {
-            const response = await axios.post(`${apiURL}/api/auth/createuser`, {name, email, password}, {withCredentials: true});
+            const response = await axios.post(`${apiURL}/api/auth/createuser`, {name, email, authRole}, {withCredentials: true});
             set({user: response.data.user, isAuthenticated: true, loading: false});
         } catch (error) {
             set({error: error.response?.data?.message || "Misslyckades att registrerar", loading: false});

@@ -8,9 +8,9 @@ import { SendLoginCredential, SendPasswordReset, SendPasswordResetSuccess } from
 export async function createUser(req, res)
 {   
     try{
-        const {email, password, name, authRole} = req.body;
+        const {email, name, authRole="trainer"} = req.body;
 
-        if(!email || !password || !name || !authRole){
+        if(!email || !name || !authRole){
             throw new Error("All Fields are required.")
         }
 
@@ -22,7 +22,7 @@ export async function createUser(req, res)
         if(userAlreadyExists){
             return res.status(400).json({message:"User already exists."});
         }
-
+        const password = crypto.randomBytes(5).toString("hex");
         const hashpass = await bcrypt.hash(password, 14);
         //const verifcode = generateVerificationCode();
         const user = new User(
