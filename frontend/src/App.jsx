@@ -64,7 +64,7 @@ export const App = () => {
     const intervalId = setInterval(() => {
       checkAuth();
       console.log("Checking auth...");
-    }, 10 * 1000); // 1 minut
+    }, 60 * 1000); // 1 minut
 
     return () => {
       clearInterval(intervalId);
@@ -82,7 +82,7 @@ export const App = () => {
   useEffect(() => {
     let timeoutId;
     if (isCheckingAuth) {
-      timeoutId = setTimeout(() => setShowBackdrop(true), 300); // 300ms delay
+      timeoutId = setTimeout(() => setShowBackdrop(true), 300);
     } else {
       setShowBackdrop(false);
     }
