@@ -103,16 +103,10 @@ export const App = () => {
         <div>
 
           <Routes>
-            <Route path='/login' element={<RedirectAuthenticated><LoginPage/></RedirectAuthenticated>}/>
-            <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
-            <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
-            <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
-            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
-            <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
-            <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
+            {standardRoutes(user)}
 
             {
-              (role === "admin" || role === "superadmin" || role === "dev" && <Route path='/admin' element={<ProtectedRoute><AdminPage role={role}/></ProtectedRoute>}/>) 
+              ((role === "admin" || role === "superadmin" || role === "dev") && adminRoutes(role)) 
               ||
               (role === "trainer" && trainerRoutes(role))
               ||
@@ -122,7 +116,6 @@ export const App = () => {
 
             <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
            </Routes>
-
 
         <Toaster/>
           <Backdrop sx={{zIndex:4}} open={showBackdrop}>

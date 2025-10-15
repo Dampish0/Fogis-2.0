@@ -10,7 +10,7 @@ import CreatePage from './pages/CreatePage';
 import DetailPage from './pages/detailpage';
 import NewPasswordPage from './pages/newPasswordPage';
 import NewsPage from './pages/NewsPage/NewsPage';
-import CompetitionPage from './pages/CompetitionPage';
+import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
 import TestingPage from './pages/testingPage';
 import PlayerEditPage from './pages/admin/dataEditingPages/playerEdit';
 import TeamEditPage from './pages/admin/dataEditingPages/teamEdit';

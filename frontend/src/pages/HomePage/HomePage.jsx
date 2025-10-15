@@ -99,8 +99,8 @@ export default function HomePage() {
   }
 
   return (
-    <div style={{
-     minHeight: "100vh", overflowX: "hidden", backgroundColor: "#121212", position: "relative"}}>
+    <div style={{//#121212
+     minHeight: "100vh", overflowX: "hidden", backgroundColor: "#FFFFFF", position: "relative", color: "#000000"}}>
         
         
 
@@ -178,12 +178,12 @@ export default function HomePage() {
 
           <section aria-label="Fler nyheter" className="right-col">
             <div className="right-header">
-              <a style={{ color: "#ffffff" }} href="/nyheter" className="right-more" aria-label="Visa alla nyheter">
+              <a style={{ color: "#000000" }} href="/nyheter" className="right-more" aria-label="Visa alla nyheter">
                 SE FLER NYHETER
               </a>
             </div>
 
-            <ul className="right-list">
+            <ul className="right-list" style={{ color: "#000000"}}>
               {rightSide.map((a) => (
                 <li key={a.id}>
                   <div className="card-block">
@@ -193,7 +193,7 @@ export default function HomePage() {
                         showNewsDetail(a.id-1);
                       }}
                       
-                      style={{ cursor: "pointer"}}
+                      style={{ cursor: "pointer", color: "#000000"}}
                       className="as-link"
                       aria-label={`Läs: ${a.title}`}
                     >
@@ -208,16 +208,16 @@ export default function HomePage() {
                             />
                           )}
 
-                          <div className="newscard__text">
+                          <div className="newscard__text" style={{ color: "#000000"}}> 
                             {a.dateText && (
-                              <time
+                              <time style={{ color: "#000000"}}
                                 className="newscard__date"
                                 aria-label={`Publicerad ${a.dateText}`}
                               >
                                 {a.dateText}
                               </time>
                             )}
-                            <h2 className="newscard__title" style={{ color: "#ffffff" }}>{a.title}</h2>
+                            <h2 className="newscard__title" style={{ color: "#000000" }}>{a.title}</h2>
                           </div>
                         </div>
                       </div>
