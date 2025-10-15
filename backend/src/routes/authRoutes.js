@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, forgotPass, login, logout, resetPass, checkAuth, sendNotification} from "../controllers/authController.js";
+import { createUser, forgotPass, login, logout, resetPass, checkAuth, sendNotification, readNotification} from "../controllers/authController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { getAuthRoleMiddleware } from "../middleware/verifyAuthorityLevel.js";
 import ratelimiter from "../middleware/ratelimiter.js";
@@ -22,5 +22,6 @@ router.post("/forgotpass", forgotPass)
 router.post("/resetpass/:token", resetPass)
 
 router.post("/notify", verifyToken, getAuthRoleMiddleware(allowedNotifyRoles), ratelimiter, sendNotification)
+router.post("/notify/mark-read", verifyToken, readNotification)
 
 export default router

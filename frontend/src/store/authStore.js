@@ -110,6 +110,21 @@ export const useAuthStore = create((set) => ({
             set({error: error.response?.data?.message || "Misslyckades att skicka meddelande", loading: false});
             throw error;
         }
+    },
+
+    markNotificationsAsRead: async (notificationIds) => {
+        set({loading: true, error: null});
+        try {
+            const response = await axios.post(`${apiURL}/api/auth/notify/mark-read`, {notificationIds}, {withCredentials: true});
+            if(response.data.success === false){
+                set({error: response.data.message, loading: false});
+                return;
+            }
+            set({loading: false});
+        } catch (error) {
+            set({error: error.response?.data?.message || "Misslyckades att markera meddelande som läst", loading: false});
+            throw error;
+        }
     }
 
 }));

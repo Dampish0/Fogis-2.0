@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import React from 'react'
-import NavBar from '../components/Navbar/NavBar'
+import NavBar from '../components/navbar/Navbar'
 
 const setMUI = (color) => (
     {

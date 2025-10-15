@@ -70,7 +70,6 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
         <div>
-          <NavBar/>
           <Routes>
             {standardRoutes(user)}
 

@@ -53,8 +53,8 @@ const setMUI = (color) => (
   );
 
 const NavBar = (props) => {
-    const {isAuthenticated, logout} = useAuthStore();
-const notificationCount = 3;
+    const {isAuthenticated, logout, user} = useAuthStore();
+  const notificationCount = user?.notifications?.filter(n => !n.read).length;
 
   const navigate = useNavigate();
 

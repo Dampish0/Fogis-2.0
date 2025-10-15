@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../../components/Navbar/NavBar.jsx";
+import NavBar from "../../components/navbar/Navbar.jsx";
 import "./NewsPage.css";
 import news1Png from "../../assets/Mbappe.png";
 import news2Png from "../../assets/Olsen.png";

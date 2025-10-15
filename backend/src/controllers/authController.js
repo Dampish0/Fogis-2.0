@@ -270,3 +270,23 @@ export const sendNotification = async (req, res) => {
         res.status(400).json({ success: false, message: "error in sendNotification.", err: error.message });
     }
 };
+
+export const readNotification = async (req, res) => {
+    try {
+        const { notificationIds } = req.body;
+        if (!notificationIds || !Array.isArray(notificationIds)) {
+            return res.status(400).json({ success: false, message: "Notification IDs are required." });
+        }
+        const user = await User.findById(req.userId);
+        if (!user) {
+            return res.status(400).json({ success: false, message: "Invalid user." });
+        }
+        const notificationsToMark = user.notifications.filter(n => notificationIds.includes(n._id.toString()));
+        notificationsToMark.forEach(n => n.read = true);
+        await user.save();
+        res.status(200).json({ success: true, message: "Notifications marked as read." });
+    } catch (error) {
+        console.log("Error in readNotification: ", error.message);
+        res.status(400).json({ success: false, message: "error in readNotification.", err: error.message });
+    }  
+};
