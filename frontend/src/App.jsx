@@ -21,7 +21,6 @@ import useAuthStore from './store/authStore';
 import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refereeRoutes, trainerRoutes
 
  } from './routes';
-import NavBar from './components/navbar/Navbar';
 import { useState } from 'react';
 
 
