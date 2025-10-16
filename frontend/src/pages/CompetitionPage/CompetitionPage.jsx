@@ -88,7 +88,7 @@ const CompetitionPage = () => {
   }
 
   return (
-    <div className="page">
+    <div className="page" style={{overflowX: "hidden"}}>
       <NavBar />
       
       <div className="banner">

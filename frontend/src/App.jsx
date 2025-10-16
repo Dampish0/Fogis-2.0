@@ -65,7 +65,7 @@ const theme = createTheme({
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-  const role = "admin" // user?.role || "guest";
+  const role = user?.role || "guest"; // user?.role || "guest";
 
   // timeout to check auth after a period to get latest notiser and check if user still logged in
   useEffect(() => {

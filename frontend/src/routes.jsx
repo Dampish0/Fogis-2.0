@@ -22,10 +22,11 @@ import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchRepor
 import ClubEditPage from './pages/admin/dataEditingPages/clubEdit';
 import UserEditPage from './pages/admin/dataEditingPages/userEdit';
 import NotificationPage from './pages/NotificationPage';
+import { CircularProgress } from '@mui/material';
 
 export const ProtectedRoute = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated, isCheckingAuth} = useAuthStore();
 
@@ -42,7 +43,7 @@ export const ProtectedRoute = ({children}) => {
 
 export const RedirectAuthenticated = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated} = useAuthStore();
   if(isAuthenticated){

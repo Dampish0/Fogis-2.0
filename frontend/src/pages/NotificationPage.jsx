@@ -7,7 +7,7 @@ import { useState } from 'react';
 import useAuthStore from '../store/authStore';
 
 const NotificationPage = (props) => {
-    const notifications = props.user.notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const notifications = (props.user?.notifications || []).sort((a, b) => new Date(b.date) - new Date(a.date));
     const [selectedNotification, setSelectedNotification] = useState(null);
     const [filter, setFilter] = useState('all');
     const [_, forceUpdate] = useState(0);
