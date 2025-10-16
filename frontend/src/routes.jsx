@@ -30,10 +30,6 @@ export const ProtectedRoute = ({children}) => {
   // --------------------
   const {isAuthenticated, isCheckingAuth} = useAuthStore();
 
-  if(isCheckingAuth){
-    return <CircularProgress/>
-  }
-
   if(!isAuthenticated){
     return <Navigate to="/login" replace/>
   }
