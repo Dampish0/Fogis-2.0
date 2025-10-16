@@ -103,7 +103,11 @@ const NotificationPage = (props) => {
 
                 </TableHead>
                 <TableBody style={{backgroundColor: "#1d293d"}}> 
-                    {notifications.filter(n => filter === 'all' || (filter === 'read' && n.read) || (filter === 'unread' && !n.read)).map((n, index) => (
+                    {notifications.filter(n => filter === 'all' || (filter === 'read' && n.read) || (filter === 'unread' && !n.read)).map((n, index) => {
+                        if(n > 12){
+                            return null;
+                        }
+                        return (
                         <TableRow key={index} style={{backgroundColor:"#4b4b4bff"}}>
                             <TableCell  onClick={() => handleNotificationClick(n)}
                              style={{ color: "white", cursor: "pointer", borderBottom: (index == notifications.length - 1 ? "none" : null) }}
@@ -122,8 +126,8 @@ const NotificationPage = (props) => {
                                 <Typography sx={{fontSize:"12px", color:"white"}}>{new Date(n.date).toLocaleString('sv-SE', { timeZone: 'Europe/Stockholm' })}</Typography>
                                 </Box>
                                 </TableCell>
-                        </TableRow>
-                    ))}
+                        </TableRow>)}
+                    )}
                 </TableBody>
             </Table>
             </TableContainer>

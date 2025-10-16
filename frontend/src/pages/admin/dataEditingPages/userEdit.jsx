@@ -133,7 +133,7 @@ const userEditPage = (props) => {
         
         <div style={{boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)", backgroundColor: "rgba(0,0,0, 0.7)"
         , backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRadius: "14px", padding: "20px"
-        , width: "25vw", height: "50vh", justifyContent: "center", alignItems: "center", display: "flex", margin: "40px auto", flexDirection: "column",
+        , width: "25vw", height: "65vh", justifyContent: "center", alignItems: "center", display: "flex", margin: "40px auto", flexDirection: "column",
             color: "white"
         }}>
 
