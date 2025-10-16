@@ -1,17 +1,7 @@
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router';
-import toast from "react-hot-toast";
-import Button from '@mui/material/Button';
+import { Navigate, Route, Routes, useNavigate } from 'react-router'; 
 import '@fontsource/roboto/500.css';
-import Backdrop from '@mui/material/Backdrop';
-import NewPasswordPage from './pages/newPasswordPage';
-import NewsPage from './pages/NewsPage/NewsPage';
-import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
-import CompetitionDetails from './pages/CompetitionPage/CompetitionDetails';
-import TestingPage from './pages/testingPage';
-import  AdminTrainerPage  from './pages/admin/AdminTrainerPage';
-import  AdminRefereePage  from './pages/admin/AdminRefereePage';
-import  AdminPage  from './pages/admin/AdminPage';
+import Backdrop from '@mui/material/Backdrop'; 
 
 
 import { Toaster } from 'react-hot-toast';
