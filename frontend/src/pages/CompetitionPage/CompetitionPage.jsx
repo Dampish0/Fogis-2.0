@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import NavBar from "../../components/Navbar/NavBar";
+import NavBar from "../../components/navbar/Navbar";
 import { Container, Typography, List, CircularProgress, Alert } from "@mui/material";
 import AnimatedContent  from '../../components/AnimatedContent';
 import CompetitionDetails from "./CompetitionDetails"; 
@@ -88,7 +88,7 @@ const CompetitionPage = () => {
   }
 
   return (
-    <div className="page">
+    <div className="page" style={{overflowX: "hidden"}}>
       <NavBar />
       
       <div className="banner">

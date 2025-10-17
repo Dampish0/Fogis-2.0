@@ -1,17 +1,7 @@
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router';
-import toast from "react-hot-toast";
-import Button from '@mui/material/Button';
+import { Navigate, Route, Routes, useNavigate } from 'react-router'; 
 import '@fontsource/roboto/500.css';
-import Backdrop from '@mui/material/Backdrop';
-import NewPasswordPage from './pages/newPasswordPage';
-import NewsPage from './pages/NewsPage/NewsPage';
-import CompetitionPage from './pages/CompetitionPage/CompetitionPage';
-import CompetitionDetails from './pages/CompetitionPage/CompetitionDetails';
-import TestingPage from './pages/testingPage';
-import  AdminTrainerPage  from './pages/admin/AdminTrainerPage';
-import  AdminRefereePage  from './pages/admin/AdminRefereePage';
-import  AdminPage  from './pages/admin/AdminPage';
+import Backdrop from '@mui/material/Backdrop'; 
 
 
 import { Toaster } from 'react-hot-toast';
@@ -21,7 +11,6 @@ import useAuthStore from './store/authStore';
 import {standardRoutes, adminRoutes, ProtectedRoute, RedirectAuthenticated, refereeRoutes, trainerRoutes
 
  } from './routes';
-import NavBar from './components/navbar/Navbar';
 import { useState } from 'react';
 
 
@@ -65,7 +54,9 @@ const theme = createTheme({
 
 export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
-  const role = "admin" // user?.role || "guest";
+  const role = user?.role || "guest"; // user?.role || "guest";
+
+  const [_, forceUpdate] = useState(0);
 
   // timeout to check auth after a period to get latest notiser and check if user still logged in
   useEffect(() => {
@@ -83,6 +74,12 @@ export const App = () => {
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
+
+  // useEffect(() => {
+  //   if(user){
+  //     forceUpdate(n => n+1);
+  //   }
+  // }, [user]);
    
 
   const [showBackdrop, setShowBackdrop] = useState(false);
@@ -105,16 +102,16 @@ export const App = () => {
           <Routes>
             {standardRoutes(user)}
 
-            {
+            {user && (
               ((role === "admin" || role === "superadmin" || role === "dev") && adminRoutes(role)) 
               ||
               (role === "trainer" && trainerRoutes(role))
               ||
-              (role === "referee" && refereeRoutes(role))
+              (role === "referee" && refereeRoutes(role)))
             }
 
 
-            <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
+            {!isCheckingAuth && !user && <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/> }
            </Routes>
 
         <Toaster/>

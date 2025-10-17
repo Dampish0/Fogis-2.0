@@ -22,18 +22,19 @@ import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchRepor
 import ClubEditPage from './pages/admin/dataEditingPages/clubEdit';
 import UserEditPage from './pages/admin/dataEditingPages/userEdit';
 import NotificationPage from './pages/NotificationPage';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 export const ProtectedRoute = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
-  const {isAuthenticated, isCheckingAuth} = useAuthStore();
+  const {isAuthenticated, isCheckingAuth, loading} = useAuthStore();
 
-  if(isCheckingAuth){
-    return <CircularProgress/>
-  }
+  // if(isCheckingAuth){
+  //   return <Backdrop open></Backdrop>
+  // }
 
-  if(!isAuthenticated){
+  if(!loading && !isCheckingAuth && !isAuthenticated){
     return <Navigate to="/login" replace/>
   }
 
@@ -42,7 +43,7 @@ export const ProtectedRoute = ({children}) => {
 
 export const RedirectAuthenticated = ({children}) => {
   // temporay dev test code
-  return children;
+  //return children;
   // --------------------
   const {isAuthenticated} = useAuthStore();
   if(isAuthenticated){
@@ -101,7 +102,7 @@ export const standardRoutes = (user) => {
             <Route path='/' element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
             <Route path='/create' element={<ProtectedRoute><CreatePage/></ProtectedRoute>}/>
             <Route path='/matcher' element={<ProtectedRoute><MatcherPage/></ProtectedRoute>}/>
-            <Route path='/reset-password/:token' element={<ProtectedRoute><NewPasswordPage/></ProtectedRoute>}/>
+            <Route path='/reset-password/:token' element={<NewPasswordPage/>}/>
             <Route path='/nyheter' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}/>
             <Route path='/tavlingar' element={<ProtectedRoute><CompetitionPage/></ProtectedRoute>}/>
             <Route path='/notifications' element={<ProtectedRoute><NotificationPage user={user}/></ProtectedRoute>}/>       

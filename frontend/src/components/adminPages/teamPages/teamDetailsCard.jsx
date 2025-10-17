@@ -25,13 +25,13 @@ export const TeamDetailsCard = (props) => {
         position: "relative",
         width:"46vw",
         aspectRatio: "1/2",
-        maxHeight: "80vh",
+        maxHeight: "85vh",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
         display: "flex",
         padding: "20px",
-        
+        marginBottom: "40px",
         
     }}>
         <img src={EIF} alt="Team Logo" style={{width: "120px", height: "120px", position: "absolute", top: "20px", right: "20px", borderRadius: "50%"}}/>

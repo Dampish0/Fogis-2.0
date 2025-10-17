@@ -40,7 +40,10 @@ const userEditPage = (props) => {
     const [tabIndex, setTabIndex] = useState(0);
     const [selectedNotificationGroup, setSelectedNotificationGroup] = useState('all');
     const [notififyAttempted, setNotifyAttempted] = useState(false);
-    const { user, role, error } = useAuthStore();
+    const { user, error } = useAuthStore();
+    const role = props.role
+
+    const [selectedRole, setSelectedRole] = useState("trainer");
 
     useEffect(() => {
         if (error) {
@@ -133,7 +136,7 @@ const userEditPage = (props) => {
         
         <div style={{boxShadow: "0 4px 16px rgba(0, 0, 0, 0.7)", backgroundColor: "rgba(0,0,0, 0.7)"
         , backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRadius: "14px", padding: "20px"
-        , width: "25vw", height: "50vh", justifyContent: "center", alignItems: "center", display: "flex", margin: "40px auto", flexDirection: "column",
+        , width: "25vw", height: "65vh", justifyContent: "center", alignItems: "center", display: "flex", margin: "40px auto", flexDirection: "column",
             color: "white"
         }}>
 
@@ -153,7 +156,7 @@ const userEditPage = (props) => {
                     <>
                         <TextField inputRef={userNameRef} label="Användarnamn" variant="outlined" margin="normal" fullWidth />
                         <TextField inputRef={emailRef} label="E-post" variant="outlined" margin="normal" fullWidth />
-                        <Autocomplete inputRef={authRoleRef} style={{width:"500px"}}
+                        <Autocomplete onInputChange={(e, v) => setSelectedRole(v)} style={{width: "100%"}}
                             options={["admin", "tränare", "domare", role == "dev" || role == "superadmin" ? "superadmin" : null].filter(Boolean)}
                             renderInput={(params) => <TextField {...params} label="Roll" variant="outlined" margin="normal" fullWidth />}
                         />
@@ -176,7 +179,7 @@ const userEditPage = (props) => {
                 {tabIndex === 3 && (
                     <>
                         <div style={{marginTop:"5vh"}}></div>
-                        <ToggleButtonGroup style={{position:"absolute", top:"8vh"}}  color="primary" value={selectedNotificationGroup} exclusive onChange={(event, n) => setSelectedNotificationGroup(n)}>
+                        <ToggleButtonGroup style={{position:"absolute", top:"10vh"}}  color="primary" value={selectedNotificationGroup} exclusive onChange={(event, n) => setSelectedNotificationGroup(n)}>
                             <ToggleButton value="all" sx={{ color: "white", borderColor: "white", '&.Mui-selected': { backgroundColor: 'rgba(255, 255, 255, 0.2)', color: 'white', borderColor: 'white' }, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
                                 Alla
                             </ToggleButton>

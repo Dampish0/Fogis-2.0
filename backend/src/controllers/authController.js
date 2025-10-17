@@ -24,7 +24,7 @@ export async function createUser(req, res)
         }
         const password = crypto.randomBytes(5).toString("hex");
         const hashpass = await bcrypt.hash(password, 14);
-        //const verifcode = generateVerificationCode();
+        
         const user = new User(
             {
                 email: email.toLowerCase(),
