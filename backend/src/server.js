@@ -51,6 +51,15 @@ app.use("/api/series", seriesRoutes)
 app.use("/api/admincase", adminCaseRoutes)
 
 
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "..", "frontend", "dist")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
+    });
+}
+
 
 //connect to db and start server
 connectDB().then(() =>
