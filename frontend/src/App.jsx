@@ -56,6 +56,8 @@ export const App = () => {
   const {checkAuth, isCheckingAuth, isAuthenticated, user} = useAuthStore();
   const role = user?.role || "guest"; // user?.role || "guest";
 
+  const [_, forceUpdate] = useState(0);
+
   // timeout to check auth after a period to get latest notiser and check if user still logged in
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -72,6 +74,12 @@ export const App = () => {
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
+
+  // useEffect(() => {
+  //   if(user){
+  //     forceUpdate(n => n+1);
+  //   }
+  // }, [user]);
    
 
   const [showBackdrop, setShowBackdrop] = useState(false);
@@ -94,16 +102,16 @@ export const App = () => {
           <Routes>
             {standardRoutes(user)}
 
-            {
+            {user && (
               ((role === "admin" || role === "superadmin" || role === "dev") && adminRoutes(role)) 
               ||
               (role === "trainer" && trainerRoutes(role))
               ||
-              (role === "referee" && refereeRoutes(role))
+              (role === "referee" && refereeRoutes(role)))
             }
 
 
-            <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/>
+            {!isCheckingAuth && !user && <Route path='*' element={<Navigate to={isAuthenticated ? "/" : "/login"} replace/>}/> }
            </Routes>
 
         <Toaster/>

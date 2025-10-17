@@ -40,7 +40,10 @@ const userEditPage = (props) => {
     const [tabIndex, setTabIndex] = useState(0);
     const [selectedNotificationGroup, setSelectedNotificationGroup] = useState('all');
     const [notififyAttempted, setNotifyAttempted] = useState(false);
-    const { user, role, error } = useAuthStore();
+    const { user, error } = useAuthStore();
+    const role = props.role
+
+    const [selectedRole, setSelectedRole] = useState("trainer");
 
     useEffect(() => {
         if (error) {
@@ -153,7 +156,7 @@ const userEditPage = (props) => {
                     <>
                         <TextField inputRef={userNameRef} label="Användarnamn" variant="outlined" margin="normal" fullWidth />
                         <TextField inputRef={emailRef} label="E-post" variant="outlined" margin="normal" fullWidth />
-                        <Autocomplete inputRef={authRoleRef} style={{width: "100%"}}
+                        <Autocomplete onInputChange={(e, v) => setSelectedRole(v)} style={{width: "100%"}}
                             options={["admin", "tränare", "domare", role == "dev" || role == "superadmin" ? "superadmin" : null].filter(Boolean)}
                             renderInput={(params) => <TextField {...params} label="Roll" variant="outlined" margin="normal" fullWidth />}
                         />
