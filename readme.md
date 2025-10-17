@@ -1,5 +1,8 @@
 # Fogis 2.0
 
+<img width="3439" height="1323" alt="image" src="https://github.com/user-attachments/assets/745c1bd2-afd4-412c-9117-0991dc6c2797" />
+
+
 | Name | github username |
 |----------|----------|
 | John Molin    | mojo0224   |
