@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "dev":"NODE_ENV=development nodemon backend/src/server.js",
+    "start": "NODE_ENV=production node backend/src/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+  },
   "devDependencies": {
     "nodemon": "^3.1.10"
   },
