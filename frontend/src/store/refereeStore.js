@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/referee');
 
 export const useRefereeStore = create((set, get) => ({
     referees: [],
@@ -16,7 +17,7 @@ export const useRefereeStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const { page = 1, limit = 10, ...filters } = params;
-            const response = await axios.get(`${apiURL}/api/referee`, {
+            const response = await axios.get(`${apiURL}`, {
                 params: { page, limit, ...filters },
                 withCredentials: true,
             });
@@ -29,7 +30,7 @@ export const useRefereeStore = create((set, get) => ({
     fetchRefereeById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/referee/${id}`, { withCredentials: true });
+            const response = await axios.get(`${apiURL}/${id}`, { withCredentials: true });
             set({ referee: response.data, loading: false, error: null });
         } catch (error) {
             set({ error: error.response?.data?.message || "Kunde inte hämta domare", loading: false });
@@ -39,7 +40,7 @@ export const useRefereeStore = create((set, get) => ({
     createReferee: async (refereeData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/referee`, refereeData, { withCredentials: true });
+            const response = await axios.post(`${apiURL}`, refereeData, { withCredentials: true });
             set({ loading: false, error: null });
             //refresh the list
             get().fetchReferees();
@@ -53,7 +54,7 @@ export const useRefereeStore = create((set, get) => ({
     updateReferee: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/referee/${id}`, updates, { withCredentials: true });
+            const response = await axios.put(`${apiURL}/${id}`, updates, { withCredentials: true });
             set({ referee: response.data, loading: false, error: null });
             return response.data;
         } catch (error) {
@@ -65,7 +66,7 @@ export const useRefereeStore = create((set, get) => ({
     deleteReferee: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/referee/${id}`, { withCredentials: true });
+            await axios.delete(`${apiURL}/${id}`, { withCredentials: true });
             set({ loading: false, error: null });
         } catch (error) {
             set({ error: error.response?.data?.message || "Kunde inte ta bort domare", loading: false });
@@ -77,7 +78,7 @@ export const useRefereeStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const { page = 1, limit = 10, ...filters } = params;
-            const response = await axios.get(`${apiURL}/api/referee/history/${id}`, {
+            const response = await axios.get(`${apiURL}/history/${id}`, {
                 params: { page, limit, ...filters },
                 withCredentials: true,
             });

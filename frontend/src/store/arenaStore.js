@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/arena');
 
 export const useArenaStore = create((set, get) => ({
     arenas: [],
@@ -14,7 +15,7 @@ export const useArenaStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const { page = 1, limit = 10, ...filters } = params;
-            const response = await axios.get(`${apiURL}/api/arena`, {
+            const response = await axios.get(`${apiURL}`, {
                 params: { page, limit, ...filters },
                 withCredentials: true,
             });
@@ -35,7 +36,7 @@ export const useArenaStore = create((set, get) => ({
     fetchArenaById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/arenas/${id}`, {
+            const response = await axios.get(`${apiURL}/${id}`, {
                 withCredentials: true,
             });
             set({
@@ -54,7 +55,7 @@ export const useArenaStore = create((set, get) => ({
     createArena: async (arenaData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/arena`, arenaData, {
+            const response = await axios.post(`${apiURL}`, arenaData, {
                 withCredentials: true,
             });
             set((state) => ({
@@ -75,7 +76,7 @@ export const useArenaStore = create((set, get) => ({
     updateArena: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/arenas/${id}`, updates, {
+            const response = await axios.put(`${apiURL}/${id}`, updates, {
                 withCredentials: true,
             });
             set((state) => ({
@@ -99,7 +100,7 @@ export const useArenaStore = create((set, get) => ({
     deleteArena: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/arenas/${id}`, {
+            await axios.delete(`${apiURL}/${id}`, {
                 withCredentials: true,
             });
             set((state) => ({

@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/admincase');
 
 export const useAdminCaseStore = create((set, get) => ({
     cases: [],
@@ -12,7 +13,7 @@ export const useAdminCaseStore = create((set, get) => ({
     fetchAdminCases: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/admincase`, {
+            const response = await axios.get(`${apiURL}`, {
                 params,
                 withCredentials: true,
             });
@@ -25,7 +26,7 @@ export const useAdminCaseStore = create((set, get) => ({
     fetchAdminCaseById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/admincase/${id}`, { withCredentials: true });
+            const response = await axios.get(`${apiURL}/${id}`, { withCredentials: true });
             set({ caseDetail: response.data, loading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || "Kunde inte hämta ärendet", loading: false });
@@ -35,7 +36,7 @@ export const useAdminCaseStore = create((set, get) => ({
     createAdminCase: async (caseData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/admincase`, caseData, { withCredentials: true });
+            const response = await axios.post(`${apiURL}`, caseData, { withCredentials: true });
             set((state) => ({
                 cases: [response.data, ...state.cases],
                 loading: false,
@@ -49,7 +50,7 @@ export const useAdminCaseStore = create((set, get) => ({
     updateAdminCase: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/admincase/${id}`, updates, { withCredentials: true });
+            const response = await axios.put(`${apiURL}/${id}`, updates, { withCredentials: true });
             set((state) => ({
                 cases: state.cases.map((c) => (c._id === id ? response.data : c)),
                 caseDetail: response.data,
@@ -64,7 +65,7 @@ export const useAdminCaseStore = create((set, get) => ({
     claimAdminCase: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/admincase/${id}/claim`, {}, { withCredentials: true });
+            const response = await axios.post(`${apiURL}/${id}/claim`, {}, { withCredentials: true });
             set((state) => ({
                 cases: state.cases.map((c) => (c._id === id ? response.data : c)),
                 caseDetail: response.data,

@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/players');
 
 export const usePlayerStore = create((set, get) => ({
     players: [],
@@ -13,7 +14,7 @@ export const usePlayerStore = create((set, get) => ({
     fetchPlayers: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/players`, {
+            const response = await axios.get(`${apiURL}`, {
                 params,
                 withCredentials: true,
             });
@@ -29,7 +30,7 @@ export const usePlayerStore = create((set, get) => ({
     fetchPlayerById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/players/${id}`, {
+            const response = await axios.get(`${apiURL}/${id}`, {
                 withCredentials: true,
             });
             set({ player: response.data, loading: false });
@@ -44,7 +45,7 @@ export const usePlayerStore = create((set, get) => ({
     createPlayer: async (playerData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/players`, playerData, {
+            const response = await axios.post(`${apiURL}`, playerData, {
                 withCredentials: true,
             });
             set((state) => ({
@@ -64,7 +65,7 @@ export const usePlayerStore = create((set, get) => ({
     updatePlayer: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/players/${id}`, updates, {
+            const response = await axios.put(`${apiURL}/${id}`, updates, {
                 withCredentials: true,
             });
             set((state) => ({
@@ -86,7 +87,7 @@ export const usePlayerStore = create((set, get) => ({
     deletePlayer: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/players/${id}`, {
+            await axios.delete(`${apiURL}/${id}`, {
                 withCredentials: true,
             });
             set((state) => ({

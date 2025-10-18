@@ -1,7 +1,8 @@
 import {create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL =  'http://localhost:5001';
+const apiURL =  getApiURL('/api/auth');
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
@@ -14,7 +15,7 @@ export const useAuthStore = create((set) => ({
     register: async (name, email, authRole) => {
         set({loading: true, error: null});
         try {
-            const response = await axios.post(`${apiURL}/api/auth/createuser`, {name, email, authRole}, {withCredentials: true});
+            const response = await axios.post(`${apiURL}/createuser`, {name, email, authRole}, {withCredentials: true});
             set({user: response.data.user, isAuthenticated: true, loading: false});
         } catch (error) {
             set({error: error.response?.data?.message || "Misslyckades att registrerar", loading: false});
@@ -25,7 +26,7 @@ export const useAuthStore = create((set) => ({
     login: async (email, password) => {
         set({loading: true, error: null});
         try {
-            const response = await axios.post(`${apiURL}/api/auth/login`, {email, password}, {withCredentials: true});
+            const response = await axios.post(`${apiURL}/login`, {email, password}, {withCredentials: true});
             if(response.data.success === false){
                 set({error: response.data.message, loading: false, isAuthenticated: false, user: null});
                 return;
@@ -39,7 +40,7 @@ export const useAuthStore = create((set) => ({
     logout: async () => {
         set({loading: true, error: null});
         try {
-            await axios.post(`${apiURL}/api/auth/logout`, {}, {withCredentials: true});
+            await axios.post(`${apiURL}/logout`, {}, {withCredentials: true});
             set({user: null, isAuthenticated: false, loading: false});
         } catch (error) {
             set({error: error.response?.data?.message || "Misslyckades att logga ut", loading: false});
@@ -49,7 +50,7 @@ export const useAuthStore = create((set) => ({
     checkAuth: async () => {
         set({isCheckingAuth: true, error: null});
         try {
-            const response = await axios.get(`${apiURL}/api/auth/check-auth`, {withCredentials: true});
+            const response = await axios.get(`${apiURL}/check-auth`, {withCredentials: true});
             if(response.data.success === false){
                 set({user: null, isAuthenticated: false, isCheckingAuth: false});
                 return;
@@ -63,7 +64,7 @@ export const useAuthStore = create((set) => ({
     sendPassResetRequest: async (email) => {
         set({loading: true, error: null});
         try {
-            await axios.post(`${apiURL}/api/auth/forgotpass`, {email: email}, {withCredentials: true});
+            await axios.post(`${apiURL}/forgotpass`, {email: email}, {withCredentials: true});
             set({loading: false});
         } catch (error) {
             set({error: error.response?.data?.message || "Misslyckades att skicka återställningslänk", loading: false});
@@ -74,7 +75,7 @@ export const useAuthStore = create((set) => ({
     resetPassword: async (token, newPassword) => {
         set({loading: true, error: null});
         try {
-            await axios.post(`${apiURL}/api/auth/resetpass/${token}`, {password: newPassword}, {withCredentials: true});
+            await axios.post(`${apiURL}/resetpass/${token}`, {password: newPassword}, {withCredentials: true});
             set({loading: false});
         } catch (error) {
             set({error: error.response?.data?.message || "Misslyckades att återställa lösenord", loading: false});
@@ -85,7 +86,7 @@ export const useAuthStore = create((set) => ({
     verifyRole: async (role) => {
         set({loading: true, error: null});
         try {
-            const response = await axios.post(`${apiURL}/api/auth/verify-role`, {role}, {withCredentials: true});
+            const response = await axios.post(`${apiURL}/verify-role`, {role}, {withCredentials: true});
             if(response.data.success === false){
                 set({error: response.data.message, loading: false});
                 return;
@@ -100,7 +101,7 @@ export const useAuthStore = create((set) => ({
     sendNotification: async (title, message, group, userId, clubId) => {
         set({loading: true, error: null});
         try {
-            const response = await axios.post(`${apiURL}/api/auth/notify`, {title, message, group, userId, clubId}, {withCredentials: true});
+            const response = await axios.post(`${apiURL}/notify`, {title, message, group, userId, clubId}, {withCredentials: true});
             if(response.data.success === false){
                 set({error: response.data.message, loading: false});
                 return;
@@ -115,7 +116,7 @@ export const useAuthStore = create((set) => ({
     markNotificationsAsRead: async (notificationIds) => {
         set({loading: true, error: null});
         try {
-            const response = await axios.post(`${apiURL}/api/auth/notify/mark-read`, {notificationIds}, {withCredentials: true});
+            const response = await axios.post(`${apiURL}/notify/mark-read`, {notificationIds}, {withCredentials: true});
             if(response.data.success === false){
                 set({error: response.data.message, loading: false});
                 return;

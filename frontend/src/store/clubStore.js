@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/clubs');
 
 export const useClubStore = create((set, get) => ({
     clubs: [],
@@ -13,7 +14,7 @@ export const useClubStore = create((set, get) => ({
     fetchClubs: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/clubs`, {
+            const response = await axios.get(`${apiURL}`, {
                 params,
                 withCredentials: true,
             });
@@ -29,7 +30,7 @@ export const useClubStore = create((set, get) => ({
     fetchClubById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/clubs/${id}`, {
+            const response = await axios.get(`${apiURL}/${id}`, {
                 withCredentials: true,
             });
             set({ club: response.data, loading: false, error: null });
@@ -44,7 +45,7 @@ export const useClubStore = create((set, get) => ({
     createClub: async (clubData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/clubs`, clubData, {
+            const response = await axios.post(`${apiURL}`, clubData, {
                 withCredentials: true,
             });
             set((state) => ({
@@ -65,7 +66,7 @@ export const useClubStore = create((set, get) => ({
     updateClub: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/clubs/${id}`, updates, {
+            const response = await axios.put(`${apiURL}/${id}`, updates, {
                 withCredentials: true,
               });
             set((state) => ({
@@ -89,7 +90,7 @@ export const useClubStore = create((set, get) => ({
     deleteClub: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/clubs/${id}`, {
+            await axios.delete(`${apiURL}/${id}`, {
                 withCredentials: true,
             });
             set((state) => ({

@@ -16,8 +16,7 @@ export const verifyToken = (req, res, next) => {
 
         next();
     }
-    catch(error){
-        console.log("error in verifyToken middleware, server.js", error);
-        return res.status(401).json({success:false, message: "Åtkomst nekad. error i verifyToken, server."});
+    catch(error){ 
+        return res.status(401).json({success:false, message: "Åtkomst nekad. inloggning har utgått."});
     }
 }

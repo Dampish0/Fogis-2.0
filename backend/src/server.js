@@ -20,7 +20,7 @@ import Agenda from "./config/agendaConfig.js";
 import path from "path";
 
 dotenv.config();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 const app = express();
 
@@ -55,7 +55,7 @@ const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "..", "frontend", "dist")));
-    app.get("*", (req, res) => {
+    app.get(/.*/, (req, res) => {
         res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
     });
 }
@@ -65,7 +65,7 @@ if (process.env.NODE_ENV === "production") {
 connectDB().then(() =>
 {
     app.listen(port, () => {
-    console.log("Server at 5001");
+    console.log("Server at port: " + port);
     });
 });
 

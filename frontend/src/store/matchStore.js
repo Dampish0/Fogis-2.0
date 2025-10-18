@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/match');
 axios.defaults.withCredentials = true;
 
 export const useMatchStore = create((set) => ({
@@ -15,7 +16,7 @@ export const useMatchStore = create((set) => ({
     fetchMatches: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/match`, { params });
+            const response = await axios.get(`${apiURL}`, { params });
             set({
                 matches: response.data.matches,
                 totalPages: response.data.totalPages,
@@ -34,7 +35,7 @@ export const useMatchStore = create((set) => ({
     fetchMatchById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/match/${id}`);
+            const response = await axios.get(`${apiURL}/${id}`);
             set({ match: response.data.match, loading: false, error: null });
         } catch (error) {
             set({
@@ -47,7 +48,7 @@ export const useMatchStore = create((set) => ({
     createMatch: async (matchData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/match`, matchData);
+            const response = await axios.post(`${apiURL}`, matchData);
             set({ loading: false, error: null });
             return response.data.Match;
         } catch (error) {
@@ -62,7 +63,7 @@ export const useMatchStore = create((set) => ({
     updateMatch: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/match/${id}`, updates);
+            const response = await axios.put(`${apiURL}/${id}`, updates);
             set({ match: response.data.match, loading: false, error: null });
             return response.data.match;
         } catch (error) {
@@ -77,7 +78,7 @@ export const useMatchStore = create((set) => ({
     deleteMatch: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/match/${id}`);
+            await axios.delete(`${apiURL}/${id}`);
             set({ loading: false, error: null });
         } catch (error) {
             set({

@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/team');
 axios.defaults.withCredentials = true;
 
 export const useTeamStore = create((set) => ({
@@ -16,7 +17,7 @@ export const useTeamStore = create((set) => ({
     fetchTeams: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/team`,  { params: params } );
+            const response = await axios.get(`${apiURL}`,  { params: params } );
             set({
                 teams: response.data.teams,
                 total: response.data.total,
@@ -36,7 +37,7 @@ export const useTeamStore = create((set) => ({
     fetchTeamById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/team/${id}`);
+            const response = await axios.get(`${apiURL}/${id}`);
             set({ team: response.data, loading: false, error: null });
         } catch (error) {
             set({
@@ -49,7 +50,7 @@ export const useTeamStore = create((set) => ({
     createTeam: async (teamData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/team`, teamData);
+            const response = await axios.post(`${apiURL}`, teamData);
             set({ loading: false, error: null, team: response.data });
             return response.data;
         } catch (error) {
@@ -64,7 +65,7 @@ export const useTeamStore = create((set) => ({
     updateTeam: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/team/${id}`, updates);
+            const response = await axios.put(`${apiURL}/${id}`, updates);
             set({ team: response.data, loading: false, error: null });
             return response.data;
         } catch (error) {
@@ -79,7 +80,7 @@ export const useTeamStore = create((set) => ({
     deleteTeam: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/team/${id}`);
+            await axios.delete(`${apiURL}/${id}`);
             set({ loading: false, error: null });
         } catch (error) {
             set({

@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { getApiURL } from './apiURL';
 
-const apiURL = 'http://localhost:5001';
+const apiURL = getApiURL('/api/series');
 
 export const useSeriesStore = create((set) => ({
     seriesList: [],
@@ -12,7 +13,7 @@ export const useSeriesStore = create((set) => ({
     fetchSeries: async (params = {}) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/series`, { params, withCredentials: true });
+            const response = await axios.get(`${apiURL}`, { params, withCredentials: true });
             set({ seriesList: response.data, loading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || "Misslyckades att hämta serier", loading: false });
@@ -22,7 +23,7 @@ export const useSeriesStore = create((set) => ({
     fetchSeriesById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`${apiURL}/api/series/${id}`, { withCredentials: true });
+            const response = await axios.get(`${apiURL}/${id}`, { withCredentials: true });
             set({ selectedSeries: response.data, loading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || "Misslyckades att hämta serien", loading: false });
@@ -32,7 +33,7 @@ export const useSeriesStore = create((set) => ({
     createSeries: async (seriesData) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.post(`${apiURL}/api/series`, seriesData, { withCredentials: true });
+            const response = await axios.post(`${apiURL}`, seriesData, { withCredentials: true });
             set((state) => ({
                 seriesList: [...state.seriesList, response.data],
                 loading: false
@@ -46,7 +47,7 @@ export const useSeriesStore = create((set) => ({
     updateSeries: async (id, updates) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.put(`${apiURL}/api/series/${id}`, updates, { withCredentials: true });
+            const response = await axios.put(`${apiURL}/${id}`, updates, { withCredentials: true });
             set((state) => ({
                 seriesList: state.seriesList.map(s => s._id === id ? response.data : s),
                 selectedSeries: state.selectedSeries && state.selectedSeries._id === id ? response.data : state.selectedSeries,
@@ -61,7 +62,7 @@ export const useSeriesStore = create((set) => ({
     deleteSeries: async (id) => {
         set({ loading: true, error: null });
         try {
-            await axios.delete(`${apiURL}/api/series/${id}`, { withCredentials: true });
+            await axios.delete(`${apiURL}/${id}`, { withCredentials: true });
             set((state) => ({
                 seriesList: state.seriesList.filter(s => s._id !== id),
                 selectedSeries: state.selectedSeries && state.selectedSeries._id === id ? null : state.selectedSeries,
