@@ -98,7 +98,8 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
         <div>
-
+          {/* we can use the this top level div to add our background color or image and then
+          add our navbar here to avoid imports everywhere and keeping DRY.  */}
           <Routes>
             {standardRoutes(user)}
 
