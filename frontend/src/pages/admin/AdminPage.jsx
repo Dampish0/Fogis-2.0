@@ -1,6 +1,6 @@
 import React from 'react'
 import './AdminPage.css'
-import Navbar from '../../components/navbar/Navbar'
+import Navbar from '../../components/Navbar/NavBar'
 import { Typography } from '@mui/material'
 import playerHantering from '../../assets/playerHantering.jpg'
 import clubHantering from '../../assets/clubHantering.jpg'

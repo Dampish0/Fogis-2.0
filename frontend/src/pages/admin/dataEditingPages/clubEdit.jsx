@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import useClubStore from "../../../store/clubStore.js";
-import Navbar from "../../../components/navbar/Navbar";
+import Navbar from "../../../components/Navbar/NavBar";
 
 const PAGE_SIZE = 10;
 const API_URL = "http://localhost:5001";

@@ -2,7 +2,7 @@ import React from 'react'
 import useTeamStore from '../../../store/teamStore';
 import { useEffect } from 'react';
 import PlayerBrowser from '../../../components/adminPages/teamPages/playerBrowser';
-import NavBar from '../../../components/navbar/Navbar';
+import NavBar from '../../../components/Navbar/NavBar';
 import LineupsEditor from '../../../components/adminPages/teamPages/LineupsEditor';
 import { Button, Typography } from '@mui/material';
 import { DndProvider } from 'react-dnd';

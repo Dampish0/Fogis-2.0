@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../../../components/navbar/Navbar'
+import NavBar from '../../../components/Navbar/NavBar'
 import { Autocomplete, Box, Button, Tab, Tabs, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { useState } from 'react';
 import useAuthStore from '../../../store/authStore';

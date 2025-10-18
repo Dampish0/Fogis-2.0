@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../../../components/navbar/Navbar';
+import NavBar from '../../../components/Navbar/NavBar';
 import { TeamBrowser } from '../../../components/adminPages/teamPages/teamBrowser';
 import useTeamStore from '../../../store/teamStore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

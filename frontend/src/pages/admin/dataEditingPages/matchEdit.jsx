@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Button, CircularProgress, colors, IconButton, Tab, Tabs, TextField, Typography } from '@mui/material';
 import React, { use } from 'react'
 import { useState } from 'react';
-import NavBar from '../../../components/navbar/Navbar';
+import NavBar from '../../../components/Navbar/NavBar';
 import MatchBrowser from '../../../components/MatchDetails/MatchBrowser';
 import useMatchStore from '../../../store/matchStore';
 import useRefereeStore from '../../../store/refereeStore';

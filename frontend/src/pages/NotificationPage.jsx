@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/navbar/Navbar'
+import NavBar from '../components/Navbar/NavBar'
 import { Box, Button, Icon, IconButton, List, ListItem, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import PageFooter from '../components/PageFooter';
 import NotificationsIcon from '@mui/icons-material/Notifications';

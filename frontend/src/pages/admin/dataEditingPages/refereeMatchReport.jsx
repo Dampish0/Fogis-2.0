@@ -1,5 +1,5 @@
 import { Button, Container, Box, Typography, Paper, Stack, Divider, Grid } from "@mui/material";
-import NavBar from "../../../components/navbar/Navbar";
+import NavBar from "../../../components/Navbar/NavBar";
 import React, { useEffect, useState } from "react";
 import useMatchStore from "../../../store/matchStore";
 import useRefereeStore from "../../../store/refereeStore";
