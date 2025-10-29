@@ -4,16 +4,15 @@ week 2: we created a git repo and started to write down what basic features(also
 
 week 3: We start testing and play around with all the tools such as react, mongodb, css etc. to learn more and to get a better understanding on the semantics and functionallity and how we can build our website with it.
 
-Me personally started by designing and implementing the website’s navigation bar
+Me personally started by designing and implementing the websites navigation bar
 
-week 4: I worked on developing the match detail section, i created a tab navigation system which contained match facts,lineups, table, scoreboard etc.
+week 4-5: I worked on developing the match detail section, i created a tab navigation system which contained match facts,lineups, table, scoreboard etc.
 
 In the match facts tab i implemented a timeline view to display match events such as goals, cards, assists, and substitutions. I created some Mockdata to see how it would look like. The timeline was designed with a clean and structured layout, including key milestones like half-time and full-time. I also worked on improving the user interface
 
 In the lineups tab i implement an image of a football field which consist of players of both the home-team and the away-team with diffrent formations and roles. When you hover over the player you would get the information of the player and when a specific match is selected the lineup view updates based on that specific match. 
 
 
+Week 6: this week i focused on designing and creating the competition page where you could see tables such as score, wins, losses etc & diffrent tournaments and leagues. Also worked with creating some "creative" components such as animations to make the page more dynamically appealing.
 
-/Project Presentation Part 1/
-
-Week 5: 
+week 7: this week i didnt put a lot of time coding since we were focusing on finalizing the project based on the feedback we got from you. We Instead put the time to discuss and plan a strategy on how to finsish the project, even if all the ideas and ambitions didnt get implemented. The rest of the time was put on studyin for the exams.
