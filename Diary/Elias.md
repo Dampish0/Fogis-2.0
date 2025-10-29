@@ -14,3 +14,6 @@ added real match fetching for match page and improved navbar on larger screens a
 Completed Lineup tab in the Match page, And it looks very beautiful, also added fetching for the positions of all players and placed them correctly in the field. Also slightly restructured the MatchDetails component which holds the lineup tab.
 
 designed and implemented the admin page. Restructured routes in frontend app.jsx.
+
+Week 7-8:
+I bought the domain fais.se (https://www.fais.se/login). I started hosting our MERN app on the web using Amazon web services (AWS) and then connected it to our domain via a tunnel through cloudflare.
