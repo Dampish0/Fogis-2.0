@@ -194,6 +194,9 @@ const MatchEditPage = (props) => {
         setArenaOptions(arenaOptionsCopy);
     }, [arenas]);
 
+    const handleUpdateMatch = async () => {
+    };
+
     useEffect(() => {
         const refereeOptionsCopy = [];
         referees.map((referee, index) => {
@@ -281,7 +284,7 @@ const MatchEditPage = (props) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
 
                     <DateTimePicker
-                    renderInput={(props) => <TextField {...props} variant="outlined" sx={{...dateTimeColor('white'), width: "80%", color:'white'}} />}
+                    renderInput={(props) => <TextField {...props} variant="outlined" sx={{ width: "80%", color:'white'}} />}
                     label="Match Datum" 
                     name='startDate'
                     sx={{color:'white', width: "80%"}}
@@ -403,7 +406,7 @@ const MatchEditPage = (props) => {
 
                     <DateTimePicker
                     value={matchDate}
-                    renderInput={(props) => <TextField {...props} variant="outlined" sx={{...dateTimeColor('white'), width: "80%", color:'white'}} />}
+                    renderInput={(props) => <TextField {...props} variant="outlined" sx={{width: "80%", color:'white'}} />}
                     label="Match Datum" 
                     name='startDate'
                     sx={{color:'white', width: "80%"}}

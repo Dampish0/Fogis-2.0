@@ -22,36 +22,7 @@ import RefereeMatchReport from './pages/admin/dataEditingPages/refereeMatchRepor
 import ClubEditPage from './pages/admin/dataEditingPages/clubEdit';
 import UserEditPage from './pages/admin/dataEditingPages/userEdit';
 import NotificationPage from './pages/NotificationPage';
-import { Backdrop, CircularProgress } from '@mui/material';
-
-export const ProtectedRoute = ({children}) => {
-  // temporay dev test code
-  //return children;
-  // --------------------
-  const {isAuthenticated, isCheckingAuth, loading} = useAuthStore();
-
-  // if(isCheckingAuth){
-  //   return <Backdrop open></Backdrop>
-  // }
-
-  if(!loading && !isCheckingAuth && !isAuthenticated){
-    return <Navigate to="/login" replace/>
-  }
-
-  return children;
-}
-
-export const RedirectAuthenticated = ({children}) => {
-  // temporay dev test code
-  //return children;
-  // --------------------
-  const {isAuthenticated} = useAuthStore();
-  if(isAuthenticated){
-    return <Navigate to="/" replace/>
-  }
-
-  return children;
-}
+import { ProtectedRoute, RedirectAuthenticated } from './helper';
 
 export const adminRoutes = (role) => {
   return (

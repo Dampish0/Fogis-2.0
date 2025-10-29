@@ -88,7 +88,7 @@ const AnimatedContent = ({
     };
     // Viktigt: om du vill återskapa animationen vid prop-ändringar kan du ha props i deps;
     // men håll den här listan kort för att undvika onödig recreate.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [
     distance,
     direction,

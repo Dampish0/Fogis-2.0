@@ -5,6 +5,7 @@ import { useState } from 'react';
 import useAuthStore from '../../../store/authStore';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
+import { useRef } from 'react';
 
   const textFieldColor = (color) => (
     {
@@ -35,7 +36,7 @@ import { useEffect } from 'react';
              }
   );
 
-const userEditPage = (props) => {
+const UserEditPage = (props) => {
     const { sendNotification, error: Aerr, loading: Aloading, register: createUser } = useAuthStore();
     const [tabIndex, setTabIndex] = useState(0);
     const [selectedNotificationGroup, setSelectedNotificationGroup] = useState('all');
@@ -55,14 +56,14 @@ const userEditPage = (props) => {
         setTabIndex(n);
     }
 
-    const emailRef = React.useRef();
-    const userNameRef = React.useRef();
-    const authRoleRef = React.useRef();
+    const emailRef = useRef();
+    const userNameRef = useRef();
+    const authRoleRef = useRef();
 
-    const titleRef = React.useRef();
-    const messageRef = React.useRef();
-    const userIdRef = React.useRef();
-    const clubIdRef = React.useRef();
+    const titleRef = useRef();
+    const messageRef = useRef();
+    const userIdRef = useRef();
+    const clubIdRef = useRef();
     const handleNotify = async (e) => {
         e.preventDefault();
 
@@ -224,4 +225,4 @@ const userEditPage = (props) => {
   )
 }
 
-export default userEditPage
+export default UserEditPage

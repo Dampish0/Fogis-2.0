@@ -14,9 +14,18 @@ import topDownPitch from '../../assets/fieldTopDown.png';
 import { Avatar, CircularProgress, Icon, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import LineupsCard from './LineupsCard';
+import { useState } from 'react';
 
 
 export const MatchDetails = (props) => {
+
+
+
+const [activeTab, setActiveTab] = useState('matchFacts');
+
+
+
+
     if(props.events === null || props.players === null ) {
         return (
             <div className="matchdetails" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
@@ -24,7 +33,7 @@ export const MatchDetails = (props) => {
             </div>
         );
     }
-    const [activeTab, setActiveTab] = React.useState('matchFacts');
+    
 
     /* mockdata, ta bort senare och hämta från databas*/
     const events = props.events || [];

@@ -1,7 +1,10 @@
 import { Button, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useRef } from 'react'
 
-const newPasswordPage = () => {
+const NewPasswordPage = () => {
+    const pass1 = useRef();
+    const pass2 = useRef();
+
   const textFieldColor = (color) => (
     {
                     '& label.Mui-focused': {
@@ -72,7 +75,8 @@ const newPasswordPage = () => {
         <Typography variant='h5' align='center' style={{marginBottom:20, color:"#ffffff"}}>
             Välj nytt lösenord
         </Typography>
-        <TextField
+        <TextField 
+            inputRef={pass1}
             sx={textFieldColor("#ffffff")}
           label="Nytt Lösenord"
           variant="outlined"
@@ -80,7 +84,8 @@ const newPasswordPage = () => {
           fullWidth
           margin="normal"
         />
-        <TextField
+        <TextField 
+            inputRef={pass2}
             sx={textFieldColor("#ffffff")}
             label="Bekräfta Lösenord"
             variant="outlined"
@@ -89,7 +94,7 @@ const newPasswordPage = () => {
             margin="normal"
             />
         <Button variant="contained" color="primary" fullWidth
-            onClick={() => submitPass(pass, confirmPass)}
+            onClick={() => submitPass(pass1.current.value, pass2.current.value)}
         >
             Ändra Lösenord
         </Button>
@@ -97,4 +102,4 @@ const newPasswordPage = () => {
   )
 }
 
-export default newPasswordPage
+export default NewPasswordPage
