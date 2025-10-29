@@ -27,4 +27,7 @@ Match events that the referee had to register were: goals, assists, yellow and r
 Our idea is that once the referee submits his report it would go through the notification system to the admins and them further action can be taken if needed.  
 
 Week 7:
+I continued working on the referee admin page. I created the components for registering match events like goals, assists, yellow and red cards, and substitutions. I also worked on the submission functionality for the referee report, ensuring that all registered events are included in the report.
+I did not complete the functinallity because the scale of the project was too big to finish everything in time.
 Week 8:
+Studied for the final exam, did not really do much this week. 
